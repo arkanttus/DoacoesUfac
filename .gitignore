@@ -2,9 +2,9 @@
 *.log
 *.pot
 *.pyc
-__pycache__
-db.sqlite3
-media
+backend/__pycache__
+backend/db.sqlite3
+backend/media
 
 # Backup files # 
 *.bak 
@@ -76,13 +76,13 @@ celerybeat-schedule.*
 *.sage.py 
 
 # Environments 
-.env 
-.venv 
-env/ 
-venv/ 
-ENV/ 
-env.bak/ 
-venv.bak/ 
+backend/.env 
+backend/.venv 
+backend/env/ 
+backend/venv/ 
+backend/ENV/ 
+backend/env.bak/ 
+backend/venv.bak/ 
 
 # mkdocs documentation 
 /site 
@@ -118,7 +118,7 @@ GitHub.sublime-settings
 
 # Migrations #
 
-media/
+backend/media/
 */migrations/
 migrations/
 backend/apps/users/migrations/
