@@ -1,2 +1,0 @@
-# Navigo
-Created with CodeSandbox
