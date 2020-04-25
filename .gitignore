@@ -128,3 +128,4 @@ backend/apps/base/migrations/
 # React #
 
 frontend/node_modules/
+frontend/package-lock.json
