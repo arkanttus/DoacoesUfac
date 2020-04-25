@@ -1,0 +1,57 @@
+@media(max-width: 600px) {
+    .footer
+    {
+        padding-top: 50px;
+    }
+    .footer div
+    {
+        padding: 5px;
+    }
+}
+
+.container
+{
+    color: #FFF;
+    background: url('/images/BG1.svg') no-repeat center center;
+    min-height: 100vh;
+    background-size: cover;
+}
+
+.navbar ul
+{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    font-size: 12px;
+}
+.navbar ul li
+{
+    padding: 10px;
+}
+.navbar ul li:nth-child(2)
+{
+    margin-right: auto;
+    font-size: 18px;
+}
+.navbar ul li:nth-child(3)
+{
+    margin-left: auto;
+}
+
+.footer
+{
+    height: 100%;
+}
+.footer div
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.border
+{
+    border: 1px solid red;
+}
