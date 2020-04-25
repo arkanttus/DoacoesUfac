@@ -3,6 +3,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Permis
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from localflavor.br.validators import BRCPFValidator
 
 
 class UserManager(BaseUserManager):
@@ -79,6 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     share_phone = models.BooleanField(_('Compartilhar Telefone'), default=False)
     phone_number = models.CharField(_('Número de Telefone'), max_length=20)
     type_user = models.CharField(_('Tipo de Usuario'), max_length=1, choices=TYPE_USER_CHOICES, null=True)
+    cpf = models.CharField(_('CPF'), max_length=13, validators=[BRCPFValidator()], unique=True)
 
     objects = UserManager()
 
