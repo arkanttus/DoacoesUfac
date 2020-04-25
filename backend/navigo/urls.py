@@ -18,9 +18,12 @@ from django.urls import path, include
 # from rest_framework_nested import routers
 from rest_framework import routers
 from apps.users.api.viewsets import UserView, Login, LogoutView
+from apps.donates.views import DonateView, TypeDonateView
 
 router = routers.DefaultRouter()
 router.register(r'users', UserView, basename='UserApp')
+router.register(r'donates', DonateView, basename='DonateApp')
+router.register(r'type_donates', TypeDonateView, basename='TypeDonateApp')
 
 
 urlpatterns = [
