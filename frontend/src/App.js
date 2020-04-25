@@ -1,9 +1,9 @@
 import React from 'react';
-import Landing from './Pages/Landing';
+import Routes from './routes';
 
 function App() {
   return (
-    <Landing />
+    <Routes />
   );
 }
 
