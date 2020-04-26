@@ -48,9 +48,7 @@ export default function Landing() {
 
     return(
         <Grid container className={classes.container}>
-            <Grid container>
                 <InitialNavbar/>
-            </Grid>
             
             <Grid container>
                 <Grid item xs={12} sm={5} style={{ fontSize: 30, padding: 15, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
