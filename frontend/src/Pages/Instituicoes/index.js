@@ -55,7 +55,7 @@ export default function Landing() {
     return(
         <Grid container className={classes.container}>
             <Grid item xs={12}>
-                <InitialNavbar/>
+                <InitialNavbar />
             </Grid>
             
             <Grid item xs={12} sm={5}>

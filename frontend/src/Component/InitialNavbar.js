@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
       },
       nav: {
         backgroundColor: "transparent",
-        boxShadow: "none"
+        boxShadow: "none",
+        position: "initial"
       },
       title: {
         color: "#FFF",
@@ -37,7 +38,7 @@ export default function InitialNavbar(props, children) {
     const classes = useStyles();
 
     return(
-        <AppBar position="fixed" className={classes.nav}>
+        <AppBar className={classes.nav}>
             <Toolbar>
                 <img src="images/Logo.svg" alt="logo" className="logo" />
                 <Typography variant="h6" className={classes.title}>
