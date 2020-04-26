@@ -23,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
       nav: {
         backgroundColor: "transparent",
         boxShadow: "none",
+        marginTop: 15
       },
       title: {
         color: "#FFF",
-        marginLeft: "5px"
+        marginLeft: "15px"
       },
       button: {
         color: "#FFF"
@@ -45,7 +46,7 @@ export default function InitialNavbar(props, children) {
                 </Typography>
                 <div className={classes.separator} />
                 <Link to={`/`} className={classes.noLinkStyle}>
-                  <Button className={classes.button}>INICIAL</Button>
+                  <Button className={classes.button}>INÍCIO</Button>
                 </Link>
                 <Link to={`/comodoar`} className={classes.noLinkStyle}>
                   <Button className={classes.button}>COMO DOAR?</Button>

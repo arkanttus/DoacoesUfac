@@ -42,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             margin: 10
         }
+    },
+    container: {
+        height: '100vh'
+    },
+    cardItem: {
+        height: 'fit-content'
     }
 }));
 
@@ -74,12 +80,8 @@ export default function Instituicoes() {
 
     return(
         <Grid container className={classes.container}>
-            <Grid container>
-                <InitialNavbar/>
-            </Grid>
-
             <Grid container justify="center">
-                <Grid item container  xs={12} alignItems="center">
+                <Grid item container  xs={12} alignItems="center" justify="center">
                     <Typography variant="h4" align="center">
                         <Box fontWeight="fontWeightMedium" m={1}>
                             INSTITUIÇÕES
@@ -90,7 +92,7 @@ export default function Instituicoes() {
             
             <Grid container spacing={4} className={classes.cardContainer}>
                 { institutions.map( institution => (
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={3} className={classes.cardItem}>
                         <InstitutionCard title={institution.name} photo={institution.img}/>
                     </Grid>
                 ) )}

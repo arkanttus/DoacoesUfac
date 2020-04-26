@@ -9,6 +9,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Instituicoes from './Instituicoes'
 import ComoDoar from './ComoDoar'
 import Home from './Home'
+import Login from './Login'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundImage: `url(${"/images/BG1.svg"})`,
         background: 'no-repeat center center',
         backgroundSize: 'cover',
-        paddingTop: 100
+        paddingTop: 50
     }
 }));
 
@@ -45,14 +46,14 @@ export default function Landing() {
         <div >
             <InitialNavbar/>
             <main className={classes.main}>
-                
-                    <Switch>
-                        <Route exact path="/instituicoes" component={Instituicoes} />
-                        <Route exact path="/comodoar" component={ComoDoar} />
-                        <Route  path="/" component={Home} />
-                    </Switch>
-                
-                    <InitialFooter/>
+                <Switch>
+                    <Route exact path="/instituicoes" component={Instituicoes} />
+                    <Route exact path="/comodoar" component={ComoDoar} />
+                    <Route exact path="/login" component={Login} />
+                    <Route  path="/" component={Home} />
+                </Switch>
+            
+                <InitialFooter/>
             </main>
         </div>
     );
