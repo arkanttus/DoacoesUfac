@@ -60,13 +60,11 @@ export default function Landing() {
 
     return(
         <Grid container className={classes.container}>
-            <Grid container>
-                <InitialNavbar/>
-            </Grid>
+            <InitialNavbar/>
 
             <Grid container style={{ paddingTop: '8%' }}>
                 <Grid item xs={12}>
-                    <Carousel>
+                    <Carousel interval={5000}>
                         <Grid container className={classes.containerCarousel}>
                             <Grid item xs={12} style={{ fontSize: 30, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                                 Gostaria de contribuir para a sustentação de alguma instituição?

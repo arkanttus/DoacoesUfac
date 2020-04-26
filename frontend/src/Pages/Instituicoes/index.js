@@ -2,16 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import ButtonCustom from '../../Component/Button';
 import InitialNavbar from '../../Component/InitialNavbar';
 import InitialFooter from '../../Component/InitialFooter';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import InstitutionCard from '../../Component/InstitutionCard';
+import Typography from "@material-ui/core/Typography";
+import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,54 +42,67 @@ const useStyles = makeStyles((theme) => ({
             color: '#e5e5e5'
         }
     },
+    cardContainer: {
+        marginLeft: '10%',
+        marginRight: '10%',
+        [theme.breakpoints.down('sm')]: {
+            margin: 10
+        }
+    }
 }));
 
 export default function Landing() {
     const classes = useStyles();
+    const institutions = [{
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    }]
 
     return(
         <Grid container className={classes.container}>
-            <Grid item xs={12}>
-                <InitialNavbar />
+            <Grid container>
+                <InitialNavbar/>
+            </Grid>
+
+            <Grid container justify="center">
+                <Grid item container  xs={12} alignItems="center">
+                    <Typography variant="h4" align="center">
+                        <Box fontWeight="fontWeightMedium" m={1}>
+                            INSTITUIÇÕES
+                        </Box>
+                    </Typography>
+                </Grid>
             </Grid>
             
-            <Grid item xs={12} sm={5}>
-                <Card className={classes.root}>
-                    <CardActionArea>
-                        <CardMedia component="img" alt="Contemplative Reptile" height="140" image="/images/Logo.svg" title="Contemplative Reptile"/>
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                Lizard
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                                across all continents except Antarctica
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
+            <Grid container spacing={4} className={classes.cardContainer}>
+                { institutions.map( institution => (
+                    <Grid item xs={12} sm={6} md={3}>
+                        <InstitutionCard title={institution.name} photo={institution.img}/>
+                    </Grid>
+                ) )}
             </Grid>
 
-            <Grid item xs={2}></Grid>
-
-            <Grid item xs={12} sm={5} className={classes.textos2}>
-                <label>Você é responsável por alguma instituição e está necessitando de recursos? Junte-se a nós!</label>
-                <Link to="/registro-instituicao" className={classes.noLinkStyle}>
-                    <ButtonCustom variant="blueDark" style={{ margin: '0 auto', marginTop: 15 }}>
-                        CADASTRAR INSTITUIÇÃO
-                    </ButtonCustom>
-                </Link>
-            </Grid>
-
-            <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Link to="/login" className={classes.noLinkStyle}>
-                    <ButtonCustom variant="green">
-                        ACESSAR MINHA CONTA
-                    </ButtonCustom>
-                </Link>
-            </Grid>
-
-            <Grid item xs={12}>
+            <Grid container>
                 <InitialFooter/>
             </Grid>
         </Grid>
