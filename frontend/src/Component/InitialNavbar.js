@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
       },
       nav: {
         backgroundColor: "transparent",
-        boxShadow: "none",
+        boxShadow: "none"
       },
       title: {
         color: "#FFF",

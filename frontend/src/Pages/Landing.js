@@ -33,8 +33,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#FFF',
         backgroundImage: `url(${"/images/BG1.svg"})`,
         background: 'no-repeat center center',
-        backgroundSize: 'cover',
-        paddingTop: 100
+        backgroundSize: 'cover'
     }
 }));
 
@@ -42,18 +41,17 @@ export default function Landing() {
     const classes = useStyles();
 
     return(
-        <div >
+        <div>
             <InitialNavbar/>
             <main className={classes.main}>
-                
                     <Switch>
                         <Route exact path="/instituicoes" component={Instituicoes} />
                         <Route exact path="/comodoar" component={ComoDoar} />
                         <Route  path="/" component={Home} />
                     </Switch>
-                
                     <InitialFooter/>
             </main>
+            
         </div>
     );
 }
