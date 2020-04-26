@@ -11,8 +11,8 @@ UserModel = get_user_model()
 
 
 class UserReadSerializer(serializers.ModelSerializer):
-    email = serializers.ReadOnlyField(source='email')
-    cpf = serializers.ReadOnlyField(source='cpf')
+    email = serializers.ReadOnlyField()
+    cpf = serializers.ReadOnlyField()
     name = serializers.ReadOnlyField()
     staffUser = serializers.BooleanField(source='is_staff', read_only=True)
     isActive = serializers.BooleanField(source='is_active', read_only=True)
@@ -37,9 +37,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
         required=True, error_messages={'required': _('Campo Obrigatório')},
         validators=[validators.UniqueValidator(queryset=UserModel.objects.all())]
     )
-    name = serializers.CharField(source='name', required=True, error_messages={'required': _('Campo Obrigatório')})
+    name = serializers.CharField(required=True, error_messages={'required': _('Campo Obrigatório')})
     cpf = serializers.CharField(
-        source='cpf', required=True, validators=[
+        required=True, validators=[
             BRCPFValidator(), validators.UniqueValidator(queryset=UserModel.objects.all())
         ]
     )
