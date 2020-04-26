@@ -1,27 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
-    navbar: {
-        '& ul': {
-            listStyle: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            padding: 0,
-            fontSize: '12px',
-            '& li' :{
-                padding: '10px 25px'
-            },
-            '& li:nth-of-type(2)': {
-                marginRight: 'auto',
-                fontSize: '18px'
-            },
-            '& li:nth-of-type(4)': {
-                marginLeft: 'auto'
-            }
-        }
-    },  
     noLinkStyle: {
         textDecoration: 'none',
         color: 'white',
@@ -29,27 +14,41 @@ const useStyles = makeStyles((theme) => ({
             color: '#e5e5e5'
         }
     },
+    menuButton: {
+        marginRight: theme.spacing(2)
+      },
+      separator: {
+        flexGrow: 1
+      },
+      nav: {
+        backgroundColor: "transparent",
+        boxShadow: "none",
+        position: "initial"
+      },
+      title: {
+        color: "#FFF",
+        marginLeft: "5px"
+      },
+      button: {
+        color: "#FFF"
+      }
 }));
 
 export default function InitialNavbar(props, children) {
     const classes = useStyles();
 
     return(
-        <nav className={classes.navbar}>
-            <ul>
-                <li>
-                    <img src="images/Logo.svg" alt="logo" className="logo" />
-                </li>
-                <li style={{ paddingLeft: 0 }}>Doações</li>
-                <Link to="/como-doar" className={classes.noLinkStyle}>
-                    <li>COMO DOAR?</li>
-                </Link>
-                
-                <Link to="/instituicoes" className={classes.noLinkStyle}>
-                    <li>INSTITUIÇÕES</li>
-                </Link>
-            </ul>
-        </nav>
+        <AppBar className={classes.nav}>
+            <Toolbar>
+                <img src="images/Logo.svg" alt="logo" className="logo" />
+                <Typography variant="h6" className={classes.title}>
+                    Doações
+                </Typography>
+                <div className={classes.separator} />
+                <Button className={classes.button}>COMO DOAR?</Button>
+                <Button className={classes.button}>INSTITUIÇÕES</Button>
+            </Toolbar>
+        </AppBar>
     );
 
 }
