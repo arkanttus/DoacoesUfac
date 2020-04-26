@@ -5,15 +5,17 @@ import Grid from '@material-ui/core/Grid';
 import ButtonCustom from '../Component/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh'
     },
     buttonFix: {
-        '& button': {
+        '& a button': {
+            whiteSpace: 'nowrap',
             [theme.breakpoints.down('sm')]: {
-                width: '100%'
+                width: '100%',
+                whiteSpace: 'initial',
+                height: '100%'
             }
         }   
     },
@@ -34,6 +36,14 @@ const useStyles = makeStyles((theme) => ({
             color: '#e5e5e5'
         }
     },
+
+    containerCarousel: {
+        padding: '0 20%',
+        [theme.breakpoints.down('xs')]: {
+            padding: 0
+        }
+    }
+
 }));
 
 export default function Home() {
@@ -54,26 +64,19 @@ export default function Home() {
                                     </ButtonCustom>
                                 </Link>
                             </Grid>
-                            <Grid item xs={6} className={classes.buttonFix} style={{ display: 'flex', paddingLeft: 10 }}>
-                                <Link to="/doador" className={classes.noLinkStyle}>
-                                    <ButtonCustom variant="yellow" style={{ heigth: 'fit-content', whiteSpace: 'nowrap' }}>
-                                        <FavoriteIcon style={{ paddingRight: 5, width: 20, height: 15 }} /> QUERO SER DOADOR
+                        </Grid>
+
+                        <Grid container className={classes.containerCarousel}>
+                            <Grid item xs={12} className={classes.textos2}>
+                                <label>Você é responsável por alguma instituição e está necessitando de recursos? Junte-se a nós!</label>
+                                <Link to="/instituicao" className={classes.noLinkStyle}>
+                                    <ButtonCustom variant="blueDark" style={{ margin: '0 auto', marginTop: 15 }}>
+                                        CADASTRAR INSTITUIÇÃO
                                     </ButtonCustom>
                                 </Link>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-
-                <Grid item xs={2}></Grid>
-
-                <Grid item xs={12} sm={5} className={classes.textos2}>
-                    <label>Você é responsável por alguma instituição e está necessitando de recursos? Junte-se a nós!</label>
-                    <Link to="/instituicao" className={classes.noLinkStyle}>
-                        <ButtonCustom variant="blueDark" style={{ margin: '0 auto', marginTop: 15 }}>
-                            CADASTRAR INSTITUIÇÃO
-                        </ButtonCustom>
-                    </Link>
                 </Grid>
             </Grid>
 
