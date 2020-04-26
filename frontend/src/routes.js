@@ -8,12 +8,14 @@ import {
 //PAGES
 import LandingPage from './Pages/Landing';
 import ComoDoar from './Pages/ComoDoar';
+import Instituicoes from './Pages/Instituicoes';
 
 const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={LandingPage} />
-      <Route path="/ComoDoar" component={ComoDoar} />
+      <Route path="/como-doar" component={ComoDoar} />
+      <Route path="/instituicoes" component={Instituicoes} />
     </Switch>
   </BrowserRouter>
 );

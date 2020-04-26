@@ -6,6 +6,12 @@ import ButtonCustom from '../../Component/Button';
 import InitialNavbar from '../../Component/InitialNavbar';
 import InitialFooter from '../../Component/InitialFooter';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,29 +58,21 @@ export default function Landing() {
                 <InitialNavbar/>
             </Grid>
             
-            <Grid item xs={12} sm={5} style={{ fontSize: 30, padding: 15, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                Gostaria de contribuir para a sustentação de alguma instituição?
-                Diversas instituições carecem de recursos básicos e que você pode doar.
-                <Grid item xs={12} style={{ flexBasis: 'auto', marginTop: 15 }}>
-                    <Grid container>
-                        <Grid item xs={6} className={classes.buttonFix} style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 10 }}>
-                            <Link to="/instituicoes" className={classes.noLinkStyle}>
-                                <ButtonCustom variant="blue" style={{ height: 'fit-content' }}>
-                                    VER INSTITUIÇÕES
-                                </ButtonCustom>
-                            </Link>
-                        </Grid>
-                        <Grid item xs={6} className={classes.buttonFix} style={{ display: 'flex', paddingLeft: 10 }}>
-                            <Link to="/registro-doador" className={classes.noLinkStyle}>
-                                <ButtonCustom variant="yellow" style={{ heigth: 'fit-content' }}>
-                                    <FavoriteIcon style={{ paddingRight: 5, width: 20, height: 15 }} /> <label style={{ whiteSpace: 'nowrap' }}>QUERO SER DOADOR</label>
-                                </ButtonCustom>
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                
-                
+            <Grid item xs={12} sm={5}>
+                <Card className={classes.root}>
+                    <CardActionArea>
+                        <CardMedia component="img" alt="Contemplative Reptile" height="140" image="/images/Logo.svg" title="Contemplative Reptile"/>
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                Lizard
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                across all continents except Antarctica
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
             </Grid>
 
             <Grid item xs={2}></Grid>
