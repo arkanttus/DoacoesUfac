@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': { filter: 'brightness(1.1)' },
         '&:active': { filter: 'brightness(1.2)' },
         '&:focus': { outline: 'none' }
-
     },
     
     buttonBlue: {

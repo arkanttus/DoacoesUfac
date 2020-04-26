@@ -60,8 +60,18 @@ const useStyles = makeStyles((theme) => ({
             [theme.breakpoints.down('sm')]: {
                 width: '100%'
             }
-        }
-        
+        }   
+    },
+
+    textos2: {
+        fontSize: 30,
+        padding: 15,
+        paddingTop: 35,
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 
 
@@ -89,10 +99,10 @@ export default function Landing() {
                     </nav>
                 </Grid>
                 
-                <Grid item xs={12} sm={5} style={{ fontSize: 30, padding: 15, textAlign: 'center' }}>
+                <Grid item xs={12} sm={5} style={{ fontSize: 30, padding: 15, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                     Gostaria de contribuir para a sustentação de alguma instituição?
                     Diversas instituições carecem de recursos básicos e que você pode doar.
-                    <Grid item xs={12} style={{ paddingTop: 20 }}>
+                    <Grid item xs={12} style={{ flexBasis: 'auto', marginTop: 15 }}>
                         <Grid container>
                             <Grid item xs={6} className={classes.buttonFix} style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 10 }}>
                                 <ButtonCustom variant="blue" style={{ height: 'fit-content' }}>
@@ -112,13 +122,11 @@ export default function Landing() {
 
                 <Grid item xs={2}></Grid>
 
-                <Grid item xs={12} sm={5} style={{ fontSize: 30, padding: 15, paddingTop: 35, textAlign: 'center' }}>
-                    Você é responsável por alguma instituição e está necessitando de recursos? Junte-se a nós!
-                    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', paddingTop: 20 }}>
-                        <ButtonCustom variant="blueDark">
-                            CADASTRAR INSTITUIÇÃO
-                        </ButtonCustom>
-                    </Grid>
+                <Grid item xs={12} sm={5} className={classes.textos2}>
+                    <label>Você é responsável por alguma instituição e está necessitando de recursos? Junte-se a nós!</label>
+                    <ButtonCustom variant="blueDark" style={{ margin: '0 auto', marginTop: 15 }}>
+                        CADASTRAR INSTITUIÇÃO
+                    </ButtonCustom>
                 </Grid>
 
                 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
