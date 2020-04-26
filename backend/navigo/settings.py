@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 if PRODUCTION:
     ALLOWED_HOSTS = ['']
 else:
-    ALLOWED_HOSTS = ['127.0.0.1']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 DEBUG = True
 
@@ -150,6 +150,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',

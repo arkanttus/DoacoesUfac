@@ -1,19 +1,19 @@
-from rest_framework import serializers, validators, exceptions
-from django.utils.translation import gettext_lazy as _
+from rest_framework import serializers
 
 from .models import Feedback
-from users.api.serializers import UserReadSerializer
-from users.models import User
-from donates.serializers import DonateSerializer, TypeDonateSerializer
-from donates.models import Donate, TypeDonate
-from apps.base.api.serializers import InstitutionSerializer
+from apps.users.api.serializers import UserReadSerializer
+from apps.users.models import User
+from apps.donates.serializers import DonateSerializer, TypeDonateSerializer
+from apps.donates.models import Donate, TypeDonate
+from apps.base.api.serializers import InstitutionReadSerializer
+
 
 class FeedbackSerializer(serializers.ModelSerializer):
     user = UserReadSerializer(read_only=True)
-    institution = InstitutionSerializer(read_only=True)
+    institution = InstitutionReadSerializer(read_only=True)
     donate = DonateSerializer(read_only=True)
     type_donate = TypeDonateSerializer(read_only=True)
-    set_user= serializers.PrimaryKeyRelatedField(
+    set_user = serializers.PrimaryKeyRelatedField(
         source='user', write_only=True, queryset=User.objects.all(), required=True
     )
     set_donate = serializers.PrimaryKeyRelatedField(
