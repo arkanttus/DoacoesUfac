@@ -1,18 +1,21 @@
 import uuid
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from localflavor.br.validators import BRCPFValidator
 
-from donates.models import Donate, TypeDonate
-from users.models import User
+from apps.donates.models import Donate, TypeDonate
+from apps.base.models import Institution
+
+User = get_user_model()
 
 class Feedback(models.Model):
     id = models.UUIDField('ID', default=uuid.uuid4, editable=False, primary_key=True)
     name = models.CharField(_('Nome'), max_length=255)
     description = models.CharField(_('Descrição'), max_length=255)
-    #intitute = models.ForeignKey(Institute, on_delete=models.CASCADE, related_name='feedbacks')
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE, related_name='feedbacks')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedbacks')
     donate = models.ForeignKey(Donate, on_delete=models.CASCADE, related_name='feedbacks', null=True)
     type_donate = models.ForeignKey(TypeDonate, on_delete=models.CASCADE, related_name='feedbacks')

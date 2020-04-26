@@ -1,4 +1,5 @@
 import os
+import uuid
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -8,6 +9,7 @@ User = get_user_model()
 
 
 class TypeInstitution(models.Model):
+    id = models.UUIDField('ID', default=uuid.uuid4, editable=False, primary_key=True)
     name = models.CharField(_('Nome'), max_length=100)
     description = models.CharField(_('Descrição'), max_length=200)
 
@@ -26,6 +28,7 @@ def path_image_institution(instance, filename):
 
 class Institution(models.Model):
     # Info
+    id = models.UUIDField('ID', default=uuid.uuid4, editable=False, primary_key=True)
     name = models.CharField(_('Instituição'), max_length=200)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Responsável pela Instituição'))
     type_institution = models.ForeignKey(

@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 if PRODUCTION:
     ALLOWED_HOSTS = ['']
 else:
-    ALLOWED_HOSTS = ['localhost']
+    ALLOWED_HOSTS = ['127.0.0.1']
 
 DEBUG = True
 
@@ -41,6 +41,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'apps.users',
     'apps.base',
+    'apps.donates',
+    'apps.feedback'
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS

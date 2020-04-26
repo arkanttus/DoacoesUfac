@@ -4,41 +4,10 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from localflavor.br.validators import BRCPFValidator
+
+from apps.base.models import Institution
 
 User = get_user_model()
-
-class Donate(models.Model):
-    id = models.UUIDField('ID', default=uuid.uuid4, editable=False, primary_key=True)
-    name = models.CharField(_('Nome'), max_length=255)
-    description = models.CharField(_('Descrição'), max_length=255)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, 
-        related_name='owner', 
-        verbose_name=_('Criador da doação')
-    )
-    #intitute = models.ForeignKey(Institute, on_delete=models.CASCADE, related_name='donates')
-    type_donate = models.ForeignKey(TypeDonate, on_delete=models.CASCADE, related_name='donates')
-    is_active = models.BooleanField(
-        _('Ativo'),
-        default=True,
-        help_text=_(
-            'Desative para que essa doação não seja retornada.'
-        ),
-    )
-    created_at = models.DateTimeField(_('Criação da Doação'), auto_now=True)
-    updated_at = models.DateTimeField(_('Última atualização'), auto_now=True)  
-    
-
-    class Meta:
-        verbose_name = _('Doação')
-        verbose_name_plural = _('Doações')
-
-    def __str__(self):
-        return f'{self.name} {self.type_donate.name}'
-
-    @property
-    def get_short_name(self):
-        return self.name[:30]
 
 class TypeDonate(models.Model):
     FOOD = 'F'
@@ -81,3 +50,37 @@ class TypeDonate(models.Model):
     @property
     def get_short_name(self):
         return self.name[:30]
+
+
+class Donate(models.Model):
+    id = models.UUIDField('ID', default=uuid.uuid4, editable=False, primary_key=True)
+    name = models.CharField(_('Nome'), max_length=255)
+    description = models.CharField(_('Descrição'), max_length=255)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, 
+        related_name='owner', 
+        verbose_name=_('Criador da doação')
+    )
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE, related_name='donates')
+    type_donate = models.ForeignKey(TypeDonate, on_delete=models.CASCADE, related_name='donates')
+    is_active = models.BooleanField(
+        _('Ativo'),
+        default=True,
+        help_text=_(
+            'Desative para que essa doação não seja retornada.'
+        ),
+    )
+    created_at = models.DateTimeField(_('Criação da Doação'), auto_now=True)
+    updated_at = models.DateTimeField(_('Última atualização'), auto_now=True)  
+    
+
+    class Meta:
+        verbose_name = _('Doação')
+        verbose_name_plural = _('Doações')
+
+    def __str__(self):
+        return f'{self.name} {self.type_donate.name}'
+
+    @property
+    def get_short_name(self):
+        return self.name[:30]
+
