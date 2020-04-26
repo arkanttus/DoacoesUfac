@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     footer: {
-        height: '100%',
+        paddingTop: '20px',
         [theme.breakpoints.down('sm')]: {
             paddingTop: '50px',
             '& div': {

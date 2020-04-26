@@ -44,8 +44,15 @@ export default function InitialNavbar(props, children) {
                     Doações
                 </Typography>
                 <div className={classes.separator} />
-                <Button className={classes.button}>COMO DOAR?</Button>
-                <Button className={classes.button}>INSTITUIÇÕES</Button>
+                <Link to={`/`} className={classes.noLinkStyle}>
+                  <Button className={classes.button}>INICIAL</Button>
+                </Link>
+                <Link to={`/comodoar`} className={classes.noLinkStyle}>
+                  <Button className={classes.button}>COMO DOAR?</Button>
+                </Link>
+                <Link to={`/instituicoes`} className={classes.noLinkStyle}>
+                  <Button className={classes.button}>INSTITUIÇÕES</Button>
+                </Link>
             </Toolbar>
         </AppBar>
     );

@@ -2,19 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import ButtonCustom from '../../Component/Button';
-import InitialNavbar from '../../Component/InitialNavbar';
-import InitialFooter from '../../Component/InitialFooter';
+import ButtonCustom from '../Component/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        color: '#FFF',
-        backgroundImage: `url(${"/images/BG1.svg"})`,
-        background: 'no-repeat center center',
-        minHeight: '100vh',
-        backgroundSize: 'cover'
+        height: '100vh'
     },
     buttonFix: {
         '& button': {
@@ -23,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
             }
         }   
     },
-
     textos2: {
         fontSize: 30,
         padding: 15,
@@ -43,13 +36,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Landing() {
+export default function Home() {
     const classes = useStyles();
 
     return(
         <Grid container className={classes.container}>
-                <InitialNavbar/>
-            
             <Grid container>
                 <Grid item xs={12} sm={5} style={{ fontSize: 30, padding: 15, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                     Gostaria de contribuir para a sustentação de alguma instituição?
@@ -96,9 +87,7 @@ export default function Landing() {
                 </Grid>
             </Grid>
 
-            <Grid container>
-                <InitialFooter/>
-            </Grid>
+            
         </Grid>
     );
 }

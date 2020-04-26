@@ -2,21 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import InitialNavbar from '../../Component/InitialNavbar';
-import InitialFooter from '../../Component/InitialFooter';
-import InstitutionCard from '../../Component/InstitutionCard';
+import InitialNavbar from '../Component/InitialNavbar';
+import InitialFooter from '../Component/InitialFooter';
+import InstitutionCard from '../Component/InstitutionCard';
 import Typography from "@material-ui/core/Typography";
 import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        color: '#FFF',
-        backgroundImage: `url(${"/images/BG1.svg"})`,
-        background: 'no-repeat center center',
-        minHeight: '100vh',
-        backgroundSize: 'cover'
-    },
+    
     buttonFix: {
         '& button': {
             [theme.breakpoints.down('sm')]: {
@@ -51,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Landing() {
+export default function Instituicoes() {
     const classes = useStyles();
     const institutions = [{
         name: "Educandário BCA",
@@ -100,10 +94,6 @@ export default function Landing() {
                         <InstitutionCard title={institution.name} photo={institution.img}/>
                     </Grid>
                 ) )}
-            </Grid>
-
-            <Grid container>
-                <InitialFooter/>
             </Grid>
         </Grid>
     );
