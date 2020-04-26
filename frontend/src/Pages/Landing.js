@@ -43,7 +43,7 @@ export default function Landing() {
     const classes = useStyles();
 
     return(
-        <div >
+        <div>
             <InitialNavbar/>
             <main className={classes.main}>
                 <Switch>
@@ -55,6 +55,7 @@ export default function Landing() {
             
                 <InitialFooter/>
             </main>
+            
         </div>
     );
 }

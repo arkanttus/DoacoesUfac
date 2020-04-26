@@ -8,7 +8,13 @@ import Carousel from 'react-material-ui-carousel';
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        height: '100vh'
+        minHeight: '95vh',
+        flexWrap: 'initial',
+        flexDirection: 'column',
+        [theme.breakpoints.down('xs')]: {
+            minHeight: '90vh',
+            paddingTop: '45%'
+        }
     },
     buttonFix: {
         '& a button': {
@@ -38,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
         }
     },
 
+    container2: {
+        padding: '8% 0 5% 0',
+        [theme.breakpoints.down('xs')]: {
+            padding: '20% 0 15% 0'
+        }
+    },
+
     containerCarousel: {
         padding: '0 20%',
         [theme.breakpoints.down('xs')]: {
@@ -52,9 +65,9 @@ export default function Home() {
 
     return(
         <Grid container className={classes.container}>
-           <Grid container style={{ paddingTop: '8%' }}>
+            <Grid container style={{ height: 'fit-content' }}>
                 <Grid item xs={12}>
-                    <Carousel interval={3000}>
+                    <Carousel interval={5000}>
                         <Grid container className={classes.containerCarousel}>
                             <Grid item xs={12} style={{ fontSize: 30, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                                 Gostaria de contribuir para a sustentação de alguma instituição?
@@ -95,7 +108,7 @@ export default function Home() {
                 </Grid>
             </Grid>
 
-            <Grid container>
+            <Grid container className={classes.container2}>
                 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Link to="/login" className={classes.noLinkStyle}>
                         <ButtonCustom variant="green">
@@ -104,7 +117,9 @@ export default function Home() {
                     </Link>
                 </Grid>
             </Grid>
-
+            
+            
+            
             
         </Grid>
     );
