@@ -7,8 +7,7 @@ import {
 
 //PAGES
 import LandingPage from './Pages/Landing';
-import ComoDoar from './Pages/ComoDoar';
-import Instituicoes from './Pages/Instituicoes';
+
 
 const Routes = () => (
   <BrowserRouter>
