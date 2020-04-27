@@ -22,7 +22,14 @@ import { cardTitle } from "../Component/MaterialKit/material-kit-react";
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        height: '100vh'
+        minHeight: '95vh',
+        flexWrap: 'initial',
+        flexDirection: 'column',
+        paddingTop: '13%',
+        [theme.breakpoints.down('xs')]: {
+            minHeight: '90vh',
+            paddingTop: '45%'
+        }
     },
     buttonFix: {
         '& a button': {

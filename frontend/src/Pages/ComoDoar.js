@@ -12,11 +12,14 @@ import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        color: '#FFF',
-        backgroundImage: `url(${"/images/BG1.svg"})`,
-        background: 'no-repeat center center',
-        minHeight: '100vh',
-        backgroundSize: 'cover'
+        minHeight: '95vh',
+        flexWrap: 'initial',
+        flexDirection: 'column',
+        paddingTop: '13%',
+        [theme.breakpoints.down('xs')]: {
+            minHeight: '90vh',
+            paddingTop: '45%'
+        }
     },
     buttonFix: {
         '& button': {
