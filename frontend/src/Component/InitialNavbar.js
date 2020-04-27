@@ -1,10 +1,7 @@
-import React from 'react';
+import React from 'react'
+import NavBar from './MaterialKit/NavBarHeader/Header';
+import { Button, Typography, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     noLinkStyle: {
@@ -16,46 +13,61 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: theme.spacing(2)
-      },
-      separator: {
+    },
+    separator: {
         flexGrow: 1
-      },
-      nav: {
-        backgroundColor: "transparent",
-        boxShadow: "none",
-        marginTop: 15
-      },
-      title: {
+    },
+    title: {
         color: "#FFF",
         marginLeft: "15px"
-      },
-      button: {
+    },
+    button: {
         color: "#FFF"
-      }
+    }
 }));
 
-export default function InitialNavbar(props, children) {
-    const classes = useStyles();
+const MenuRight = (props) => {
+    const classes = useStyles()
+    return (
+        <>
+            
 
-    return(
-        <AppBar className={classes.nav} position='fixed'>
-            <Toolbar>
-                <img src="images/Logo.svg" alt="logo" className="logo" />
-                <Typography variant="h6" className={classes.title}>
+            <Link to={`/`} className={classes.noLinkStyle}>
+                <Button className={classes.button}>INÍCIO</Button>
+            </Link>
+            <Link to={`/comodoar`} className={classes.noLinkStyle}>
+                <Button className={classes.button}>COMO DOAR?</Button>
+            </Link>
+            <Link to={`/instituicoes`} className={classes.noLinkStyle}>
+                <Button className={classes.button}>INSTITUIÇÕES</Button>
+            </Link>
+        </>
+    )
+}
+
+const MenuLeft = (props) => {
+    const classes = useStyles()
+    return (
+        <>
+            <img src="images/Logo.svg" alt="logo" className="logo" />
+            <Typography variant="h6" className={classes.title}>
                     Doações
-                </Typography>
-                <div className={classes.separator} />
-                <Link to={`/`} className={classes.noLinkStyle}>
-                  <Button className={classes.button}>INÍCIO</Button>
-                </Link>
-                <Link to={`/comodoar`} className={classes.noLinkStyle}>
-                  <Button className={classes.button}>COMO DOAR?</Button>
-                </Link>
-                <Link to={`/instituicoes`} className={classes.noLinkStyle}>
-                  <Button className={classes.button}>INSTITUIÇÕES</Button>
-                </Link>
-            </Toolbar>
-        </AppBar>
-    );
+            </Typography>
+        </>
+    )
+}
 
+export default function Home() {
+    return (
+            <NavBar
+                color="transparent"
+                fixed={true}
+                leftLinks={
+                    <MenuLeft />
+                }
+                rightLinks={
+                    <MenuRight />
+                } 
+            />
+    )
 }
