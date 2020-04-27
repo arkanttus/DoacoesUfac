@@ -30,7 +30,7 @@ const headerStyle = {
     justifyContent: "flex-start",
     position: "relative",
     zIndex: "unset",
-    height: '8vh'
+    
   },
   absolute: {
     position: "absolute",
@@ -147,7 +147,7 @@ const headerStyle = {
     textAlign: "left",
     paddingRight: "0px",
     paddingLeft: "0",
-    backgroundColor: '#FFF',
+    backgroundColor: '#444',
     ...transition
   },
 };
