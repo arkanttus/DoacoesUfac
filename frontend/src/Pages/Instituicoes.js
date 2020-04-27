@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     container: {
-        height: '100vh'
+        height: '100%',
+        paddingTop: '10%'
     },
     cardItem: {
         height: 'fit-content'
@@ -51,6 +52,26 @@ const useStyles = makeStyles((theme) => ({
 export default function Instituicoes() {
     const classes = useStyles();
     const institutions = [{
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
+        name: "Educandário BCA",
+        img: "images/HEADER.png"
+    },
+    {
         name: "Educandário BCA",
         img: "images/HEADER.png"
     },

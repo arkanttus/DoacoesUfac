@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
         '&:hover': {
             color: '#e5e5e5'
+        },
+        [theme.breakpoints.down('sm')]: {
+            display: 'block'
         }
     },
     menuButton: {
@@ -23,15 +26,22 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         color: "#FFF"
+    },
+    logo: {
+        display: 'flex',
+        alignItems: 'center'
+    },
+    menuRightCollapse: {
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 20
+        }
     }
 }));
 
 const MenuRight = (props) => {
     const classes = useStyles()
     return (
-        <>
-            
-
+        <div className={classes.menuRightCollapse}>
             <Link to={`/`} className={classes.noLinkStyle}>
                 <Button className={classes.button}>INÍCIO</Button>
             </Link>
@@ -41,19 +51,19 @@ const MenuRight = (props) => {
             <Link to={`/instituicoes`} className={classes.noLinkStyle}>
                 <Button className={classes.button}>INSTITUIÇÕES</Button>
             </Link>
-        </>
+        </div>
     )
 }
 
 const MenuLeft = (props) => {
     const classes = useStyles()
     return (
-        <>
+        <div className={classes.logo}>
             <img src="images/Logo.svg" alt="logo" className="logo" />
             <Typography variant="h6" className={classes.title}>
                     Doações
             </Typography>
-        </>
+        </div>
     )
 }
 
@@ -68,6 +78,12 @@ export default function Home() {
                 rightLinks={
                     <MenuRight />
                 } 
+                changeColorOnScroll={
+                    {
+                        height: 10,
+                        color: 'dark'
+                    }
+                }
             />
     )
 }

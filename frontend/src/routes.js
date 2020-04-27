@@ -12,7 +12,7 @@ import DashboardPage from './Pages/Dashboard/Index';
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/" exact component={LandingPage} />
+      <Route path="/" component={LandingPage} />
       <Route path="/dashboard" component={DashboardPage} />
     </Switch>
   </BrowserRouter>
