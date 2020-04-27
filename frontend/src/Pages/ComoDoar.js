@@ -49,9 +49,6 @@ export default function ComoDoar() {
 
     return(
         <Grid container className={classes.container}>
-             <Grid container>
-                <InitialNavbar/>
-             </Grid>
 
             <Grid container justify="center">
                 <Grid item container  justify="center" xs={12} alignItems="center">
