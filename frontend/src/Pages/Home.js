@@ -2,20 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import ButtonCustom from '../../Component/Button';
-import InitialNavbar from '../../Component/InitialNavbar';
-import InitialFooter from '../../Component/InitialFooter';
+import ButtonCustom from '../Component/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Carousel from 'react-material-ui-carousel';
 
-
 const useStyles = makeStyles((theme) => ({
     container: {
-        color: '#FFF',
-        backgroundImage: `url(${"/images/BG1.svg"})`,
-        background: 'no-repeat center center',
-        minHeight: '100vh',
-        backgroundSize: 'cover'
+        minHeight: '95vh',
+        flexWrap: 'initial',
+        flexDirection: 'column',
+        [theme.breakpoints.down('xs')]: {
+            minHeight: '90vh',
+            paddingTop: '45%'
+        }
     },
     buttonFix: {
         '& a button': {
@@ -27,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
             }
         }   
     },
-
     textos2: {
         fontSize: 30,
         padding: 15,
@@ -46,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
         }
     },
 
+    container2: {
+        padding: '8% 0 5% 0',
+        [theme.breakpoints.down('xs')]: {
+            padding: '20% 0 15% 0'
+        }
+    },
+
     containerCarousel: {
         padding: '0 20%',
         [theme.breakpoints.down('xs')]: {
@@ -55,14 +60,12 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Landing() {
+export default function Home() {
     const classes = useStyles();
 
     return(
         <Grid container className={classes.container}>
-            <InitialNavbar/>
-
-            <Grid container style={{ paddingTop: '8%' }}>
+            <Grid container style={{ height: 'fit-content' }}>
                 <Grid item xs={12}>
                     <Carousel interval={5000}>
                         <Grid container className={classes.containerCarousel}>
@@ -105,7 +108,7 @@ export default function Landing() {
                 </Grid>
             </Grid>
 
-            <Grid container>
+            <Grid container className={classes.container2}>
                 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Link to="/login" className={classes.noLinkStyle}>
                         <ButtonCustom variant="green">
@@ -114,10 +117,10 @@ export default function Landing() {
                     </Link>
                 </Grid>
             </Grid>
-
-            <Grid container>
-                <InitialFooter/>
-            </Grid>
+            
+            
+            
+            
         </Grid>
     );
 }

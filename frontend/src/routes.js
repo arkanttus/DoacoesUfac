@@ -7,15 +7,12 @@ import {
 
 //PAGES
 import LandingPage from './Pages/Landing';
-import ComoDoar from './Pages/ComoDoar';
-import Instituicoes from './Pages/Instituicoes';
+
 
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={LandingPage} />
-      <Route path="/como-doar" component={ComoDoar} />
-      <Route path="/instituicoes" component={Instituicoes} />
+      <Route path="/" component={LandingPage} />
     </Switch>
   </BrowserRouter>
 );

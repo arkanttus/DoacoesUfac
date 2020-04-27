@@ -2,21 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import InitialNavbar from '../../Component/InitialNavbar';
-import InitialFooter from '../../Component/InitialFooter';
-import InstitutionCard from '../../Component/InstitutionCard';
+import InitialNavbar from '../Component/InitialNavbar';
+import InitialFooter from '../Component/InitialFooter';
+import InstitutionCard from '../Component/InstitutionCard';
 import Typography from "@material-ui/core/Typography";
 import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        color: '#FFF',
-        backgroundImage: `url(${"/images/BG1.svg"})`,
-        background: 'no-repeat center center',
-        minHeight: '100vh',
-        backgroundSize: 'cover'
-    },
+    
     buttonFix: {
         '& button': {
             [theme.breakpoints.down('sm')]: {
@@ -48,10 +42,16 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             margin: 10
         }
+    },
+    container: {
+        height: '100vh'
+    },
+    cardItem: {
+        height: 'fit-content'
     }
 }));
 
-export default function Landing() {
+export default function Instituicoes() {
     const classes = useStyles();
     const institutions = [{
         name: "Educandário BCA",
@@ -80,12 +80,8 @@ export default function Landing() {
 
     return(
         <Grid container className={classes.container}>
-            <Grid container>
-                <InitialNavbar/>
-            </Grid>
-
             <Grid container justify="center">
-                <Grid item container  xs={12} alignItems="center">
+                <Grid item container  xs={12} alignItems="center" justify="center">
                     <Typography variant="h4" align="center">
                         <Box fontWeight="fontWeightMedium" m={1}>
                             INSTITUIÇÕES
@@ -96,14 +92,10 @@ export default function Landing() {
             
             <Grid container spacing={4} className={classes.cardContainer}>
                 { institutions.map( institution => (
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={3} className={classes.cardItem}>
                         <InstitutionCard title={institution.name} photo={institution.img}/>
                     </Grid>
                 ) )}
-            </Grid>
-
-            <Grid container>
-                <InitialFooter/>
             </Grid>
         </Grid>
     );

@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
     noLinkStyle: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         color: "#247BA0"
+    },
+    content: {
+        padding: 0
     }
 }));
 
@@ -25,9 +29,11 @@ export default function InstitutionCard(props) {
         <Card>
             <CardActionArea>
                 <CardMedia component="img" height="190" image={props.photo}/>
-                <CardContent>
+                <CardContent className={classes.content}>
                     <Typography gutterBottom variant="h5" component="h2" align="center" className={classes.title}>
-                        {props.title}
+                        <Box fontWeight="fontWeightBold" m={1}>
+                            {props.title}
+                        </Box>
                     </Typography>
 
                     { props.text ? (

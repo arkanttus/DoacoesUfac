@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
       nav: {
         backgroundColor: "transparent",
         boxShadow: "none",
-        position: "initial"
+        marginTop: 15
       },
       title: {
         color: "#FFF",
-        marginLeft: "5px"
+        marginLeft: "15px"
       },
       button: {
         color: "#FFF"
@@ -38,15 +38,22 @@ export default function InitialNavbar(props, children) {
     const classes = useStyles();
 
     return(
-        <AppBar className={classes.nav}>
+        <AppBar className={classes.nav} position='fixed'>
             <Toolbar>
                 <img src="images/Logo.svg" alt="logo" className="logo" />
                 <Typography variant="h6" className={classes.title}>
                     Doações
                 </Typography>
                 <div className={classes.separator} />
-                <Button className={classes.button}>COMO DOAR?</Button>
-                <Button className={classes.button}>INSTITUIÇÕES</Button>
+                <Link to={`/`} className={classes.noLinkStyle}>
+                  <Button className={classes.button}>INÍCIO</Button>
+                </Link>
+                <Link to={`/comodoar`} className={classes.noLinkStyle}>
+                  <Button className={classes.button}>COMO DOAR?</Button>
+                </Link>
+                <Link to={`/instituicoes`} className={classes.noLinkStyle}>
+                  <Button className={classes.button}>INSTITUIÇÕES</Button>
+                </Link>
             </Toolbar>
         </AppBar>
     );
