@@ -1,11 +1,8 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import ButtonCustom from '../Component/Button';
 import InitialNavbar from '../Component/InitialNavbar';
 import InitialFooter from '../Component/InitialFooter';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import Instituicoes from './Instituicoes'
 import ComoDoar from './ComoDoar'
 import Home from './Home'

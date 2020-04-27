@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import InitialNavbar from '../Component/InitialNavbar';
-import InitialFooter from '../Component/InitialFooter';
 import ButtonCustom from '../Component/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Typography from "@material-ui/core/Typography";
