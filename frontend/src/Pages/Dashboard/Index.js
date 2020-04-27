@@ -12,18 +12,22 @@ import Home from './Home';
 const useStyles = makeStyles((theme) => ({
     main: {
         marginTop: '8vh'
+    },
+    leftSide: {
+        display: 'flex',
+        alignItems: 'center'
     }
 }));
 
 const MenuLeft = (props) => {
     const classes = useStyles()
     return (
-        <>
+        <div className={classes.leftSide}>
             <img src="images/Logo.svg" alt="logo" className="logo" />
             <Typography variant="h6" className={classes.title}>
                     Doações
             </Typography>
-        </>
+        </div>
     )
 }
 
