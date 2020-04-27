@@ -12,8 +12,8 @@ import DashboardPage from './Pages/Dashboard/Index';
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/" component={LandingPage} />
       <Route path="/dashboard" component={DashboardPage} />
+      <Route path="/" component={LandingPage} />
     </Switch>
   </BrowserRouter>
 );

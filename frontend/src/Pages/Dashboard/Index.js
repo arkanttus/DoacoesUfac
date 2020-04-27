@@ -9,6 +9,10 @@ import PersonIcon from '@material-ui/icons/Person';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
+import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import Dropdown from '@material-ui/core/Menu';
+
 //PAGES
 import Home from './Home';
 
@@ -59,12 +63,48 @@ const MenuLeft = (props) => {
 
 const Menu = (props) => {
     const classes = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+
     return (
         <>
             <Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon />Instituições</Button>
             <Button className={classes.NavBarButtons}><FavoriteBorderIcon />Minhas Doações</Button>
-            <Button className={classes.NavBarButtons}><PersonIcon /></Button>
-            
+            <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <PersonIcon />
+              </IconButton>
+              <Dropdown
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
+                <MenuItem onClick={handleClose} style={{ color: 'red' }}>Sair</MenuItem>
+              </Dropdown>
         </>
     )
 }
@@ -72,16 +112,7 @@ const Menu = (props) => {
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    
 
     return(
         <div>
