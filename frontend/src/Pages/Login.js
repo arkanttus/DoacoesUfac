@@ -15,6 +15,11 @@ import Container from '@material-ui/core/Container';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 
+import Card from "../Component/MaterialKit/Card/Card";
+import CardBody from "../Component/MaterialKit/Card/CardBody";
+import CardHeader from "../Component/MaterialKit/Card/CardHeader";
+import { cardTitle } from "../Component/MaterialKit/material-kit-react";
+
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh'
@@ -76,6 +81,14 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
         color: "#9C27B0",
       },
+      gridCard: {
+          display: 'flex',
+          justifyContent: 'center',
+          height: 'fit-content'
+      },
+      containerCardBody: {
+          padding: 0
+      }
 
 }));
 
@@ -84,31 +97,35 @@ export default function Login() {
 
     return(
         <Grid container className={classes.container}>
-            <Container component="main" maxWidth="sm">
+            <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
                 <CssBaseline />
-                <div className={classes.paper}>
-                    <form className={classes.form} noValidate>
-                        <Grid container spacing={2}>
-                            <Grid container spacing={1} alignItems="flex-end">
-                                <Grid item>
-                                    <EmailIcon style={{  color: "#555" }} />
+                <Grid item xs={12} className={classes.gridCard}>
+                    <Card style={{width: "35rem"}}>
+                        <CardHeader style={{ textAlign: 'center', fontSize: 20, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>LOGIN</CardHeader>
+                        <CardBody>
+                            <Grid container>
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <EmailIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <TextField variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email"/>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={11}>
-                                    <TextField variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email"/>
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <LockIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <TextField variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password"/>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid container spacing={1} alignItems="flex-end">
-                                <Grid item>
-                                    <LockIcon style={{  color: "#555" }} />
-                                </Grid>
-                                <Grid item xs={11}>
-                                    <TextField variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password"/>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Button type="submit" fullWidth className={classes.submit}>ENTRAR</Button>
-                    </form>
-                </div>
+                            <Button style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">ENTRAR</Button>
+                        </CardBody>
+                    </Card>
+                </Grid>
+                
             </Container>
         </Grid>
     );

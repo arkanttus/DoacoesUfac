@@ -34,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#FFF',
         backgroundImage: `url(${"/images/BG1.svg"})`,
         background: 'no-repeat center center',
-        backgroundSize: 'cover',
-        paddingTop: 50
+        backgroundSize: 'cover'
     }
 }));
 
