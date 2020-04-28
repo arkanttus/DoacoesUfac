@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     textos2: {
         fontSize: 30,
-        padding: 15,
+        padding: '15px',
         paddingTop: 35,
         textAlign: 'center',
         display: 'flex',
@@ -57,6 +57,12 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             padding: 0
         }
+    },
+    carouselText: {
+        padding: '15px 20%',
+        [theme.breakpoints.down('sm')]: {
+            padding: 0
+        }
     }
 
 }));
@@ -70,10 +76,12 @@ export default function Home() {
                 <Grid item xs={12}>
                     <Carousel interval={5000}>
                         <Grid container className={classes.containerCarousel}>
-                            <Grid item xs={12} style={{ fontSize: 30, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                Gostaria de contribuir para a sustentação de alguma instituição?
-                                Diversas instituições carecem de recursos básicos e que você pode doar.
-                                <Grid item xs={12} style={{ flexBasis: 'auto', marginTop: 15, padding: 0 }}>
+                            <Grid item  xs={12} style={{ fontSize: 30, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                <label className={classes.carouselText}>
+                                    Gostaria de contribuir para a sustentação de alguma instituição?
+                                    Diversas instituições carecem de recursos básicos e que você pode doar.
+                                </label>
+                                <Grid item xl={5} xs={12} style={{ flexBasis: 'auto', marginTop: 15, padding: 0 }}>
                                     <Grid container>
                                         <Grid item xs={6} className={classes.buttonFix} style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 10 }}>
                                             <Link to="/instituicoes" className={classes.noLinkStyle} style={{ width: '100%' }}>
@@ -96,7 +104,7 @@ export default function Home() {
 
                         <Grid container className={classes.containerCarousel}>
                             <Grid item xs={12} className={classes.textos2}>
-                                <label>Você é responsável por alguma instituição e está necessitando de recursos? Junte-se a nós!</label>
+                                <label className={classes.carouselText}>Você é responsável por alguma instituição e está necessitando de recursos? Junte-se a nós!</label>
                                 <Link to="/instituicao" className={classes.noLinkStyle}>
                                     <ButtonCustom variant="blueDark" style={{ margin: '0 auto', marginTop: 15 }}>
                                         CADASTRAR INSTITUIÇÃO
