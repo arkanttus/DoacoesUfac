@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Dropdown from '@material-ui/core/Menu';
 
+import Logo from '../assets/Logo.svg';
+
 import {
     container,
     defaultFont,
@@ -205,7 +207,7 @@ const MenuLeft = (props) => {
     const classes = useStyles();
     return (
         <div className={classes.leftSide}>
-            <img src="images/Logo.svg" alt="logo" className="logo" />
+            <img src={Logo} alt="logo" className="logo" />
             <Typography variant="h6" className={classes.title}>
                     Doações
             </Typography>

@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     carouselImage: {
         maxWidth: '80%'
     },
-
     cardContainer: {
         marginLeft: '10%',
         marginRight: '10%',
@@ -33,6 +32,23 @@ const useStyles = makeStyles((theme) => ({
             margin: 10
         }
     },
+    titulo1: {
+        color: 'red',
+        textAlign: 'center',
+        padding: '4% 0 2% 0',
+        fontSize: '2rem',
+        [theme.breakpoints.down('xs')]: {
+            padding: '8% 0 2% 0',
+        }
+    },
+    titulo2: {
+        textAlign: 'center',
+        padding: '10vh 0vh 5vh 0vh',
+        fontSize: '2rem',
+        [theme.breakpoints.down('xs')]: {
+            padding: '6vh 0vh 1vh 0vh'
+        }
+    }
 
 }));
 
@@ -87,7 +103,7 @@ export default function Home() {
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
 
-                <Grid item xs={12} style={{ color: 'red', textAlign: 'center', padding: '4% 0 2% 0', fontSize: '2rem' }}>
+                <Grid item xs={12} className={classes.titulo1}>
                     Instituições sem doações <WarningIcon />
                 </Grid>
         
@@ -110,7 +126,7 @@ export default function Home() {
                 </Grid>
 
                 <Grid container>
-                    <Grid item xs={12} style={{ textAlign: 'center', padding: '10vh 0vh 5vh 0vh', fontSize: '2rem' }}>
+                    <Grid item xs={12} className={classes.titulo2}>
                         Todas as Instituições
                     </Grid>
                 </Grid>

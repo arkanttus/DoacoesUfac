@@ -11,8 +11,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Dropdown from '@material-ui/core/Menu';
 
+//PAGES
 import Home from './Home';
 import NavBarDashboard from '../../Component/NavBarDashboard';
+import DonationList from './DonationList';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -117,6 +119,7 @@ export default function Dashboard() {
             <NavBarDashboard />
             <main className={classes.main}>
                 <Switch>
+                    <Route path="/dashboard/donationlist" component={DonationList} />
                     <Route path="/dashboard" component={Home} />
                 </Switch>
                 <Footer/>
