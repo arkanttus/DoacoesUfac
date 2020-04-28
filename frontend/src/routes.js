@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 
 //PAGES
-import LandingPage from './Pages/Landing';
-import DashboardPage from './Pages/Dashboard/Index';
+import LandingPage from './Pages/Public/Landing';
+import DashboardPage from './Pages/Private/Index';
 
 const Routes = () => (
   <BrowserRouter>

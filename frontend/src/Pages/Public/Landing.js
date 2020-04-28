@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import InitialNavbar from '../Component/InitialNavbar';
-import InitialFooter from '../Component/InitialFooter';
+import InitialNavbar from '../../Component/InitialNavbar';
+import InitialFooter from '../../Component/InitialFooter';
 import Institutions from './Institutions'
 import HowToDonate from './HowToDonate'
 import Home from './Home'
