@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import NavBar from '../../Component/MaterialKit/NavBarHeader/Header';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import InitialFooter from '../../Component/InitialFooter';
@@ -8,13 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Dropdown from '@material-ui/core/Menu';
 
-//PAGES
 import Home from './Home';
+import NavBarDashboard from '../../Component/NavBarDashboard';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -116,15 +114,7 @@ export default function Dashboard() {
 
     return(
         <div>
-            <NavBar
-            color="info"
-            fixed={true}
-            leftLinks={
-                <MenuLeft />
-            }
-            rightLinks={
-                <Menu />
-            } />
+            <NavBarDashboard />
             <main className={classes.main}>
                 <Switch>
                     <Route path="/dashboard" component={Home} />
