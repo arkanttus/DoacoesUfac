@@ -199,7 +199,7 @@ const MenuRight = (props) => {
             <Link to={`/`} className={classes.noLinkStyle}>
                 <Button className={classes.button}>INÍCIO</Button>
             </Link>
-            <Link to={`/comodoar`} className={classes.noLinkStyle}>
+            <Link to={`/como-doar`} className={classes.noLinkStyle}>
                 <Button className={classes.button}>COMO DOAR?</Button>
             </Link>
             <Link to={`/instituicoes`} className={classes.noLinkStyle}>

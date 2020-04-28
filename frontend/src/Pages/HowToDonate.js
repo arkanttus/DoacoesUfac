@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ComoDoar() {
+export default function HowToDonate() {
     const classes = useStyles();
 
     return(

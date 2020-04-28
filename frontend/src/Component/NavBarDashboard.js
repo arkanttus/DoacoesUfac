@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import NavBar from './MaterialKit/NavBarHeader/Header';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
@@ -38,14 +38,14 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         '& img': {
-            width: '7.5vh',
+            /*width: '7.5vh',*/
             marginRight: 5
         },
         [theme.breakpoints.down('sm')]: {
-            backgroundColor: '#247BA0',
             color: '#FFF',
-            /*margin: '-20px -10px 20px -10px',*/
-            padding: 3,
+            /*backgroundColor: '#247BA0',
+            margin: '-20px -10px 20px -10px',
+            padding: 3,*/
             display: 'flex',
             justifyContent: 'center'
         }
@@ -217,14 +217,18 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             display: 'none'
         }
-    }
+    },
+    noLinkStyle: {
+        textDecoration: 'none',
+        color: 'white',
+    },
 }));
 
 const MenuLeft = (props) => {
     const classes = useStyles();
     return (
         <div className={classes.leftSide}>
-            <img src={Logo} alt="logo" className="logo" />
+            <img src={Logo} alt="logo" className={classes.logo} />
             <Typography variant="h6" className={classes.title}>
                     Doações
             </Typography>
@@ -247,8 +251,8 @@ const Menu = (props) => {
 
     return (
         <>
-            <Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Instituições</Button>
-            <Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Minhas Doações</Button>
+            <Link to="/dashboard" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Instituições</Button></Link>
+            <Link to="/dashboard/minhas-doacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Minhas Doações</Button></Link>
             <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -277,8 +281,8 @@ const Menu = (props) => {
                 <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
                 <MenuItem onClick={handleClose} style={{ color: 'red' }}>Sair</MenuItem>
               </Dropdown>
-            <Button className={classes.NavBarButtons, classes.navHiddenItem}><PersonIcon />Minha Conta</Button>
-            <Button className={classes.NavBarButtons, classes.navHiddenItem} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button>
+            <Link to="/minha-conta" className={classes.noLinkStyle}><Button className={classes.NavBarButtons, classes.navHiddenItem}><PersonIcon />Minha Conta</Button></Link>
+            <Link to="/sair" className={classes.noLinkStyle}><Button className={classes.NavBarButtons, classes.navHiddenItem} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button></Link>
         </>
     )
 }

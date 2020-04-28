@@ -13,8 +13,10 @@ import Dropdown from '@material-ui/core/Menu';
 
 //PAGES
 import Home from './Home';
+import Donated from './Donated';
 import NavBarDashboard from '../../Component/NavBarDashboard';
 import DonationList from './DonationList';
+import MyDonations from './MyDonations';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -55,7 +57,7 @@ const MenuLeft = (props) => {
         <div className={classes.leftSide}>
             <img src="images/Logo.svg" alt="logo" className="logo" />
             <Typography variant="h6" className={classes.title}>
-                    Doações
+                Doações
             </Typography>
         </div>
     )
@@ -119,7 +121,9 @@ export default function Dashboard() {
             <NavBarDashboard />
             <main className={classes.main}>
                 <Switch>
-                    <Route path="/dashboard/donationlist" component={DonationList} />
+                    <Route exact path="/dashboard/doacoes" component={DonationList} />
+                    <Route exact path="/dashboard/minhas-doacoes" component={MyDonations} />
+                    <Route exact path="/dashboard/doado" component={Donated} />
                     <Route path="/dashboard" component={Home} />
                 </Switch>
                 <Footer/>

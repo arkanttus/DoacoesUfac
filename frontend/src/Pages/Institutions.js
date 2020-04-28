@@ -49,52 +49,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Instituicoes() {
+export default function Institutions() {
     const classes = useStyles();
-    const institutions = [{
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    }]
+    let institutions = []
+    for(let i = 0; i < 10; i++) {
+        institutions.push({
+            name: "Educandário BCA",
+            img: "images/HEADER.png"
+        })
+    }
 
     return(
         <Grid container className={classes.container}>
