@@ -1,15 +1,14 @@
-import uuid
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
 
 from apps.base.models import Institution
+from apps.base.models import BaseModel
 
 User = get_user_model()
 
-class TypeDonate(models.Model):
+
+class TypeDonate(BaseModel):
     FOOD = 'F'
     HYGIENE = 'H'
     MONEY = 'M'
@@ -26,19 +25,11 @@ class TypeDonate(models.Model):
         (OTHER, 'Outros')
     )
 
-    id = models.UUIDField('ID', default=uuid.uuid4, editable=False, primary_key=True)
     name = models.CharField(_('Nome'), max_length=255)
     type_donate = models.CharField(_('Tipo de Doação'), max_length=1, choices=TYPE_DONATE_CHOICES, null=True)
     is_active = models.BooleanField(
-        _('Ativo'),
-        default=True,
-        help_text=_(
-            'Desative para que esse tipo de doação não seja retornado.'
-        ),
+        _('Ativo'), default=True, help_text=_('Desative para que esse tipo de doação não seja retornado.')
     )
-    created_at = models.DateTimeField(_('Criação do tipo de doação'), auto_now=True)
-    updated_at = models.DateTimeField(_('Última atualização'), auto_now=True)  
-    
 
     class Meta:
         verbose_name = _('Tipo de Doação')
@@ -52,26 +43,17 @@ class TypeDonate(models.Model):
         return self.name[:30]
 
 
-class Donate(models.Model):
-    id = models.UUIDField('ID', default=uuid.uuid4, editable=False, primary_key=True)
+class Donate(BaseModel):
     name = models.CharField(_('Nome'), max_length=255)
     description = models.CharField(_('Descrição'), max_length=255)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, 
-        related_name='owner', 
-        verbose_name=_('Criador da doação')
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='owner', verbose_name=_('Criador da doação')
     )
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, related_name='donates')
     type_donate = models.ForeignKey(TypeDonate, on_delete=models.CASCADE, related_name='donates')
     is_active = models.BooleanField(
-        _('Ativo'),
-        default=True,
-        help_text=_(
-            'Desative para que essa doação não seja retornada.'
-        ),
+        _('Ativo'), default=True, help_text=_('Desative para que essa doação não seja retornada.'),
     )
-    created_at = models.DateTimeField(_('Criação da Doação'), auto_now=True)
-    updated_at = models.DateTimeField(_('Última atualização'), auto_now=True)  
-    
 
     class Meta:
         verbose_name = _('Doação')

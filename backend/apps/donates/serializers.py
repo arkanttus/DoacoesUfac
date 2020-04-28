@@ -7,7 +7,7 @@ from apps.base.api.serializers import InstitutionReadSerializer
 class TypeDonateSerializer(serializers.ModelSerializer):
     class Meta:
         model = TypeDonate
-        fields = ('id','name')
+        fields = ('id', 'name')
 
 
 class DonateSerializer(serializers.ModelSerializer):

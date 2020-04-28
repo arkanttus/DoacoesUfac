@@ -37,14 +37,23 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
 class InstitutionCreateSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, max_length=200)
     owner = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
-    typeInstitution = serializers.PrimaryKeyRelatedField(queryset=TypeInstitution.objects.all(), required=True)
-    image = serializers.ImageField(required=True, use_url=True)
+    typeInstitution = serializers.PrimaryKeyRelatedField(
+        queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
+    )
+    otherType = serializers.ReadOnlyField(source='other_type')
+    image = serializers.ImageField()
+    description = serializers.CharField(required=False, max_length=500)
+    street = serializers.CharField(required=True, max_length=200)
+    neighborhood = serializers.CharField(required=True, max_length=155)
+    number = serializers.IntegerField(required=False)
+    latitude = serializers.CharField(required=False, max_length=20)
+    longitude = serializers.CharField(required=False, max_length=20)
 
     class Meta:
         model = Institution
         fields = (
-            'name', 'owner', 'other_type', 'description', 'image', 'set_type_donate',
-            'street', 'neighborhood', 'number', 'latitude', 'longitude'
+            'name', 'owner', 'typeInstitution', 'image', 'description', 'street', 'neighborhood',
+            'number', 'latitude', 'longitude'
         )
 
 
