@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import InitialNavbar from '../Component/InitialNavbar';
-import InitialFooter from '../Component/InitialFooter';
-import Instituicoes from './Instituicoes'
-import ComoDoar from './ComoDoar'
+import InitialNavbar from '../../Component/InitialNavbar';
+import InitialFooter from '../../Component/InitialFooter';
+import Institutions from './Institutions'
+import HowToDonate from './HowToDonate'
 import Home from './Home'
 import Login from './Login'
 
@@ -43,8 +43,8 @@ export default function Landing() {
             <InitialNavbar/>
             <main className={classes.main}>
                 <Switch>
-                    <Route exact path="/instituicoes" component={Instituicoes} />
-                    <Route exact path="/comodoar" component={ComoDoar} />
+                    <Route exact path="/instituicoes" component={Institutions} />
+                    <Route exact path="/como-doar" component={HowToDonate} />
                     <Route exact path="/login" component={Login} />
                     <Route  path="/" component={Home} />
                 </Switch>

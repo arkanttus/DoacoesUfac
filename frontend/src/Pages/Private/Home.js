@@ -18,14 +18,13 @@ const useStyles = makeStyles((theme) => ({
     },
     containerCarousel: {
         padding: '0 20%',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             padding: 0
         }
     },
     carouselImage: {
         maxWidth: '80%'
     },
-
     cardContainer: {
         marginLeft: '10%',
         marginRight: '10%',
@@ -33,84 +32,68 @@ const useStyles = makeStyles((theme) => ({
             margin: 10
         }
     },
+    titulo1: {
+        textAlign: 'center',
+        color: 'red',
+        fontSize: '2rem',
+        padding: '5vh 0vh 3vh 0vh'
+    },
+    todasTitle: {
+        textAlign: 'center', 
+        padding: '10vh 0vh 5vh 0vh', 
+        fontSize: '2rem',
+        [theme.breakpoints.down('sm')]: {
+            padding: '5vh 0vh'
+        }
+    }
 
 }));
 
 export default function Home() {
     const classes = useStyles();
-    const institutions = [{
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
+    let institutions = []
+
+    for(let i = 0; i < 8; i++) {
+        institutions.push({
+            name: "Educandário BCA",
+            img: "/images/HEADER.png"
+        })
+    }
+
+    const withoutDonations = [{
+        name: "Orfanato Fulano de Tal",
+        img: "/images/Example1.svg"
     },
     {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
+        name: "Orfanato Fulano de Tal",
+        img: "/images/Example1.svg"
     }]
 
-    return(
+    return (
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
 
-                <Grid item xs={12} style={{ color: 'red', textAlign: 'center', padding: '4% 0 2% 0', fontSize: '2rem' }}>
+                <Grid item xs={12} className={classes.titulo1}>
                     Instituições sem doações <WarningIcon />
                 </Grid>
         
-                {/*CARROUSEL*/}
+                {/* CARROUSEL*/}
                 <Grid container>
                     <Grid item xs={12}>
                         <Carousel interval={5000}>
-                            <Grid container className={classes.containerCarousel}>
-                                <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <img src="images/Example1.svg" className={classes.carouselImage} />
+                            { withoutDonations.map( institution => (
+                                <Grid container className={classes.containerCarousel}>
+                                    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <img src={institution.img} className={classes.carouselImage} alt="logo"/>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                            <Grid container className={classes.containerCarousel}>
-                                <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <img src="images/Example1.svg" className={classes.carouselImage} />
-                                </Grid>
-                            </Grid>
+                            ) )}
                         </Carousel>
                     </Grid>
                 </Grid>
 
                 <Grid container>
-                    <Grid item xs={12} style={{ textAlign: 'center', padding: '10vh 0vh 5vh 0vh', fontSize: '2rem' }}>
+                    <Grid item xs={12} className={classes.todasTitle}>
                         Todas as Instituições
                     </Grid>
                 </Grid>

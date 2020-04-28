@@ -9,9 +9,9 @@ import Container from '@material-ui/core/Container';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 
-import Card from "../Component/MaterialKit/Card/Card";
-import CardBody from "../Component/MaterialKit/Card/CardBody";
-import CardHeader from "../Component/MaterialKit/Card/CardHeader";
+import Card from "../../Component/MaterialKit/Card/Card";
+import CardBody from "../../Component/MaterialKit/Card/CardBody";
+import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
 
 
 const useStyles = makeStyles((theme) => ({
