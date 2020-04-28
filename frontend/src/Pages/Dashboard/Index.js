@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Dropdown from '@material-ui/core/Menu';
 
 import Home from './Home';
+import Doado from './Doado';
 import NavBarDashboard from '../../Component/NavBarDashboard';
 
 const useStyles = makeStyles((theme) => ({
@@ -118,6 +119,7 @@ export default function Dashboard() {
             <main className={classes.main}>
                 <Switch>
                     <Route path="/dashboard" component={Home} />
+                    <Route exact path="/doado" component={Doado} />
                 </Switch>
                 <Footer/>
             </main>
