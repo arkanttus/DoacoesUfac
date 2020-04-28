@@ -42,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
             marginRight: 5
         },
         [theme.breakpoints.down('sm')]: {
-            backgroundColor: '#247BA0',
             color: '#FFF',
-            /*margin: '-20px -10px 20px -10px',*/
-            padding: 3,
+            /*backgroundColor: '#247BA0',
+            margin: '-20px -10px 20px -10px',
+            padding: 3,*/
             display: 'flex',
             justifyContent: 'center'
         }
