@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Doado() {
+export default function Donated() {
     const classes = useStyles();
 
     const pos = {
