@@ -25,13 +25,18 @@ const useStyles = makeStyles((theme) => ({
     carouselImage: {
         maxWidth: '80%'
     },
-
     cardContainer: {
         marginLeft: '10%',
         marginRight: '10%',
         [theme.breakpoints.down('sm')]: {
             margin: 10
         }
+    },
+    titulo1: {
+        textAlign: 'center',
+        color: 'red',
+        fontSize: '2rem',
+        padding: '5vh 0vh 3vh 0vh'
     },
     todasTitle: {
         textAlign: 'center', 
@@ -95,7 +100,7 @@ export default function Home() {
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
 
-                <Grid item xs={12} style={{ color: 'red', textAlign: 'center', padding: '4% 0 2% 0', fontSize: '2rem' }}>
+                <Grid item xs={12} className={classes.titulo1}>
                     Instituições sem doações <WarningIcon />
                 </Grid>
         
