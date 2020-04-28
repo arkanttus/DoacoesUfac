@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
     containerCarousel: {
         padding: '0 20%',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             padding: 0
         }
     },
@@ -33,20 +33,17 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     titulo1: {
+        textAlign: 'center',
         color: 'red',
-        textAlign: 'center',
-        padding: '4% 0 2% 0',
         fontSize: '2rem',
-        [theme.breakpoints.down('xs')]: {
-            padding: '8% 0 2% 0',
-        }
+        padding: '5vh 0vh 3vh 0vh'
     },
-    titulo2: {
-        textAlign: 'center',
-        padding: '10vh 0vh 5vh 0vh',
+    todasTitle: {
+        textAlign: 'center', 
+        padding: '10vh 0vh 5vh 0vh', 
         fontSize: '2rem',
-        [theme.breakpoints.down('xs')]: {
-            padding: '6vh 0vh 1vh 0vh'
+        [theme.breakpoints.down('sm')]: {
+            padding: '5vh 0vh'
         }
     }
 
@@ -126,7 +123,7 @@ export default function Home() {
                 </Grid>
 
                 <Grid container>
-                    <Grid item xs={12} className={classes.titulo2}>
+                    <Grid item xs={12} className={classes.todasTitle}>
                         Todas as Instituições
                     </Grid>
                 </Grid>

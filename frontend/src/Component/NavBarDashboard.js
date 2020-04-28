@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             backgroundColor: '#247BA0',
             color: '#FFF',
-            margin: '-20px -10px 20px -10px',
+            /*margin: '-20px -10px 20px -10px',*/
             padding: 3,
             display: 'flex',
             justifyContent: 'center'
@@ -106,28 +107,32 @@ const useStyles = makeStyles((theme) => ({
     title: {
         ...defaultFont,
         lineHeight: "30px",
-        fontSize: "18px",
+        fontSize: "32px",
         borderRadius: "3px",
         textTransform: "none",
         color: "inherit",
-        padding: "8px 16px",
+        padding: "8px 10px 8px 0px",
         letterSpacing: "unset",
         "&:hover,&:focus": {
             color: "inherit",
             background: "transparent"
         }
     },
+    logo: {
+        width: '50px',
+        height: '50px'
+    },
     appResponsive: {
         margin: "20px 10px"
     },
     primary: {
-        backgroundColor: primaryColor,
+        backgroundColor: "primaryColor",
         color: "#FFFFFF",
         boxShadow:
             "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(156, 39, 176, 0.46)"
     },
     info: {
-        backgroundColor: infoColor,
+        backgroundColor: "#247BA0",
         color: "#FFFFFF",
         boxShadow:
             "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(0, 188, 212, 0.46)"
@@ -201,6 +206,18 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#FFF',
         ...transition
     },
+    navHiddenItem: {
+        display: 'none',
+        [theme.breakpoints.down('sm')]: {
+            display: 'flex'
+        }
+    },
+    navHiddenInvert: {
+        display: 'inline-flex',
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }
+    }
 }));
 
 const MenuLeft = (props) => {
@@ -230,14 +247,15 @@ const Menu = (props) => {
 
     return (
         <>
-            <Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon />Instituições</Button>
-            <Button className={classes.NavBarButtons}><FavoriteBorderIcon />Minhas Doações</Button>
+            <Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Instituições</Button>
+            <Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Minhas Doações</Button>
             <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
+                className={classes.navHiddenInvert}
               >
                 <PersonIcon />
               </IconButton>
@@ -259,6 +277,8 @@ const Menu = (props) => {
                 <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
                 <MenuItem onClick={handleClose} style={{ color: 'red' }}>Sair</MenuItem>
               </Dropdown>
+            <Button className={classes.NavBarButtons, classes.navHiddenItem}><PersonIcon />Minha Conta</Button>
+            <Button className={classes.NavBarButtons, classes.navHiddenItem} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button>
         </>
     )
 }
