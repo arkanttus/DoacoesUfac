@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import NavBar from '../../Component/MaterialKit/NavBarHeader/Header';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
-import InitialFooter from '../../Component/InitialFooter';
+import Footer from '../../Component/Footer';
 import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
@@ -129,7 +129,7 @@ export default function Dashboard() {
                 <Switch>
                     <Route path="/dashboard" component={Home} />
                 </Switch>
-                <InitialFooter/>
+                <Footer/>
             </main>
         </div>
         

@@ -91,7 +91,7 @@ export default function Home() {
                     Instituições sem doações <WarningIcon />
                 </Grid>
         
-                {/*CARROUSEL*/}
+                {/* CARROUSEL*/}
                 <Grid container>
                     <Grid item xs={12}>
                         <Carousel interval={5000}>
