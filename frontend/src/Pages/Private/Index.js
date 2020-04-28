@@ -10,6 +10,7 @@ import Donate from './Donate';
 import DashboardNavbar from '../../Component/DashboardNavbar';
 import DonationList from './DonationList';
 import MyDonations from './MyDonations';
+import ProfileEditDonator from './ProfileEditDonator';
 
 const useStyles = makeStyles((theme) => ({
     main: {
