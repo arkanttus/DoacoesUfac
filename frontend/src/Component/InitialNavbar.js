@@ -33,10 +33,6 @@ const useStyles = makeStyles((theme) => ({
     separator: {
         flexGrow: 1
     },
-    title: {
-        color: "#FFF",
-        marginLeft: "15px"
-    },
     button: {
         color: "#FFF"
     },

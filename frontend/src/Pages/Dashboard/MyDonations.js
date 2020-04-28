@@ -1,30 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Switch from '@material-ui/core/Switch';
-import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '../../Component/Button';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 //Material Kit
 import Card from '../../Component/MaterialKit/Card/Card';
 import CardBody from "../../Component/MaterialKit/Card/CardBody";
 import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
-
-const PurpleSwitch = withStyles({
-    switchBase: {
-      color: '#FFF',
-      '&$checked': {
-        color: '#FFF',
-      },
-      '&$checked + $track': {
-        backgroundColor: '#27AE60',
-      },
-    },
-    checked: {},
-    track: {},
-  })(Switch);
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -74,14 +56,6 @@ export default function MyDonations() {
             date: "22/07/1999"
         })
     }
-
-    const [state, setState] = React.useState({
-        checked: true,
-      });
-    
-      const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-      };
 
     return(
         <Grid container className={classes.containerRoot}>
