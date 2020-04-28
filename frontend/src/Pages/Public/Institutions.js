@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import InstitutionCard from '../Component/InstitutionCard';
+import InstitutionCard from '../../Component/InstitutionCard';
 import Typography from "@material-ui/core/Typography";
 import Box from '@material-ui/core/Box';
 

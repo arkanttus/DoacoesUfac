@@ -3,27 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '../../Component/Button';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 //Material Kit
 import Card from '../../Component/MaterialKit/Card/Card';
 import CardBody from "../../Component/MaterialKit/Card/CardBody";
 import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
-
-const PurpleSwitch = withStyles({
-    switchBase: {
-      color: '#FFF',
-      '&$checked': {
-        color: '#FFF',
-      },
-      '&$checked + $track': {
-        backgroundColor: '#27AE60',
-      },
-    },
-    checked: {},
-    track: {},
-  })(Switch);
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -38,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     titulo1: {
         textAlign: 'center',
         fontSize: '2rem',
-        padding: '4vh 0vh 1vh 0vh'
+        padding: '4vh 0vh 1vh 0vh',
+        marginBottom: '20px'
     },
     titulo2: {
         textAlign: 'center',
@@ -61,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ListDonation() {
+export default function MyDonations() {
     const classes = useStyles();
 
     let donations = []
@@ -73,36 +59,21 @@ export default function ListDonation() {
         })
     }
 
-    const [state, setState] = React.useState({
-        checked: true,
-      });
-    
-      const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-      };
-
     return(
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
                 <Grid item xs={12} className={classes.titulo1}>
-                    Lista de doações
-                </Grid>
-                <Grid item xs={12} className={classes.titulo2}>
-                    Confirme se a doação foi efetuada
+                    <ThumbUpIcon /> Minhas doações
                 </Grid>
 
                 <Grid container>
                     { donations.map( donation => (
-                        <Grid item xs={12} sm={4} lg={3} className={classes.gridCardContainer}>
-                            <Card style={{width: "19rem"}}>
+                        <Grid item xs={12} sm={4} md={3} className={classes.gridCardContainer}>
+                            <Card style={{ width: '19rem'}}>
                                 <CardHeader className={classes.cardHeader}>
                                     <label>
-                                        <strong>Doador:</strong> {donation.name}
+                                        <strong>Instituição:</strong> {donation.name}
                                     </label>
-                                    <FormControlLabel
-                                        control={<PurpleSwitch checked={state.checked} onChange={handleChange} name="checked" />}
-                                        style={{ marginRight: -8 }}
-                                    />
                                 </CardHeader>
                                 <CardBody>
                                     <p><strong>Doação: </strong>{donation.text}</p>
@@ -112,9 +83,6 @@ export default function ListDonation() {
                         </Grid>
                     ) )}
                 </Grid>
-
-                <Button variant="contained" variant="green" style={{ display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1.2rem' }}>Salvar</Button>
-
             </Grid>
         </Grid>
     );

@@ -1,20 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Carousel from 'react-material-ui-carousel';
-import WarningIcon from '@material-ui/icons/Warning';
-import InstitutionCard from '../../Component/InstitutionCard';
-import Pagination from '@material-ui/lab/Pagination';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import Typography from "@material-ui/core/Typography";
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import TextField from '@material-ui/core/TextField';
-import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -26,16 +18,6 @@ const useStyles = makeStyles((theme) => ({
     container: {
         height: 'fit-content'
     },
-    containerCarousel: {
-        padding: '0 20%',
-        [theme.breakpoints.down('sm')]: {
-            padding: 0
-        }
-    },
-    carouselImage: {
-        maxWidth: '80%'
-    },
-
     cardContainer: {
         marginLeft: '10%',
         marginRight: '10%',
@@ -70,18 +52,29 @@ const useStyles = makeStyles((theme) => ({
             width: '85%',
             height: '200px'
         }
+    },
+    content: {
+        padding: "5px 20px !important",
     }
 }));
 
 export default function Donated() {
     const classes = useStyles();
 
-    const pos = {
+    const institution = {
+        name: "Educandário BCA",
+        phone: "(68) 4002-8922",
+        email: "educandariobca@gmail.com",
+        donated: [
+            { name: "Produtos de limpeza"},
+            { name: "Cestas básicas"},
+            { name: "Alimentos não perecíveis"}
+        ],
         lat: '67.82543436532767',
         long: '9.970694704824691'
     }
 
-    const mapUrl = "https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d982.3893816689978!2d-"+pos.lat+"!3d-"+pos.long+"!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e2!4m3!3m2!1d-"+pos.long+"!2d-"+pos.lat+"!4m3!3m2!1d-"+pos.long+"!2d-"+pos.lat+"!5e0!3m2!1spt-BR!2sbr!4v1588062121261!5m2!1spt-BR!2sbr"
+    const mapUrl = "https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d982.3893816689978!2d-"+institution.lat+"!3d-"+institution.long+"!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e2!4m3!3m2!1d-"+institution.long+"!2d-"+institution.lat+"!4m3!3m2!1d-"+institution.long+"!2d-"+institution.lat+"!5e0!3m2!1spt-BR!2sbr!4v1588062121261!5m2!1spt-BR!2sbr"
 
     return(
         <Grid container className={classes.containerRoot}>
@@ -102,7 +95,7 @@ export default function Donated() {
                             </Typography>
                             <Typography variant="body2" component="p" style={{ color: "#000" }} >
                                 <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px">
-                                    O representante da instituição <b>Educandário BCA</b> foi informado sobre sua
+                                    O representante da instituição <b>{institution.name}</b> foi informado sobre sua
                                     disponibilidade para doação dos seguintes itens:
                                 </Box>
                             </Typography>
@@ -112,9 +105,9 @@ export default function Donated() {
                             <CardContent className={classes.content}>
                                 <Typography variant="body2" color="textSecondary" component="p" style={{ color: "#247BA0" }} >
                                     <Box fontWeight="fontWeightBold" m={1} textAlign="center">
-                                        Produtos de limpeza;<br/>
-                                        Cestas básicas;<br/>
-                                        Alimentos não perecíveis.<br/>
+                                        { institution.donated.map( item => (
+                                            <label>{item.name};<br/></label>
+                                        ) )}
                                     </Box>
                                 </Typography>
                             </CardContent>
@@ -133,7 +126,7 @@ export default function Donated() {
                                         <PhoneIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                     </Grid>
                                     <Grid item>
-                                        (68) 4002-8922
+                                        {institution.phone}
                                     </Grid>
                                 </Grid>
                                 <Grid container direction="row" alignItems="center">
@@ -141,7 +134,7 @@ export default function Donated() {
                                         <EmailIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                     </Grid>
                                     <Grid item>
-                                        educandariobca@gmail.com
+                                        {institution.email}
                                     </Grid>
                                 </Grid>
                             </CardContent>
@@ -157,7 +150,7 @@ export default function Donated() {
                     </Grid>
                         
                     <Grid container item xs={12} alignItems="center" justify="center" direction="column">
-                        <iframe src={mapUrl} frameborder="0" className={classes.map} allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        <iframe src={mapUrl} title="map" frameborder="0" className={classes.map} allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                     </Grid>
                 </Grid>
 

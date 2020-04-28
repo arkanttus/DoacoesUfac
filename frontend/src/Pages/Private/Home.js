@@ -51,52 +51,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
     const classes = useStyles();
-    const institutions = [{
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
+    let institutions = []
+
+    for(let i = 0; i < 8; i++) {
+        institutions.push({
+            name: "Educandário BCA",
+            img: "/images/HEADER.png"
+        })
+    }
+
+    const withoutDonations = [{
+        name: "Orfanato Fulano de Tal",
+        img: "/images/Example1.svg"
     },
     {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
-    },
-    {
-        name: "Educandário BCA",
-        img: "images/HEADER.png"
+        name: "Orfanato Fulano de Tal",
+        img: "/images/Example1.svg"
     }]
 
-    return(
+    return (
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
 
@@ -108,16 +81,13 @@ export default function Home() {
                 <Grid container>
                     <Grid item xs={12}>
                         <Carousel interval={5000}>
-                            <Grid container className={classes.containerCarousel}>
-                                <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <img src="images/Example1.svg" className={classes.carouselImage} />
+                            { withoutDonations.map( institution => (
+                                <Grid container className={classes.containerCarousel}>
+                                    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <img src={institution.img} className={classes.carouselImage} alt="logo"/>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                            <Grid container className={classes.containerCarousel}>
-                                <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <img src="images/Example1.svg" className={classes.carouselImage} />
-                                </Grid>
-                            </Grid>
+                            ) )}
                         </Carousel>
                     </Grid>
                 </Grid>

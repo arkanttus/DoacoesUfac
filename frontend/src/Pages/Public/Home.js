@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import ButtonCustom from '../Component/Button';
+import ButtonCustom from '../../Component/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Carousel from 'react-material-ui-carousel';
 

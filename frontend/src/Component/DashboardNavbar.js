@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NavBar from './MaterialKit/NavBarHeader/Header';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
@@ -16,10 +16,7 @@ import Dropdown from '@material-ui/core/Menu';
 import Logo from '../assets/Logo.svg';
 
 import {
-    container,
     defaultFont,
-    primaryColor,
-    infoColor,
     successColor,
     warningColor,
     dangerColor,
@@ -281,14 +278,14 @@ const Menu = (props) => {
                 <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
                 <MenuItem onClick={handleClose} style={{ color: 'red' }}>Sair</MenuItem>
               </Dropdown>
-            <Link to="/minha-conta" className={classes.noLinkStyle}><Button className={classes.NavBarButtons, classes.navHiddenItem}><PersonIcon />Minha Conta</Button></Link>
-            <Link to="/sair" className={classes.noLinkStyle}><Button className={classes.NavBarButtons, classes.navHiddenItem} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button></Link>
+            <Link to="/minha-conta" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button></Link>
+            <Link to="/sair" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button></Link>
         </>
     )
 }
 
 
-export default function NavBardDashboard() {
+export default function DashboardNavbar() {
     const classes = useStyles();
     
 
