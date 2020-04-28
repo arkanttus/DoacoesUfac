@@ -13,7 +13,7 @@ import Dropdown from '@material-ui/core/Menu';
 
 //PAGES
 import Home from './Home';
-import Doado from './Doado';
+import Donated from './Donated';
 import NavBarDashboard from '../../Component/NavBarDashboard';
 import DonationList from './DonationList';
 import MyDonations from './MyDonations';
@@ -123,7 +123,7 @@ export default function Dashboard() {
                 <Switch>
                     <Route exact path="/dashboard/doacoes" component={DonationList} />
                     <Route exact path="/dashboard/minhas-doacoes" component={MyDonations} />
-                    <Route exact path="/dashboard/doado" component={Doado} />
+                    <Route exact path="/dashboard/doado" component={Donated} />
                     <Route path="/dashboard" component={Home} />
                 </Switch>
                 <Footer/>
