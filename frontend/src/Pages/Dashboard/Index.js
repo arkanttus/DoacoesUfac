@@ -17,6 +17,7 @@ import Donated from './Donated';
 import NavBarDashboard from '../../Component/NavBarDashboard';
 import DonationList from './DonationList';
 import MyDonations from './MyDonations';
+import ProfileEditDonator from './ProfileEditDonator';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -124,6 +125,7 @@ export default function Dashboard() {
                     <Route exact path="/dashboard/doacoes" component={DonationList} />
                     <Route exact path="/dashboard/minhas-doacoes" component={MyDonations} />
                     <Route exact path="/dashboard/doado" component={Donated} />
+                    <Route path="/dashboard/meu-perfil-doador" component={ProfileEditDonator} />
                     <Route path="/dashboard" component={Home} />
                 </Switch>
                 <Footer/>

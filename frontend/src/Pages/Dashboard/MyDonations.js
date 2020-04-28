@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '../../Component/Button';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 //Material Kit
