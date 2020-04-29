@@ -8,10 +8,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
+import FaceIcon from '@material-ui/icons/Face';
 
-import Card from "../../Component/MaterialKit/Card/Card";
-import CardBody from "../../Component/MaterialKit/Card/CardBody";
-import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
+import Card from "../../components/MaterialKit/Card/Card";
+import CardBody from "../../components/MaterialKit/Card/CardBody";
+import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -93,18 +94,28 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Login() {
+export default function CadastroInstituicao() {
     const classes = useStyles();
 
     return(
         <Grid container className={classes.container}>
             <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
                 <CssBaseline />
-                <Grid item xs={12} className={classes.gridCard}>
+                <Grid item xs={12}  justify="center" className={classes.gridCard}>
                     <Card style={{width: "35rem"}}>
-                        <CardHeader style={{ textAlign: 'center', fontSize: 20, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>LOGIN</CardHeader>
+                        <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Doador</CardHeader>
                         <CardBody>
                             <Grid container>
+                                
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <FaceIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <TextField variant="standard" required fullWidth id="nome" label="Nome completo" autoComplete="nome"/>
+                                    </Grid>
+                                </Grid>
+                                
                                 <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                     <Grid item>
                                         <EmailIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
@@ -122,7 +133,7 @@ export default function Login() {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Button style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">ENTRAR</Button>
+                            <Button style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
                         </CardBody>
                     </Card>
                 </Grid>

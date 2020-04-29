@@ -4,9 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 //Material Kit
-import Card from '../../Component/MaterialKit/Card/Card';
-import CardBody from "../../Component/MaterialKit/Card/CardBody";
-import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
+import Card from '../../components/MaterialKit/Card/Card';
+import CardBody from "../../components/MaterialKit/Card/CardBody";
+import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {

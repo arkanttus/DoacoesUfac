@@ -17,9 +17,9 @@ import DescricaoIcon from '@material-ui/icons/BorderColorOutlined';
 import LocationIcon from '@material-ui/icons/LocationOn';
 
 
-import Card from "../../Component/MaterialKit/Card/Card";
-import CardBody from "../../Component/MaterialKit/Card/CardBody";
-import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
+import Card from "../../components/MaterialKit/Card/Card";
+import CardBody from "../../components/MaterialKit/Card/CardBody";
+import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 
 
 

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Carousel from 'react-material-ui-carousel';
 import WarningIcon from '@material-ui/icons/Warning';
-import InstitutionCard from '../../Component/InstitutionCard';
+import InstitutionCard from '../../components/InstitutionCard';
 import Pagination from '@material-ui/lab/Pagination';
 
 const useStyles = makeStyles((theme) => ({

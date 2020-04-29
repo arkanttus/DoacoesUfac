@@ -8,9 +8,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import IconButton from '@material-ui/core/IconButton';
 //Material Kit
-import Card from '../../Component/MaterialKit/Card/Card';
-import CardBody from "../../Component/MaterialKit/Card/CardBody";
-import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
+import Card from '../../components/MaterialKit/Card/Card';
+import CardBody from "../../components/MaterialKit/Card/CardBody";
+import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 
 const PurpleSwitch = withStyles({
     switchBase: {

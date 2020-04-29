@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Button from '../../Component/Button';
+import Button from '../../components/Button';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
