@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "flex-start",
         position: "relative",
         zIndex: "unset",
-        height: '8vh'
+        maxHeight: '60px'
     },
     absolute: {
         position: "absolute",
