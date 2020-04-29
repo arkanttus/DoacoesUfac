@@ -48,7 +48,7 @@ export default function Button(props, children) {
     }
 
     return(
-        <button className={classes.buttonBase + ' ' + theme} style={props.style}>{props.children}</button>
+        <button className={classes.buttonBase + ' ' + theme} onClick={props.onClick} style={props.style}>{props.children}</button>
     );
 
 }

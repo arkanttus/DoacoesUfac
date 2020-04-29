@@ -53,7 +53,7 @@ export default function HowToDonate() {
                 <Grid item container  justify="center" xs={12} alignItems="center">
                     <Typography variant="h4" align="center">
                         <Box fontWeight="fontWeightMedium" m={1}>
-                            COMO DOAR?
+                            SOBRE A EQUIPE
                         </Box>
                     </Typography>
                 </Grid>
@@ -64,24 +64,11 @@ export default function HowToDonate() {
                    
                     <label style={{  fontSize: 22} }>
                             <p>
-                                Para fazer uma doação, basta se fornecer alguns dados, selecionar uma instituição e entrar em contato com a instituição.
-                            </p>
-                            <p>
-                                Seu cadastro é importamente para recomendarmos de maneira justa instituições que receberam poucas doações.
+                                Este é um projeto de causa social desenvolvido por discentes e docentes da Universidade Federal do Acre dos cursos de Medicina e Sistemas de Informação.
                             </p>
                     </label>
                 </Grid>       
-            </Grid>
-
-            <Grid container style={{paddingBottom:"15%", justifyContent:"center"}}>
-                <Link to="/doador" className={classes.noLinkStyle}>
-                        <ButtonCustom to="/doador"  variant="yellow" style={{ heigth: 'fit-content' }}>
-                            <FavoriteIcon style={{ paddingRight: 5, width: 20, height: 15 }} /> <label style={{ whiteSpace: 'nowrap' }}>QUERO SER DOADOR</label>
-                        </ButtonCustom>
-                </Link>
-            </Grid>
-            
-        
+            </Grid>        
         </Grid>
     );
 }

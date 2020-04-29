@@ -11,7 +11,8 @@ import DashboardNavbar from '../../Component/DashboardNavbar';
 import DonationList from './DonationList';
 import MyDonations from './MyDonations';
 import ProfileEditDonator from './ProfileEditDonator';
-import InstitutionItems from './InstitutionItems';
+import SelectDonationTypes from './SelectDonationTypes';
+import ProfileEditInstitution from './ProfileEditInstitution';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -59,8 +60,9 @@ export default function Dashboard() {
                     <Route exact path="/dashboard/minhas-doacoes" component={MyDonations} />
                     <Route exact path="/dashboard/doado" component={Donated} />
                     <Route exact path="/dashboard/doar" component={Donate} />
-                    <Route exact path="/dashboard/solicitacao" component={InstitutionItems} />
                     <Route path="/dashboard/meu-perfil-doador" component={ProfileEditDonator} />
+                    <Route path="/dashboard/meu-perfil-instituicao" component={ProfileEditInstitution} />
+                    <Route path="/dashboard/selecionar-doacoes" component={SelectDonationTypes} />
                     <Route path="/dashboard" component={Home} />
                 </Switch>
                 <Footer/>
