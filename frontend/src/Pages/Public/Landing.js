@@ -9,6 +9,8 @@ import Home from './Home'
 import Login from './Login'
 import DonatorRegister from './DonatorRegister'
 import InstituteRegister from './InstituteRegister'
+import AboutTeam from './AboutTeam'
+import Credits from './Credits'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,6 +49,8 @@ export default function Landing() {
                 <Switch>
                     <Route exact path="/instituicoes" component={Institutions} />
                     <Route exact path="/como-doar" component={HowToDonate} />
+                    <Route exact path="/equipe" component={AboutTeam} />
+                    <Route exact path="/creditos" component={Credits} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/instituicao" component={InstituteRegister} />
                     <Route exact path="/doador" component={DonatorRegister} />
