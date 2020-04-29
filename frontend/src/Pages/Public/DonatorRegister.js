@@ -12,9 +12,9 @@ import LockIcon from '@material-ui/icons/Lock';
 import FaceIcon from '@material-ui/icons/Face';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
-import Card from "../Component/MaterialKit/Card/Card";
-import CardBody from "../Component/MaterialKit/Card/CardBody";
-import CardHeader from "../Component/MaterialKit/Card/CardHeader";
+import Card from "../../Component/MaterialKit/Card/Card";
+import CardBody from "../../Component/MaterialKit/Card/CardBody";
+import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -117,14 +117,7 @@ export default function CadastroInstituicao() {
                                         <TextField variant="standard" required fullWidth id="nome" label="Nome completo" autoComplete="nome"/>
                                     </Grid>
                                 </Grid>
-                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
-                                    <Grid item>
-                                        <AssignmentIndIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
-                                    </Grid>
-                                    <Grid item xs={10} sm={11}>
-                                        <TextField variant="standard" required fullWidth name="cpf" label="CPF"  id="cpf" autoComplete="cpf"/>
-                                    </Grid>
-                                </Grid>
+                                
                                 <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                     <Grid item>
                                         <EmailIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />

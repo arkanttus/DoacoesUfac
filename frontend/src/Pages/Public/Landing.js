@@ -7,6 +7,8 @@ import Institutions from './Institutions'
 import HowToDonate from './HowToDonate'
 import Home from './Home'
 import Login from './Login'
+import DonatorRegister from './DonatorRegister'
+import InstituteRegister from './InstituteRegister'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,6 +48,8 @@ export default function Landing() {
                     <Route exact path="/instituicoes" component={Institutions} />
                     <Route exact path="/como-doar" component={HowToDonate} />
                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/instituicao" component={InstituteRegister} />
+                    <Route exact path="/doador" component={DonatorRegister} />
                     <Route  path="/" component={Home} />
                 </Switch>
             

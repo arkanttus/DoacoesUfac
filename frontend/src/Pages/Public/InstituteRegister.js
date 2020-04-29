@@ -17,9 +17,9 @@ import DescricaoIcon from '@material-ui/icons/BorderColorOutlined';
 import LocationIcon from '@material-ui/icons/LocationOn';
 
 
-import Card from "../Component/MaterialKit/Card/Card";
-import CardBody from "../Component/MaterialKit/Card/CardBody";
-import CardHeader from "../Component/MaterialKit/Card/CardHeader";
+import Card from "../../Component/MaterialKit/Card/Card";
+import CardBody from "../../Component/MaterialKit/Card/CardBody";
+import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
 
 
 
@@ -89,6 +89,18 @@ function ContinueButton(props) {
 export default function CadastroInstituicao() {
     const classes = useStyles();
     const [ screen,setScreen] = React.useState(0);
+    const [ nome,setNome] = React.useState("");
+    const [ cpf,setCpf] = React.useState("");
+    const [ email,setEmail] = React.useState("");
+    const [ senha,setSenha] = React.useState("");
+    const [ instituicao,setInstituicao] = React.useState("");
+    const [ telefone,setTelefone] = React.useState("");
+    const [ tipo,setTipo] = React.useState("");
+    const [ descricao,setDescricao] = React.useState("");
+
+
+
+
 
     function handleContinuar(){
         if( screen==1 ){
@@ -98,7 +110,8 @@ export default function CadastroInstituicao() {
             setScreen(1);
         }
     }
-
+    
+     
     return(
         <Grid container className={classes.container}>
         <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
@@ -114,7 +127,8 @@ export default function CadastroInstituicao() {
                                        <FaceIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
                                    </Grid>
                                    <Grid item xs={10} sm={11}>
-                                       <TextField  variant="standard" required fullWidth id="nome" label="Nome completo do responsável" autoComplete="nome"/>
+                                       <TextField   onChange={e => setNome(e.target.value)}
+                                          variant="standard" required fullWidth  name="nome" value={nome} label="Nome completo do responsável" autoComplete="nome"/>
                                    </Grid>
                                </Grid>
 
@@ -123,7 +137,7 @@ export default function CadastroInstituicao() {
                                        <CpfIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                    </Grid>
                                    <Grid item xs={10} sm={11}>
-                                       <TextField variant="standard" required fullWidth name="cpf" label="CPF do responsável"  id="cpf" autoComplete="cpf"/>
+                                       <TextField  onChange={e => setCpf(e.target.value)} value={cpf} variant="standard" required fullWidth name="cpf" label="CPF do responsável"  id="cpf" autoComplete="cpf"/>
                                    </Grid>
                                </Grid>
 
@@ -132,7 +146,7 @@ export default function CadastroInstituicao() {
                                        <EmailIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
                                    </Grid>
                                    <Grid item xs={10} sm={11}>
-                                       <TextField variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email"/>
+                                       <TextField  onChange={e => setEmail(e.target.value)} value={email} variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email"/>
                                    </Grid>
                                </Grid>
 
@@ -141,7 +155,7 @@ export default function CadastroInstituicao() {
                                        <LockIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                    </Grid>
                                    <Grid item xs={10} sm={11}>
-                                       <TextField variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password"/>
+                                       <TextField  onChange={e => setSenha(e.target.value)} value={senha} variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password"/>
                                    </Grid>
                                </Grid>
 
@@ -162,7 +176,7 @@ export default function CadastroInstituicao() {
                                             <InstituicaoIcon style={{  color: "#555", marginLeft: -15, marginRight: 10 }} />
                                         </Grid>
                                         <Grid item xs={10} sm={11}>
-                                            <TextField variant="standard" required fullWidth id="nome" label="Nome da Instituição" name="nome" autoComplete="nome"/>
+                                            <TextField  onChange={e => setInstituicao(e.target.value)} value={instituicao} variant="standard" required fullWidth id="nome" label="Nome da Instituição" name="instituicao" autoComplete="nome"/>
                                         </Grid>
                                     </Grid>
 
@@ -171,7 +185,7 @@ export default function CadastroInstituicao() {
                                             <CallIcon style={{ color: "#555", marginLeft: -15, marginRight: 10 }} />
                                         </Grid>
                                         <Grid item xs={10} sm={11}>
-                                            <TextField variant="standard" required fullWidth name="telefone" label="Telefone"  id="telefone" autoComplete="telefone"/>
+                                            <TextField  onChange={e => setTelefone(e.target.value)} value={telefone} variant="standard" required fullWidth name="telefone" label="Telefone"  id="telefone" autoComplete="telefone"/>
                                         </Grid>
                                     </Grid>
 
@@ -180,7 +194,7 @@ export default function CadastroInstituicao() {
                                             <TipoIcon style={{ color: "#555", marginLeft: -15, marginRight: 10 }} />
                                         </Grid>
                                         <Grid item xs={10} sm={11}>
-                                            <TextField variant="standard" required fullWidth name="tipo" label="Tipo de Instituição"  id="tipo" autoComplete="tipo"/>
+                                            <TextField  onChange={e => setTipo(e.target.value)} value={tipo} variant="standard" required fullWidth name="tipo" label="Tipo de Instituição"  id="tipo" autoComplete="tipo"/>
                                         </Grid>
                                     </Grid>
 
@@ -189,7 +203,7 @@ export default function CadastroInstituicao() {
                                             <DescricaoIcon style={{ color: "#555", marginLeft: -15, marginRight: 10 }} />
                                         </Grid>
                                         <Grid item xs={10} sm={11}>
-                                            <TextField variant="standard" required fullWidth name="descricao" label="Breve descrição sobre a Instituição"  id="descricao" autoComplete="descricao"/>
+                                            <TextField   onChange={e => setDescricao(e.target.value)} value={descricao} variant="standard" required fullWidth name="descricao" label="Breve descrição sobre a Instituição"  id="descricao" autoComplete="descricao"/>
                                         </Grid>
                                     </Grid>
 
@@ -205,7 +219,7 @@ export default function CadastroInstituicao() {
                                 
                                 <Grid container spacing={3}>
                                     <Button onClick={handleContinuar} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">VOLTAR</Button>
-                                    <Button type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">CADASTRAR</Button>
+                                    <Button type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
                                 </Grid> 
 
                             </CardBody>

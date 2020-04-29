@@ -74,8 +74,8 @@ export default function HowToDonate() {
             </Grid>
 
             <Grid container style={{paddingBottom:"15%", justifyContent:"center"}}>
-                <Link to="/registro-doador" className={classes.noLinkStyle}>
-                        <ButtonCustom variant="yellow" style={{ heigth: 'fit-content' }}>
+                <Link to="/doador" className={classes.noLinkStyle}>
+                        <ButtonCustom to="/doador"  variant="yellow" style={{ heigth: 'fit-content' }}>
                             <FavoriteIcon style={{ paddingRight: 5, width: 20, height: 15 }} /> <label style={{ whiteSpace: 'nowrap' }}>QUERO SER DOADOR</label>
                         </ButtonCustom>
                 </Link>
