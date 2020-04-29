@@ -116,8 +116,8 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     logo: {
-        width: '50px',
-        height: '50px'
+        width: '40px',
+        height: '40px'
     },
     appResponsive: {
         margin: "20px 10px"

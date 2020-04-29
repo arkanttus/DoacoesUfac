@@ -64,8 +64,7 @@ export default function Donated() {
             {name: "Cestas básicas"},
             {name: "Produtos de limpeza"},
             {name: "Roupas"},
-            {name: "Alimentos não perecíveis"},
-            {name: "Dinheiro"}
+            {name: "Alimentos não perecíveis"}
         ]
     }
 
@@ -84,27 +83,12 @@ export default function Donated() {
     return(
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
-
-                <Grid item xs={12} className={classes.pageTitle}>
-                    {institution.name}
-                </Grid>
-        
-
                 <Grid container>
-                    <Grid container item xs={12} alignItems="center" justify="center" direction="column" style={{ marginBottom: '25px' }}>
-                        <img src="/images/Image.png" className={classes.institutionPhoto} alt="logo"/>
-                    </Grid>
                     <Grid container item xs={12} alignItems="center" justify="center" direction="column">
-                        <Typography variant="body2" component="p" className={classes.descriptionText} >
-                            <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="22px">
-                                “{institution.description}“
-                            </Box>
-                        </Typography>
-
                         <Grid container item xs={10} sm={6} md={6} alignItems="center" justify="center" direction="column" className={classes.donationFrame}>
                             <Typography variant="body2" component="p" style={{ color: "#000" }} >
                                 <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="20px">
-                                    Como irá ajudar esta instituição?
+                                    Selecione as necessidades de doação
                                 </Box>
                             </Typography>
 
