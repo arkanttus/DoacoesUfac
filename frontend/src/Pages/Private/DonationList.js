@@ -4,8 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '../../Component/Button';
-
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import IconButton from '@material-ui/core/IconButton';
 //Material Kit
 import Card from '../../Component/MaterialKit/Card/Card';
 import CardBody from "../../Component/MaterialKit/Card/CardBody";
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '2.5vh',
         backgroundColor: '#247BA0',
         boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.56)',
-        color: '#FFF'
+        color: '#fff'
     },
 
 }));
@@ -78,7 +79,8 @@ export default function ListDonation() {
       });
     
       const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
+        //setState({ ...state, [event.target.name]: event.target.checked });
+        setState({ checked:! state.checked })
       };
 
     return(
@@ -93,27 +95,36 @@ export default function ListDonation() {
 
                 <Grid container>
                     { donations.map( donation => (
-                        <Grid item xs={12} sm={4} lg={3} className={classes.gridCardContainer}>
-                            <Card style={{width: "19rem"}}>
+                        <Grid item xs={12} sm={4} lg={3}  className={classes.gridCardContainer}>
+                            <Card style={{backgroundColor:"#ECE9E9",width: "19rem"}}>
                                 <CardHeader className={classes.cardHeader}>
                                     <label>
                                         <strong>Doador:</strong> {donation.name}
                                     </label>
-                                    <FormControlLabel
-                                        control={<PurpleSwitch checked={state.checked} onChange={handleChange} name="checked" />}
-                                        style={{ marginRight: -8 }}
-                                    />
+                                    { state.checked == true ? (
+                                            <IconButton onClick={handleChange} >  
+                                                    <FavoriteIcon style={{ color:"#E53935", marginRight: -8 }}/>
+                                            </IconButton>
+                                        ) : ( 
+                                            <IconButton onClick={handleChange} >
+                                                <FavoriteBorderIcon style={{color:"#ffffff", marginRight: -8 }} />
+                                            </IconButton>      
+                                        ) 
+                                    }
+                                   
                                 </CardHeader>
                                 <CardBody>
                                     <p><strong>Doação: </strong>{donation.text}</p>
                                     <p><strong>Data: </strong>{donation.date}</p>
+                                    <Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
+                                        <label> 2410 </label>
+                                        <FavoriteIcon style={{ color:"#E53935", marginRight: -8, marginLeft: 5 }}/>     
+                                    </Grid>
                                 </CardBody>
                             </Card>
                         </Grid>
                     ) )}
                 </Grid>
-
-                <Button variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>SALVAR</Button>
 
             </Grid>
         </Grid>
