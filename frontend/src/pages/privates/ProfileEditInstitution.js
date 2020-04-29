@@ -8,7 +8,7 @@ import MaskedInput from 'react-text-mask';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import Button from '../../Component/Button';
+import Button from '../../components/Button';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {

@@ -1,13 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import InstitutionCard from '../../Component/InstitutionCard';
+import InstitutionCard from '../../components/InstitutionCard';
 import Typography from "@material-ui/core/Typography";
 import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
-    
     buttonFix: {
         '& button': {
             [theme.breakpoints.down('sm')]: {
@@ -34,18 +33,30 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     cardContainer: {
-        marginLeft: '10%',
-        marginRight: '10%',
+        /*marginLeft: '10%',
+        marginRight: '10%',*/
         [theme.breakpoints.down('sm')]: {
             margin: 10
         }
     },
     container: {
-        height: '100%',
-        paddingTop: '10%'
+        minHeight: '95vh',
+        flexWrap: 'initial',
+        flexDirection: 'column',
+        paddingTop: '13%',
+        [theme.breakpoints.down('xs')]: {
+            minHeight: '90vh',
+            paddingTop: '30%'
+        }
     },
     cardItem: {
         height: 'fit-content'
+    },
+    fatherContainer: {
+        padding: 60,
+        [theme.breakpoints.down('sm')]: {
+            padding: 0
+        }
     }
 }));
 
@@ -71,12 +82,14 @@ export default function Institutions() {
                 </Grid>
             </Grid>
             
-            <Grid container spacing={4} className={classes.cardContainer}>
-                { institutions.map( institution => (
-                    <Grid item xs={12} sm={6} md={3} className={classes.cardItem}>
-                        <InstitutionCard title={institution.name} photo={institution.img}/>
-                    </Grid>
-                ) )}
+            <Grid container className={classes.fatherContainer}>
+                <Grid container spacing={4} className={classes.cardContainer}>
+                    { institutions.map( institution => (
+                        <Grid item xs={12} sm={6} lg={3} className={classes.cardItem}>
+                            <InstitutionCard title={institution.name} photo={institution.img}/>
+                        </Grid>
+                    ) )}
+                </Grid>
             </Grid>
         </Grid>
     );

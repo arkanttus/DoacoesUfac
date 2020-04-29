@@ -4,12 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '../../Component/Button';
+import Button from '../../components/Button';
 
 //Material Kit
-import Card from '../../Component/MaterialKit/Card/Card';
-import CardBody from "../../Component/MaterialKit/Card/CardBody";
-import CardHeader from "../../Component/MaterialKit/Card/CardHeader";
+import Card from '../../components/MaterialKit/Card/Card';
+import CardBody from "../../components/MaterialKit/Card/CardBody";
+import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 
 const PurpleSwitch = withStyles({
     switchBase: {

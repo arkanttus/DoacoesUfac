@@ -62,7 +62,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "flex-start",
         position: "relative",
         zIndex: "unset",
-        
+        [theme.breakpoints.down('sm')]: {
+          padding: 0
+        }
       },
       absolute: {
         position: "absolute",
@@ -74,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
       },
       container: {
         ...container,
+        padding: 0,
         minHeight: "50px",
         flex: "1",
         alignItems: "center",
@@ -186,6 +189,12 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#444',
         ...transition
       },
+      img: {
+        [theme.breakpoints.down('sm')]: {
+          width: '40px',
+          height: '40px'
+        }
+      }
 }));
 
 const MenuRight = (props) => {
@@ -209,7 +218,7 @@ const MenuLeft = (props) => {
     const classes = useStyles()
     return (
         <div className={classes.logo}>
-            <img src="images/Logo.svg" alt="logo" className="logo" />
+            <img src="images/Logo.svg" alt="logo" className={classes.img} />
             <Typography variant="h6" className={classes.title}>
                     Doações
             </Typography>
