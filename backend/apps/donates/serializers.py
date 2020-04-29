@@ -1,26 +1,35 @@
 from rest_framework import serializers, validators, exceptions
 from django.utils.translation import gettext_lazy as _
-from .models import Donate, TypeDonate
+from django.contrib.auth import get_user_model
+from .models import Donate
+from apps.need_donate.models import NeedDonate
+from apps.base.models import Institution
 from apps.base.api.serializers import InstitutionReadSerializer
+from apps.need_donate.serializers import NeedDonateSerializer
+from apps.users.api.serializers import UserReadSerializer
 
-
-class TypeDonateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TypeDonate
-        fields = ('id', 'name')
-
+User = get_user_model()
 
 class DonateSerializer(serializers.ModelSerializer):
+    needDonate = NeedDonateSerializer(read_only=True)
+    donator = UserReadSerializer(read_only=True)
     institution = InstitutionReadSerializer(read_only=True)
-    type_donate = TypeDonateSerializer(read_only=True)
-    set_type_donate = serializers.PrimaryKeyRelatedField(
-        source='type_donate', write_only=True, queryset=TypeDonate.objects.all(), required=True
+    setNeedDonate = serializers.PrimaryKeyRelatedField(
+        source='need_donate', write_only=True, queryset=NeedDonate.objects.all(),
+        required=True
     )
-    
+    setDonator = serializers.PrimaryKeyRelatedField(
+        source='donator', write_only=True, queryset=User.objects.all(), required=True
+    )
+    setInstitution = serializers.PrimaryKeyRelatedField(
+        source='institution', write_only=True, queryset=Institution.objects.all(), required=True
+    )
+
     class Meta:
         model = Donate
         fields = (
-            'id', 'name', 'institution', 'description', 'type_donate', 'set_type_donate'
+            'id', 'needDonate', 'donator', 'institution', 'setNeedDonate', 'setDonator',
+            'setInstitution', 'donated'
         )
 
 

@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from .serializers import (DonateSerializer, TypeDonateSerializer)
-from .models import Donate, TypeDonate
+from .serializers import DonateSerializer
+from .models import Donate
 
 
 class DonateView(viewsets.ModelViewSet):
@@ -10,8 +10,4 @@ class DonateView(viewsets.ModelViewSet):
     # permission_classes = (permissions.IsAuthenticated,)
 
 
-class TypeDonateView(viewsets.ModelViewSet):
-    queryset = TypeDonate.objects.all()
-    serializer_class = TypeDonateSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
 

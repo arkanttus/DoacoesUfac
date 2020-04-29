@@ -42,7 +42,7 @@ LOCAL_APPS = [
     'apps.users',
     'apps.base',
     'apps.donates',
-    'apps.feedback'
+    'apps.need_donate'
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
