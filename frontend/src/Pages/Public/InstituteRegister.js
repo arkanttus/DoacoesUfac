@@ -76,15 +76,6 @@ const useStyles = makeStyles((theme) => ({
       }
 
 }));
-
-function ContinueButton(props) {
-    return (
-      <button onClick={props.onClick}>
-        Continue
-      </button>
-    );
-  }
-
   
 export default function CadastroInstituicao() {
     const classes = useStyles();
@@ -97,26 +88,12 @@ export default function CadastroInstituicao() {
     const [ telefone,setTelefone] = React.useState("");
     const [ tipo,setTipo] = React.useState("");
     const [ descricao,setDescricao] = React.useState("");
-
-
-
-
-
-    function handleContinuar(){
-        if( screen==1 ){
-            setScreen(0);
-        }
-        else{
-            setScreen(1);
-        }
-    }
-    
-     
+   
     return(
         <Grid container className={classes.container}>
         <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
             <CssBaseline />
-            { screen == 0 ? (
+            { screen === 0 ? (
                    <Grid item xs={12}  justify="center" className={classes.gridCard}>
                    <Card style={{width: "35rem"}}>
                        <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
@@ -160,7 +137,7 @@ export default function CadastroInstituicao() {
                                </Grid>
 
                            </Grid>
-                           <Button onClick={handleContinuar} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">CONTINUAR</Button>
+                           <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">CONTINUAR</Button>
                        </CardBody>
                    </Card>
                </Grid>            
@@ -218,7 +195,7 @@ export default function CadastroInstituicao() {
                                 </Grid>   
                                 
                                 <Grid container spacing={3}>
-                                    <Button onClick={handleContinuar} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">VOLTAR</Button>
+                                    <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">VOLTAR</Button>
                                     <Button type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
                                 </Grid> 
 

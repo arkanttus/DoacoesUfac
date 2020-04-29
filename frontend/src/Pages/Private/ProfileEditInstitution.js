@@ -100,7 +100,7 @@ export default function ProfileEditInstitution() {
 
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={4}>
-                        <img src={PhotoExample} style={{ maxWidth: '100%' }} />
+                        <img src={PhotoExample} style={{ maxWidth: '100%' }} alt="profile" />
                     </Grid>
                     <Grid item xs={12} sm={8} style={{ border: '1px solid' }}>
                         Google Maps Frame

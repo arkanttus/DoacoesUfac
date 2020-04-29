@@ -58,7 +58,7 @@ export default function SelectDOnationTypes() {
                 <Container maxWidth="md">
                     <Grid container item xs={12} alignItems="center" justify="center" direction="column" className={classes.donationFrame}>
                         <Typography variant="body2" component="p" style={{ color: "#000" }} >
-                            <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="20px" color="#247BA0" fontWeight="bold" padding="10px">
+                            <Box m={1} textAlign="center" fontSize="20px" color="#247BA0" fontWeight="bold" padding="10px">
                                 Selecione as necessidades de doação
                             </Box>
                         </Typography>

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,7 +9,6 @@ import Container from '@material-ui/core/Container';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import FaceIcon from '@material-ui/icons/Face';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 import Card from "../../Component/MaterialKit/Card/Card";
 import CardBody from "../../Component/MaterialKit/Card/CardBody";
