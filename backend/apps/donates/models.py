@@ -25,7 +25,6 @@ class TypeDonate(BaseModel):
         (OTHER, 'Outros')
     )
 
-    name = models.CharField(_('Nome'), max_length=255)
     type_donate = models.CharField(_('Tipo de Doação'), max_length=1, choices=TYPE_DONATE_CHOICES, null=True)
     is_active = models.BooleanField(
         _('Ativo'), default=True, help_text=_('Desative para que esse tipo de doação não seja retornado.')

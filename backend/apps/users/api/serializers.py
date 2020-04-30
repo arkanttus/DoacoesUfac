@@ -39,7 +39,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
     )
     name = serializers.CharField(required=True, error_messages={'required': _('Campo Obrigatório')})
     cpf = serializers.CharField(
-        required=True, validators=[
+        required=False, validators=[
             BRCPFValidator(), validators.UniqueValidator(queryset=UserModel.objects.all())
         ]
     )
@@ -53,8 +53,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
         source='password', label=_("Password"), write_only=True, error_messages={'required': _('Campo Obrigatório')},
         style={'input_type': 'password'}, trim_whitespace=False
     )
-    typeUser = serializers.CharField(
-        source='type_user', required=True, error_messages={'required': _('Campo Obrigatório')}
+    typeUser = serializers.ChoiceField(
+        source='type_user', required=True, error_messages={'required': _('Campo Obrigatório')},
+        choices=UserModel.TYPE_USER_CHOICES
     )
 
     class Meta:
@@ -85,4 +86,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
             raise exceptions.ValidationError(_('Número Inválido'))
         return number
 
+    def validate(self, attrs):
+        pass
 
