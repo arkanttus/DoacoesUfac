@@ -10,7 +10,7 @@ User = get_user_model()
 
 
 class Donate(BaseModel):
-    need_donate = models.ManyToManyField(NeedDonate, on_delete=models.CASCADE, related_name='donates')
+    need_donate = models.ManyToManyField(NeedDonate, related_name='donates')
     donator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donates')
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, related_name='donates')
     donated = models.BooleanField(

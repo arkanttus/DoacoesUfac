@@ -65,9 +65,10 @@ class Login(ObtainAuthToken):
         #     }, status=status.HTTP_406_NOT_ACCEPTABLE
         #     )
         token, created = Token.objects.get_or_create(user=user)
+        serializer_user = UserReadSerializer(user)
         return response.Response({
             'token': token.key,
-            'user_id': user.id
+            'user': serializer_user.data
         }, status=status.HTTP_200_OK
         )
 
