@@ -15,7 +15,7 @@ PRODUCTION = True if env('SETTINGS') == 'PROD' else False
 SECRET_KEY = env('SECRET_KEY')
 
 if PRODUCTION:
-    ALLOWED_HOSTS = ['200.129.173.207']
+    ALLOWED_HOSTS = ['200.129.173.207', 'localhost']
 else:
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
