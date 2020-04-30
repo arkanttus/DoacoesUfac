@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import NavBar from './MaterialKit/NavBarHeader/Header';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
@@ -14,6 +14,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Dropdown from '@material-ui/core/Menu';
 
 import Logo from '../assets/Logo.svg';
+
+import { logout, getUser } from '../services/auth';
 
 import {
     defaultFont,
@@ -233,23 +235,41 @@ const MenuLeft = (props) => {
     )
 }
 
-const Menu = (props) => {
+const Menu = withRouter((props) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
-      };
+    };
     
     const handleClose = () => {
-    setAnchorEl(null);
+        setAnchorEl(null);
     };
+
+    const handleLogout = () => {
+        logout()
+        props.history.push("/login")
+    }
+
+    const user = getUser();
+
+    console.log(user)
 
     return (
         <>
-            <Link to="/dashboard" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Instituições</Button></Link>
-            <Link to="/minhas-doacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Minhas Doações</Button></Link>
+            {user.typeUser === 'Doador' ? (
+                <>
+                    <Link to="/dashboard" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Instituições</Button></Link>
+                    <Link to="/minhas-doacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Minhas Doações</Button></Link>
+                </>
+            ) : (
+                <>
+                    <Link to="/solicitacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Solicitações</Button></Link>
+                    <Link to="/doacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Doações</Button></Link>
+                </>
+            )}
             <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -276,13 +296,13 @@ const Menu = (props) => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
-                <MenuItem onClick={handleClose} style={{ color: 'red' }}>Sair</MenuItem>
+                <MenuItem onClick={handleLogout} style={{ color: 'red' }}>Sair</MenuItem>
               </Dropdown>
             <Link to="/minha-conta" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button></Link>
-            <Link to="/sair" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button></Link>
+            <Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }} onClick={handleLogout}><ExitToAppIcon  />Sair</Button>
         </>
     )
-}
+})
 
 
 export default function DashboardNavbar() {

@@ -1,9 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Switch from '@material-ui/core/Switch';
-import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,20 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Card from '../../components/MaterialKit/Card/Card';
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
-
-const PurpleSwitch = withStyles({
-    switchBase: {
-      color: '#FFF',
-      '&$checked': {
-        color: '#FFF',
-      },
-      '&$checked + $track': {
-        backgroundColor: '#27AE60',
-      },
-    },
-    checked: {},
-    track: {},
-  })(Switch);
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -101,7 +84,7 @@ export default function ListDonation() {
                                     <label>
                                         <strong>Doador:</strong> {donation.name}
                                     </label>
-                                    { state.checked == true ? (
+                                    { state.checked === true ? (
                                             <IconButton onClick={handleChange} >  
                                                     <FavoriteIcon style={{ color:"#E53935", marginRight: -8 }}/>
                                             </IconButton>

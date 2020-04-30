@@ -13,6 +13,10 @@ import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 
+import { sendRequest } from "../../services/api";
+import { login } from "../../services/auth";
+
+import Modal from '@material-ui/core/Modal';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -89,12 +93,42 @@ const useStyles = makeStyles((theme) => ({
       },
       containerCardBody: {
           padding: 0
-      }
+      },
+      modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      paper2: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+      },
 
 }));
 
-export default function Login() {
+export default function Login({ props }) {
     const classes = useStyles();
+
+    const [ email, setEmail ] = React.useState("");
+    const [ password, setPassword ] = React.useState("");
+    const [ open, setOpen ] = React.useState(false);
+    const [ error, setError ] = React.useState("");
+
+    async function validateForm(e) {
+        e.preventDefault()
+        const response = await sendRequest("POST", "login/", { username: email, password })
+        
+        if(response.status === 200) {
+            login(response.data)
+            props.history.push("/dashboard")
+        }
+        else {
+            setError(`Erro ${response.status} - ${response.data.errors}`)
+            setOpen(true)
+        }
+    }
 
     return(
         <Grid container className={classes.container}>
@@ -104,30 +138,36 @@ export default function Login() {
                     <Card style={{width: "35rem"}}>
                         <CardHeader style={{ textAlign: 'center', fontSize: 20, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>LOGIN</CardHeader>
                         <CardBody>
-                            <Grid container>
-                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
-                                    <Grid item>
-                                        <EmailIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
+                            <form onSubmit={validateForm}>
+                                <Grid container>
+                                    <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                        <Grid item>
+                                            <EmailIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                        </Grid>
+                                        <Grid item xs={10} sm={11}>
+                                            <TextField variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email" value={email} onChange={e => { setEmail(e.target.value) }}/>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={10} sm={11}>
-                                        <TextField variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email"/>
+                                    <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                        <Grid item>
+                                            <LockIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                        </Grid>
+                                        <Grid item xs={10} sm={11}>
+                                            <TextField variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password" value={password} onChange={e => { setPassword(e.target.value) }}/>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
-                                    <Grid item>
-                                        <LockIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
-                                    </Grid>
-                                    <Grid item xs={10} sm={11}>
-                                        <TextField variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password"/>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                            <Button style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">ENTRAR</Button>
+                                <Button type="submit" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">ENTRAR</Button>
+                            </form>
                         </CardBody>
                     </Card>
                 </Grid>
                 
             </Container>
+
+            <Modal open={open} aria-labelledby="server-modal-title" aria-describedby="server-modal-description" onClose={() => setOpen(false)} className={classes.modal}>
+                <div className={classes.paper2}>{error}</div>
+            </Modal>
         </Grid>
     );
 }
