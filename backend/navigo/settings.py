@@ -34,7 +34,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
-    # 'corsheaders',
+    'corsheaders',
     # 'drf_yasg',
     'localflavor',
 ]
@@ -49,6 +49,7 @@ INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,28 +79,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'navigo.wsgi.application'
 
-if PRODUCTION:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': env('DB_NAME'),
-            'USER': env('DB_USER'),
-            'PASSWORD': env('DB_PASS'),
-            'HOST': env('DB_HOST'),
-            'PORT': '',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASS'),
+        'HOST': env('DB_HOST'),
+        'PORT': '',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': env('DB_NAME'),
-            'USER': env('DB_USER'),
-            'PASSWORD': env('DB_PASS'),
-            'HOST': env('DB_HOST'),
-            'PORT': '',
-        }
-    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -159,3 +148,13 @@ REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
     'NON_FIELD_ERRORS_KEY': 'errors',
 }
+
+# CORS
+
+CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ORIGIN_WHITELIST = [
+#    'https://localhost:3000',
+#]
+#CORS_ORIGIN_REGEX_WHITELIST = [
+#    'localhost:3000',
+#]
