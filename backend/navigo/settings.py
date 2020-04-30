@@ -101,6 +101,7 @@ else:
         }
     }
 
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -137,9 +138,7 @@ if PRODUCTION:
 else:
     # Dev
     STATIC_URL = '/static/'
-
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
     MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
