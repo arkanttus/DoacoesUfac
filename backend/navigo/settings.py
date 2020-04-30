@@ -119,7 +119,7 @@ STATICFILES_DIRS = [
 
 # Production
 if PRODUCTION:
-    STATIC_URL = '/static/'
+    STATIC_URL = '/static/back/'
     MEDIA_URL = '/media/'
     STATIC_ROOT = '/var/www/static/navigo/'
     MEDIA_ROOT = '/var/www/media/navigo/'
