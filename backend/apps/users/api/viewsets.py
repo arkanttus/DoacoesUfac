@@ -7,6 +7,8 @@ from rest_framework.decorators import action
 from .serializers import (UserReadSerializer, UserCreateSerializer)
 from .permissions import PostOnlyPermissions
 from apps.users.models import User
+from apps.donates.models import Donate
+from apps.donates.serializers import DonateSerializer
 
 
 class UserView(viewsets.ModelViewSet):
@@ -37,11 +39,16 @@ class UserView(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        user = User.objects.get(id=instance.id)
-        user.is_active = False
-        user.save()
-        Token.objects.exclude(user=user)
+        instance.is_active = False
+        instance.save()
+        Token.objects.exclude(user=instance)
         return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=['get'], detail=True)
+    def donates(self, request, pk=None):
+        queryset = Donate.objects.filter(donator_id=pk)
+        serializer = DonateSerializer(queryset, many=True)
+        return response.Response(serializer.data)
 
 
 class Login(ObtainAuthToken):

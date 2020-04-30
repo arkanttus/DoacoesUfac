@@ -15,7 +15,7 @@ PRODUCTION = True if env('SETTINGS') == 'PROD' else False
 SECRET_KEY = env('SECRET_KEY')
 
 if PRODUCTION:
-    ALLOWED_HOSTS = ['']
+    ALLOWED_HOSTS = ['200.129.173.207']
 else:
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -42,7 +42,7 @@ LOCAL_APPS = [
     'apps.users',
     'apps.base',
     'apps.donates',
-    'apps.feedback'
+    'apps.need_donate'
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -78,24 +78,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'navigo.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASS'),
-        'HOST': env('DB_HOST'),
-        'PORT': '',
+if PRODUCTION:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': env('DB_NAME'),
+            'USER': env('DB_USER'),
+            'PASSWORD': env('DB_PASS'),
+            'HOST': env('DB_HOST'),
+            'PORT': '',
+        }
     }
-}
-
-
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env('DB_NAME'),
+            'USER': env('DB_USER'),
+            'PASSWORD': env('DB_PASS'),
+            'HOST': env('DB_HOST'),
+            'PORT': '',
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -113,9 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'users.User'
-
-# Internationalization
-# https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Rio_Branco'

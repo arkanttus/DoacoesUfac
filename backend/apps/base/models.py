@@ -24,8 +24,7 @@ class BaseModel(models.Model):
 
 
 class TypeInstitution(BaseModel):
-    name = models.CharField(_('Nome'), max_length=100)
-    description = models.CharField(_('Descrição'), max_length=200)
+    name = models.CharField(_('Nome'), max_length=100, unique=True)
 
     class Meta:
         verbose_name = _('Tipo de Instituição')

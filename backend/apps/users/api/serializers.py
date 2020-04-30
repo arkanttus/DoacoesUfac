@@ -1,6 +1,5 @@
 from rest_framework import serializers, validators, exceptions
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth import get_user_model
 from localflavor.br.validators import BRCPFValidator
 import re
@@ -86,6 +85,5 @@ class UserCreateSerializer(serializers.ModelSerializer):
             raise exceptions.ValidationError(_('Número Inválido'))
         return number
 
-    def validate(self, attrs):
-        pass
+
 
