@@ -6,6 +6,7 @@ from apps.users.api.viewsets import UserView, Login, LogoutView
 from apps.donates.views import DonateView
 from apps.need_donate.views import NeedDonateView, TypeDonateView
 from apps.base.api.viewsets import InstitutionView, TypeInstitutionView
+from django.conf.urls.static import static, settings
 
 router = routers.DefaultRouter()
 router.register(r'users', UserView, basename='UserApp')
@@ -21,4 +22,4 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api/v1/login/', Login.as_view(), name='obter-token'),
     path('api/v1/logout/', LogoutView.as_view(), name='logout'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
