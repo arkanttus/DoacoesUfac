@@ -36,7 +36,7 @@ class TypeInstitution(BaseModel):
 
 def path_image_institution(instance, filename):
     extension = os.path.splitext(filename)[-1]
-    return f'institution/{instance.nome}_{instance.type_institution.name}{extension}'
+    return f'institution/{instance.name}_{instance.type_institution.name}{extension}'
 
 
 class Institution(BaseModel):
