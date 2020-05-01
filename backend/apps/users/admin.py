@@ -13,6 +13,7 @@ class UserAdmin(DjangoUserAdmin):
                 'name',
                 'phone_number',
                 'email_confirm',
+                'type_user'
             )
         }),
         (_('Permissions'), {'fields': (

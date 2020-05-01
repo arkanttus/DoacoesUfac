@@ -12,7 +12,7 @@ User = get_user_model()
 class BaseModel(models.Model):
     id = models.UUIDField('ID', default=uuid.uuid4, editable=False, primary_key=True)
     created_at = models.DateTimeField(_('Criado em'), auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(_('Última atualização'), editable=False)
+    updated_at = models.DateTimeField(_('Última atualização'), editable=False, null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -48,7 +48,7 @@ class Institution(BaseModel):
     )
     other_type = models.CharField(_('Outro tipo'), max_length=100, null=True, blank=True)
     description = models.TextField(_('Descrição da Instituição'), max_length=500)
-    image = models.ImageField(_('Foto da instituição'), upload_to=path_image_institution)
+    image = models.ImageField(_('Foto da instituição'), upload_to=path_image_institution, null=True, blank=True)
 
     # Address
     street = models.CharField(_('Rua'), max_length=200)
@@ -69,3 +69,12 @@ class Institution(BaseModel):
     def clean(self):
         if self.type_institution.name.startswith('Outro') and not self.other_type:
             raise ValidationError(_('Especifique o tipo de instituição'))
+
+    @property
+    def get_institution_others(self):
+        if self.type_institution.name.startswith('Outro'):
+            return f'{self.other_type}'
+        else:
+            return self.type_institution.name
+
+

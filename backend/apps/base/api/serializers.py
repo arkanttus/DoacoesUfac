@@ -15,8 +15,8 @@ class TypeInstitutionSerializer(serializers.ModelSerializer):
 
 class InstitutionReadSerializer(serializers.ModelSerializer):
     name = serializers.ReadOnlyField()
-    owner = UserReadSerializer(read_only=True)
-    typeInstitution = TypeInstitutionSerializer(source='type_institution', read_only=True)
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+    typeInstitution = serializers.ReadOnlyField(source='type_institution.name', read_only=True)
     otherType = serializers.ReadOnlyField(source='other_type')
     image = serializers.ImageField(use_url=True)
     description = serializers.ReadOnlyField()

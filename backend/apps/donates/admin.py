@@ -1,3 +1,10 @@
 from django.contrib import admin
+from apps.donates.models import Donate
 
-# Register your models here.
+
+class DonateAdmin(admin.ModelAdmin):
+    list_display = ('donator', 'institution', 'donated')
+
+
+admin.site.register(Donate, DonateAdmin)
+

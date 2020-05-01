@@ -9,6 +9,8 @@ from .permissions import PostOnlyPermissions
 from apps.users.models import User
 from apps.donates.models import Donate
 from apps.donates.serializers import DonateSerializer
+from apps.base.api.serializers import InstitutionReadSerializer
+from apps.base.models import Institution
 
 
 class UserView(viewsets.ModelViewSet):
@@ -19,9 +21,9 @@ class UserView(viewsets.ModelViewSet):
     ]
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return UserCreateSerializer
-        return UserReadSerializer
+        if self.request.method == 'GET':
+            return UserReadSerializer
+        return UserCreateSerializer
 
     def get_queryset(self):
         return User.objects.filter(is_active=True)
@@ -59,6 +61,7 @@ class Login(ObtainAuthToken):
         )
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
+
         # if not user.email_confirm:
         #     return response.Response(data={
         #         'detail': "Usuário não confirmou e-mail"
@@ -66,9 +69,14 @@ class Login(ObtainAuthToken):
         #     )
         token, created = Token.objects.get_or_create(user=user)
         serializer_user = UserReadSerializer(user)
+        if user.type_user == User.DONATOR:
+            serializer_institution = InstitutionReadSerializer(user.institution_set.get())
+        else:
+            serializer_institution = None
         return response.Response({
             'token': token.key,
-            'user': serializer_user.data
+            'user': serializer_user.data,
+            'institution': serializer_institution.data if serializer_institution else None
         }, status=status.HTTP_200_OK
         )
 
