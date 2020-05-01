@@ -32,7 +32,7 @@ class UserAdmin(DjangoUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('password1', 'password2'),
+            'fields': ('email', 'phone_number', 'password1', 'password2'),
         }),
     )
     list_display = ('email', 'name', 'is_active', )
