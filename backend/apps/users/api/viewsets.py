@@ -69,7 +69,7 @@ class Login(ObtainAuthToken):
         #     )
         token, created = Token.objects.get_or_create(user=user)
         serializer_user = UserReadSerializer(user)
-        if user.type_user == User.DONATOR:
+        if user.type_user == User.RECEIVER:
             serializer_institution = InstitutionReadSerializer(user.institution_set.get())
         else:
             serializer_institution = None
