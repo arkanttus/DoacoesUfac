@@ -7,7 +7,7 @@ class TypeInstitutionAdmin(admin.ModelAdmin):
 
 
 class InstitutionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'owner', 'get_institution_others')
+    list_display = ('id', 'name', 'owner', 'get_institution_others')
 
 
 admin.site.register(TypeInstitution, TypeInstitutionAdmin)
