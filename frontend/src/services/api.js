@@ -28,6 +28,8 @@ export async function sendRequest(type, url, params) {
             response = await api.post(url, params)
         else if(type === 'PATCH')
             response = await api.patch(url, params)
+        else if(type === 'PUT')
+            response = await api.put(url, params)
 
         const { status, data } = response
 

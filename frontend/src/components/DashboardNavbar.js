@@ -295,7 +295,9 @@ const Menu = withRouter((props) => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
+                <Link to="/minha-conta" style={{ color: '#000' }} className={classes.noLinkStyle}>
+                    <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
+                </Link>
                 <MenuItem onClick={handleLogout} style={{ color: 'red' }}>Sair</MenuItem>
               </Dropdown>
             <Link to="/minha-conta" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button></Link>

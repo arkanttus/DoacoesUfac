@@ -29,6 +29,7 @@ import MyDonations from './pages/privates/MyDonations';
 import ProfileEditDonator from './pages/privates/ProfileEditDonator';
 import SelectDonationTypes from './pages/privates/SelectDonationTypes';
 import ProfileEditInstitution from './pages/privates/ProfileEditInstitution';
+import MyProfile from './pages/privates/MyProfile';
 
 import { isAuthenticated } from './services/auth';
 
@@ -80,6 +81,7 @@ const Routes = () => (
       <PrivateRoute path="/minhas-doacoes" layout={DashboardLayout} component={MyDonations} />
       <PrivateRoute path="/doado" layout={DashboardLayout} component={Donated} />
       <PrivateRoute path="/doar" layout={DashboardLayout} component={Donate} />
+      <PrivateRoute path="/minha-conta" layout={DashboardLayout} component={MyProfile} />
       <PrivateRoute path="/perfil-doador" layout={DashboardLayout} component={ProfileEditDonator} />
       <PrivateRoute path="/perfil-instituicao" layout={DashboardLayout} component={ProfileEditInstitution} />
       <PrivateRoute path="/selecionar-doacoes" layout={DashboardLayout} component={SelectDonationTypes} />
