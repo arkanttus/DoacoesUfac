@@ -8,6 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Container from '@material-ui/core/Container';
+import { getUser } from '../../services/auth';
 
 function TextMaskCustom(props) {
     const { inputRef, ...other } = props;
@@ -67,12 +68,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileEditDonator() {
     const classes = useStyles();
+    const user = getUser();
     const [screen, setScreen] = React.useState(0);
-    const [name, setName] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const [phone, setPhone] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [newPassword, setNewPassword] = React.useState('');
+    const [name, setName] = React.useState(user.name);
+    const [email, setEmail] = React.useState(user.email);
+    const [phone, setPhone] = React.useState(user.phone);
+    const [password, setPassword] = React.useState("");
+    const [newPassword, setNewPassword] = React.useState("");
 
     return(
         <Grid container className={classes.containerRoot}>
@@ -81,7 +83,7 @@ export default function ProfileEditDonator() {
                 <Container maxWidth="sm">
                     {screen===0 ? (
                     <Grid container spacing={4} className={classes.containerForm}>
-                        <label className={classes.titulo1}>Editar Perfil</label>
+                        <label className={classes.titulo1}>Edição de Conta</label>
                         <Grid item xs={12}>
                             <TextField fullWidth value={name} onChange={(e) => setName(e.target.value)} label="Nome Completo" />
                         </Grid>
@@ -91,13 +93,7 @@ export default function ProfileEditDonator() {
                         <Grid item xs={12}>
                         <FormControl fullWidth>
                             <InputLabel htmlFor="formatted-text-mask-input">Telefone</InputLabel>
-                            <Input
-                            name="textmask"
-                            id="formatted-text-mask-input"
-                            inputComponent={TextMaskCustom}
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            />
+                            <Input name="textmask" id="formatted-text-mask-input" inputComponent={TextMaskCustom} value={phone} onChange={(e) => setPhone(e.target.value)}/>
                         </FormControl>
                         </Grid>
 

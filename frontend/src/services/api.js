@@ -39,3 +39,23 @@ export async function sendRequest(type, url, params) {
         return { status: error.response.status, data: error.response.data }
     }
 }
+
+async function getFromRequest(type, url, params) {
+    const response = await sendRequest(type, url, params);
+    if(response.status === 200)
+        return response.data;
+    return null;
+}
+
+export async function getInstitutionById(id) {
+    return await getFromRequest("GET", "institutions/"+id, {})
+}
+
+export async function getDonationsByUserId(id) {
+    return await getFromRequest("GET", `user/${id}/donates`, {})
+}
+
+export async function getDonationsByInstitutionId(id) {
+    return await getFromRequest("GET", `institutions/${id}/need_donates`, {})
+}
+
