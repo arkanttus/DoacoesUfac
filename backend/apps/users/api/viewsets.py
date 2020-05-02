@@ -91,6 +91,10 @@ class Login(ObtainAuthToken):
         #         'detail': "Usuário não confirmou e-mail"
         #     }, status=status.HTTP_406_NOT_ACCEPTABLE
         #     )
+        try:
+            user.auth_token.delete()
+        except AttributeError:
+            pass
         token, created = Token.objects.get_or_create(user=user)
         serializer_user = UserReadSerializer(user)
         if user.type_user == User.RECEIVER:
