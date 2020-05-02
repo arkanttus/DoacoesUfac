@@ -255,8 +255,6 @@ const Menu = withRouter((props) => {
 
     const user = getUser();
 
-    console.log(user)
-
     return (
         <>
             {user.typeUser === 'Doador' ? (
@@ -270,14 +268,7 @@ const Menu = withRouter((props) => {
                     <Link to="/doacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Doações</Button></Link>
                 </>
             )}
-            <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-                className={classes.navHiddenInvert}
-              >
+            <IconButton aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleMenu} color="inherit" className={classes.navHiddenInvert}>
                 <PersonIcon />
               </IconButton>
               <Dropdown
@@ -295,12 +286,12 @@ const Menu = withRouter((props) => {
                 open={open}
                 onClose={handleClose}
               >
-                <Link to="/minha-conta" style={{ color: '#000' }} className={classes.noLinkStyle}>
+                <Link to="/conta" style={{ color: '#000' }} className={classes.noLinkStyle}>
                     <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
                 </Link>
                 <MenuItem onClick={handleLogout} style={{ color: 'red' }}>Sair</MenuItem>
               </Dropdown>
-            <Link to="/minha-conta" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button></Link>
+            <Link to="/conta" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button></Link>
             <Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }} onClick={handleLogout}><ExitToAppIcon  />Sair</Button>
         </>
     )
@@ -310,20 +301,17 @@ const Menu = withRouter((props) => {
 export default function DashboardNavbar() {
     const classes = useStyles();
     
-
     return(
-            <NavBar
-                styles={classes}
-                color="info"
-                fixed={true}
-                brand={
-                    <MenuLeft />
-                }
-                rightLinks={
-                    <Menu />
-                } 
-            />
-  
+        <NavBar
+            styles={classes}
+            color="info"
+            fixed={true}
+            brand={
+                <MenuLeft />
+            }
+            rightLinks={
+                <Menu />
+            } 
+        />
     );
-
 }

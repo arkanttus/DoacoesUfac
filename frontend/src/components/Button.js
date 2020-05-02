@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     
 }));
 
-export default function Button(props, children) {
+export default function Button(props) {
     const classes = useStyles();
     let theme = null;
     if(props.variant === "blue") {

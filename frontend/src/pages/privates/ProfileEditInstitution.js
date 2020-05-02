@@ -9,6 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '../../components/Button';
+import { getUser, getInstitution } from '../../services/auth';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -81,20 +82,22 @@ function CPFMask(props) {
 
 export default function ProfileEditInstitution() {
     const classes = useStyles();
+    const user = getUser();
+    const institution = getInstitution();
     const [screen, setScreen] = React.useState(0);
-    const [description, setDescription] = React.useState('');
-    const [name, setName] = React.useState('');
-    const [nameResponsible, setNameResponsible] = React.useState('');
-    const [CPF, setCPF] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const [phone, setPhone] = React.useState('');
+    const [description, setDescription] = React.useState(institution.description);
+    const [name, setName] = React.useState(institution.name);
+    const [nameResponsible, setNameResponsible] = React.useState(user.name);
+    const [CPF, setCPF] = React.useState(user.cpf);
+    const [email, setEmail] = React.useState(user.email);
+    const [phone, setPhone] = React.useState(user.phone);
     const [password, setPassword] = React.useState('');
     const [newPassword, setNewPassword] = React.useState('');
     
     return(
         <Grid container className={classes.containerRoot}>
             <Container className={classes.container} maxWidth="lg">
-                <label className={classes.titulo}>Editar Perfil</label>
+                <label className={classes.titulo}>Edição de Conta</label>
                 
                 {screen===0 ? (
 
@@ -117,12 +120,7 @@ export default function ProfileEditInstitution() {
                     <Grid item xs={12} sm={6}>
                         <FormControl fullWidth>
                             <InputLabel htmlFor="formatted-text-mask-input">CPF do responsável</InputLabel>
-                            <Input
-                            name="textmask"
-                            value={CPF}
-                            onChange={(e) => setCPF(e.target.value)}
-                            inputComponent={CPFMask}
-                            />
+                            <Input name="textmask" value={CPF} onChange={(e) => setCPF(e.target.value)} inputComponent={CPFMask}/>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6}>
