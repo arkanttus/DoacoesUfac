@@ -9,10 +9,17 @@ import Container from '@material-ui/core/Container';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import FaceIcon from '@material-ui/icons/Face';
+import PhoneIcon from '@material-ui/icons/Phone';
+import MaskedInput from 'react-text-mask';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 
 import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
+
+import { sendRequest } from "../../services/api";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -94,8 +101,87 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function CadastroInstituicao() {
+function PhoneMask(props) {
+    const { inputRef, ...other } = props;
+  
+    return (
+      <MaskedInput
+        {...other}
+        ref={(ref) => {
+          inputRef(ref ? ref.inputElement : null);
+        }}
+        mask={['(', /[1-9]/, /\d/,')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/ , '-', /\d/, /\d/, /\d/, /\d/]}
+        placeholderChar={'\u2000'}
+        showMask
+      />
+    );
+}
+
+export default function CadastroInstituicao({ props }) {
     const classes = useStyles();
+    const Swal = require('sweetalert2');
+    const [ name, setName ] = React.useState('');
+    const [ email, setEmail ] = React.useState('');
+    const [ phoneNumber, setPhoneNumber ] = React.useState('');
+    const [ password, setPassword ] = React.useState('');
+
+    async function confirmRegister(e) {
+        e.preventDefault();
+        const response = await sendRequest('POST', "users/", { name, email, password1: password, phoneNumber, typeUser: "D" });
+
+        if(response.status === 201) {
+            Swal.fire({
+                title: "Seu cadastro foi realizado com sucesso!",
+                text: "Você foi redirecionado para a página de Login!",
+                icon: 'error',
+                confirmButtonText: 'Obrigado'
+            })
+            props.history.push('/login');
+        } else {
+            if(response.data.name) {
+                Swal.fire({
+                    title: response.data.name,
+                    text: "Nome Completo*",
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                })
+                return;
+            }
+            if(response.data.email) {
+                Swal.fire({
+                    title: response.data.email,
+                    text: "Email*",
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                })
+                return;
+            }
+            if(response.data.phoneNumber) {
+                Swal.fire({
+                    title: response.data.phoneNumber,
+                    text: "Telefone*",
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                })
+                return;
+            }
+            if(response.data.password1) {
+                Swal.fire({
+                    title: response.data.password1,
+                    text: "Senha de acesso*",
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                })
+                return;
+            }
+            Swal.fire({
+                title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
+                icon: 'error',
+                confirmButtonText: 'Okay'
+            })
+        }
+
+    }
 
     return(
         <Grid container className={classes.container}>
@@ -112,7 +198,7 @@ export default function CadastroInstituicao() {
                                         <FaceIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
                                     </Grid>
                                     <Grid item xs={10} sm={11}>
-                                        <TextField variant="standard" required fullWidth id="nome" label="Nome completo" autoComplete="nome"/>
+                                        <TextField value={name} onChange={(e) => setName(e.target.value)} variant="standard" required fullWidth id="nome" label="Nome completo" autoComplete="nome"/>
                                     </Grid>
                                 </Grid>
                                 
@@ -121,19 +207,37 @@ export default function CadastroInstituicao() {
                                         <EmailIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
                                     </Grid>
                                     <Grid item xs={10} sm={11}>
-                                        <TextField variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email"/>
+                                        <TextField value={email} onChange={(e) => setEmail(e.target.value)} variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email"/>
                                     </Grid>
                                 </Grid>
+
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <PhoneIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                    <FormControl fullWidth>
+                                        <InputLabel htmlFor="formatted-text-mask-input">Telefone</InputLabel>
+                                        <Input
+                                        name="textmask"
+                                        value={phoneNumber}
+                                        onChange={(e) => setPhoneNumber(e.target.value)}
+                                        inputComponent={PhoneMask}
+                                        />
+                                    </FormControl>
+                                    </Grid>
+                                </Grid>
+
                                 <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                     <Grid item>
                                         <LockIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                     </Grid>
                                     <Grid item xs={10} sm={11}>
-                                        <TextField variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password"/>
+                                        <TextField value={password} onChange={(e) => setPassword(e.target.value)} variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password"/>
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Button style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
+                            <Button onClick={(e) => confirmRegister(e)} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
                         </CardBody>
                     </Card>
                 </Grid>
