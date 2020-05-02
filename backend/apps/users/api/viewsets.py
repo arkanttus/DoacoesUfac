@@ -4,7 +4,7 @@ from rest_framework.authtoken.models import Token
 from django.utils.translation import gettext_lazy as _
 from rest_framework.decorators import action
 
-from .serializers import (UserReadSerializer, UserCreateSerializer)
+from .serializers import UserReadSerializer, UserCreateSerializer, PasswordChangeSerializer
 from .permissions import PostOnlyPermissions
 from apps.users.models import User
 from apps.donates.models import Donate
@@ -66,6 +66,15 @@ class UserView(viewsets.ModelViewSet):
         queryset = Donate.objects.filter(donator_id=pk)
         serializer = DonateSerializer(queryset, many=True)
         return response.Response(serializer.data)
+
+    @action(methods=['post'], detail=True)
+    def change_password(self, request, pk=None):
+        if self.request.user.id != pk:
+            return response.Response({'errors': _('Não tem autorização')}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer = PasswordChangeSerializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return response.Response({}, status=status.HTTP_200_OK)
 
 
 class Login(ObtainAuthToken):
