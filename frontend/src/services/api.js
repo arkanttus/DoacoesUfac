@@ -28,6 +28,8 @@ export async function sendRequest(type, url, params) {
             response = await api.post(url, params)
         else if(type === 'PATCH')
             response = await api.patch(url, params)
+        else if(type === 'PUT')
+            response = await api.put(url, params)
 
         const { status, data } = response
 
@@ -49,6 +51,10 @@ async function getFromRequest(type, url, params) {
 
 export async function getInstitutionById(id) {
     return await getFromRequest("GET", "institutions/"+id, {})
+}
+
+export async function getInstitutionTypes() {
+    return await getFromRequest("GET", "type_institutions/", {})
 }
 
 export async function getDonationsByUserId(id) {

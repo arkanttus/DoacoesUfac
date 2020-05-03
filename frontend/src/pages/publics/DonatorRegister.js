@@ -132,18 +132,20 @@ export default function CadastroInstituicao({ props }) {
         if(response.status === 201) {
             Swal.fire({
                 title: "Seu cadastro foi realizado com sucesso!",
-                text: "Você foi redirecionado para a página de Login!",
-                icon: 'error',
+                text: "Você será redirecionado para a página de Login!",
+                icon: 'success',
                 confirmButtonText: 'Obrigado'
-            })
-            props.history.push('/login');
+            }).then(() => {
+                props.history.push('/login');
+            });
+            
         } else {
             if(response.data.name) {
                 Swal.fire({
                     title: response.data.name,
                     text: "Nome Completo*",
                     icon: 'error',
-                    confirmButtonText: 'Okay'
+                    confirmButtonText: 'Ok'
                 })
                 return;
             }
@@ -152,7 +154,7 @@ export default function CadastroInstituicao({ props }) {
                     title: response.data.email,
                     text: "Email*",
                     icon: 'error',
-                    confirmButtonText: 'Okay'
+                    confirmButtonText: 'Ok'
                 })
                 return;
             }
@@ -161,7 +163,7 @@ export default function CadastroInstituicao({ props }) {
                     title: response.data.phoneNumber,
                     text: "Telefone*",
                     icon: 'error',
-                    confirmButtonText: 'Okay'
+                    confirmButtonText: 'Ok'
                 })
                 return;
             }
@@ -170,14 +172,14 @@ export default function CadastroInstituicao({ props }) {
                     title: response.data.password1,
                     text: "Senha de acesso*",
                     icon: 'error',
-                    confirmButtonText: 'Okay'
+                    confirmButtonText: 'Ok'
                 })
                 return;
             }
             Swal.fire({
                 title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
                 icon: 'error',
-                confirmButtonText: 'Okay'
+                confirmButtonText: 'Ok'
             })
         }
 

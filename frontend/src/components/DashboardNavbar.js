@@ -286,10 +286,12 @@ const Menu = withRouter((props) => {
                 open={open}
                 onClose={handleClose}
               >
-                <Link to="/conta" style={{ textDecoration: 'none', color: "black" }}><MenuItem>Minha Conta</MenuItem></Link>
+                <Link to="/conta" style={{ color: '#000' }} className={classes.noLinkStyle}>
+                    <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
+                </Link>
                 <MenuItem onClick={handleLogout} style={{ color: 'red' }}>Sair</MenuItem>
               </Dropdown>
-            <Link to="/minha-conta" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button></Link>
+            <Link to="/conta" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button></Link>
             <Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }} onClick={handleLogout}><ExitToAppIcon  />Sair</Button>
         </>
     )
