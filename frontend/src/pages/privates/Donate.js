@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '../../components/Button';
 import WaitLoading from '../../components/WaitLoading';
-import { getInstitutionById, getDonationsByInstitutionId } from '../../services/api';
+import { getInstitutionById, getDonationsByInstitutionId, sendRequest } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -103,14 +103,24 @@ export default function Donate({ props }) {
     ]);*/
     
     const handleChange = (itemId) => {
-        items.forEach(function(item) {
-            if(itemId === item.id)
-                item.checked = !items.checked
+        const newItems = items.map(item => {
+            if(itemId === item.id) {
+                item.checked = !item.checked
+            }
+            return item
         });
-        console.log(items)
-        setItems(items)
-        //setItems({ ...items, [event.target.name]: event.target.checked });
+        setItems(newItems)
     };
+
+    async function handleSubmit() {
+        const response = await sendRequest("POST", `institutions/${institution.id}/donates/`, { items })
+        
+        
+        if(response.status === 200) {
+        }
+        else {
+        }
+    }
 
     return(
         <Grid container className={classes.containerRoot}>
@@ -158,7 +168,7 @@ export default function Donate({ props }) {
                                         </Grid>
 
                                         <Grid item>
-                                            <Button variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>CONFIRMAR</Button>
+                                            <Button onClick={handleSubmit} variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>CONFIRMAR</Button>
                                         </Grid>
                                     </Grid>
                                 </>
