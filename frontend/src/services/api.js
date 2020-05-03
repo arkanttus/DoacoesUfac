@@ -53,6 +53,10 @@ export async function getInstitutionById(id) {
     return await getFromRequest("GET", "institutions/"+id, {})
 }
 
+export async function getInstitutionTypes() {
+    return await getFromRequest("GET", "type_institutions/", {})
+}
+
 export async function getDonationsByUserId(id) {
     return await getFromRequest("GET", `user/${id}/donates`, {})
 }

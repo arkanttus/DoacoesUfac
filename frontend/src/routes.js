@@ -20,6 +20,8 @@ import HowToDonate from './pages/publics/HowToDonate'
 import Home from './pages/publics/Home'
 import AboutTeam from './pages/publics/AboutTeam'
 import Credits from './pages/publics/Credits'
+import Contact from './pages/publics/Contact'
+
 
 import Dashboard from './pages/privates/Dashboard';
 import Donated from './pages/privates/Donated';
@@ -64,6 +66,7 @@ const NotAuthenticateRoute = ({ component: Component, ...rest }) => (
 
 const user = getUser();
 
+console.log(user);
 const Routes = () => (
   <BrowserRouter>
     <Switch>
@@ -72,12 +75,14 @@ const Routes = () => (
       <RouteWithLayout path="/como-doar" layout={LandingLayout} component={HowToDonate} />
       <RouteWithLayout path="/equipe" layout={LandingLayout} component={AboutTeam} />
       <RouteWithLayout path="/creditos" layout={LandingLayout} component={Credits} />
+      <RouteWithLayout path="/contato" layout={LandingLayout} component={Contact} />
+
 
       <NotAuthenticateRoute path="/login" layout={FormLayout} component={Login} />
       <NotAuthenticateRoute path="/instituicao" layout={FormLayout} component={InstituteRegister} />
       <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
 
-      <PrivateRoute path="/dashboard" layout={DashboardLayout} component={user.typeUser === 'Doador' ? Dashboard : DonationList} />
+      <PrivateRoute path="/dashboard" layout={DashboardLayout} component={user && user.typeUser === 'Doador' ? Dashboard : DonationList} />
       <PrivateRoute path="/doacoes" layout={DashboardLayout} component={DonationList} />
       <PrivateRoute path="/minhas-doacoes" layout={DashboardLayout} component={MyDonations} />
       <PrivateRoute path="/doado" layout={DashboardLayout} component={Donated} />
@@ -85,7 +90,7 @@ const Routes = () => (
       <PrivateRoute path="/perfil-doador" layout={DashboardLayout} component={ProfileEditDonator} />
       <PrivateRoute path="/perfil-instituicao" layout={DashboardLayout} component={ProfileEditInstitution} />
       <PrivateRoute path="/doar/:institutionId" layout={DashboardLayout} component={Donate} />
-      <PrivateRoute path="/conta" layout={DashboardLayout} component={user.typeUser === 'Doador' ? ProfileEditDonator : ProfileEditInstitution} />
+      <PrivateRoute path="/conta" layout={DashboardLayout} component={user && user.typeUser === 'Doador' ? ProfileEditDonator : ProfileEditInstitution} />
       <PrivateRoute path="/selecionar-doacoes" layout={DashboardLayout} component={SelectDonationTypes} />
     </Switch>
   </BrowserRouter>
