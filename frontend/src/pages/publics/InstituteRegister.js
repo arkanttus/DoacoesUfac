@@ -23,6 +23,9 @@ import CallIcon from '@material-ui/icons/Call';
 import TipoIcon from '@material-ui/icons/HomeWork';
 import DescricaoIcon from '@material-ui/icons/BorderColorOutlined';
 import LocationIcon from '@material-ui/icons/LocationOn';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 
 import Card from "../../components/MaterialKit/Card/Card";
@@ -152,8 +155,12 @@ export default function CadastroInstituicao({props}) {
     const [email, setEmail] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [confirmPassword, setConfirmPassword] = React.useState("");
     const [type,setType] = React.useState("");
     const [types,setTypes] = React.useState(null);
+    const [linkFacebook, setLinkFacebook] = React.useState("");
+    const [linkInstagram, setLinkInstagram] = React.useState("");
+    const [linkTwitter, setLinkTwitter] = React.useState("");
 
 
     async function loadData() {
@@ -177,7 +184,112 @@ export default function CadastroInstituicao({props}) {
 
     async function confirmRegister(e) {
         e.preventDefault();
-        const response = await sendRequest('POST', "users/", { name:nameResponsible, email,CPF, password1: password, phoneNumber:phone, typeUser: "R" });
+
+        //Nome completo do responsável vazio
+        if(nameResponsible === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Nome completo do responsável",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //CPF vazio
+        if(CPF === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "CPF",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Email vazio
+        if(email === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Email",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Senha vazio
+        if(password === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Senha de acesso",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Confirmar senha vazio
+        if(confirmPassword === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Confirmar senha de acesso",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Senhas não correspondem
+        if(password !== confirmPassword) {
+            Swal.fire({
+                title: "Os campos de senha não correspondem:",
+                text: "Senha de acesso e Confirmar senha de acesso",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Nome da Instituição vazio
+        if(name === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Nome da Instituição",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Tipo de Instituição vazio
+        if(type === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Tipo de Instituição",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Breve descrição vazio
+        if(description === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Breve descrição",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        
+
+        const response = await sendRequest('POST', "institutions/", { 
+            owner: { name: nameResponsible, email, password1: password, CPF, typeUser: "R", phoneNumber: phone},
+            name,
+            street: "Rua sem saída",
+            neighborhood: "Perto da Torre dos Vingadores",
+            typeInstitution: type,
+            description,
+            latitude: institution.lat,
+            longitude: institution.long,
+            linkFacebook, linkInstagram,
+            linkTwitter,
+            }
+        );
 
         if(response.status === 201) {
             Swal.fire({
@@ -239,7 +351,7 @@ export default function CadastroInstituicao({props}) {
         <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
             <CssBaseline />
             { screen === 0 ? (
-                   <Grid item xs={12}  justify="center" className={classes.gridCard}>
+                   <Grid item xs={12} className={classes.gridCard}>
                    <Card style={{width: "35rem"}}>
                        <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                        <CardBody style={{ paddingRight:15, paddingLeft:15}}>
@@ -248,7 +360,7 @@ export default function CadastroInstituicao({props}) {
                                    <Grid item>
                                        <FaceIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
                                    </Grid>
-                                   <Grid container  item xs={10} sm={18}>
+                                   <Grid container  item xs={10} sm={11}>
                                        <TextField   onChange={e => setNameResponsible(e.target.value)}
                                           variant="standard" required fullWidth  name="nome" value={nameResponsible} label="Nome completo do responsável" autoComplete="nome"/>
                                    </Grid>
@@ -260,7 +372,7 @@ export default function CadastroInstituicao({props}) {
                                    </Grid>
                                         <Grid item xs={10} sm={11}>
                                         <FormControl fullWidth>
-                                        <InputLabel htmlFor="formatted-text-mask-input">CPF do responsável</InputLabel>
+                                        <InputLabel required htmlFor="formatted-text-mask-input">CPF do responsável</InputLabel>
                                         <Input
                                         name="textmask"
                                         value={CPF}
@@ -289,13 +401,22 @@ export default function CadastroInstituicao({props}) {
                                    </Grid>
                                </Grid>
 
+                               <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                   <Grid item>
+                                       <LockIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                   </Grid>
+                                   <Grid item xs={10} sm={11}>
+                                       <TextField  onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} variant="standard" required fullWidth label="Confirmar senha de acesso" type="password" id="password" autoComplete="current-password"/>
+                                   </Grid>
+                               </Grid>
+
                            </Grid>
                            <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">CONTINUAR</Button>
                        </CardBody>
                    </Card>
                </Grid>            
             ): (
-                <Grid item xs={12}  justify="center" className={classes.gridCard}>
+                <Grid item xs={12} className={classes.gridCard}>
                         <Card style={{width: "35rem"}}>
                             <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                             <CardBody style={{ paddingRight:15, paddingLeft:15}}>
@@ -363,10 +484,38 @@ export default function CadastroInstituicao({props}) {
 
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                         <Grid item xs={12} >            
-                                            <iframe style={{ border:"1px solid", width:"100%" }} src={mapUrl} title="map" frameborder="0" className={classes.map} allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                                            <iframe style={{ border:"1px solid", width:"100%" }} src={mapUrl} title="map" frameBorder="0" className={classes.map} allowFullScreen="" aria-hidden="false" tabIndex="0"></iframe>
                                         </Grid>
                                     </Grid>
-                                </Grid>   
+                                </Grid>
+
+                            
+                                <label style={{ fontWeight: 'bold', display: 'flex', justifyContent: 'center', fontSize: '1.2rem' }}>Redes Sociais</label>
+
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <FacebookIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <TextField  onChange={e => setLinkFacebook(e.target.value)} value={linkFacebook} variant="standard" fullWidth label="Facebook" name="instituicao"/>
+                                    </Grid>
+                                </Grid>
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <InstagramIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <TextField  onChange={e => setLinkInstagram(e.target.value)} value={linkInstagram} variant="standard" fullWidth label="Instagram" />
+                                    </Grid>
+                                </Grid>
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <TwitterIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <TextField  onChange={e => setLinkTwitter(e.target.value)} value={linkTwitter} variant="standard" fullWidth label="Twitter"/>
+                                    </Grid>
+                                </Grid>
                                 
                                 <Grid container spacing={3}>
                                     <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">VOLTAR</Button>
