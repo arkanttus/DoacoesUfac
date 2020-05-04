@@ -13,7 +13,8 @@ class UserAdmin(DjangoUserAdmin):
                 'name',
                 'phone_number',
                 'email_confirm',
-                'type_user'
+                'type_user',
+                'cpf'
             )
         }),
         (_('Permissions'), {'fields': (
@@ -35,7 +36,7 @@ class UserAdmin(DjangoUserAdmin):
             'fields': ('email', 'phone_number', 'password1', 'password2'),
         }),
     )
-    list_display = ('email', 'name', 'is_active', )
+    list_display = ('email', 'name', 'cpf', 'is_active', )
     search_fields = ('email', 'name')
     ordering = ('-id',)
     list_filter = ('is_superuser', 'is_active')
