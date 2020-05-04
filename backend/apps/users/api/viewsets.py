@@ -72,7 +72,8 @@ class UserView(viewsets.ModelViewSet):
         if str(self.request.user.id) != pk:
             return response.Response({'errors': _('Não tem autorização')}, status=status.HTTP_401_UNAUTHORIZED)
         serializer = PasswordChangeSerializer(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid()
+
         serializer.save()
         return response.Response({}, status=status.HTTP_200_OK)
 

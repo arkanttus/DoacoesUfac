@@ -59,6 +59,11 @@ class Institution(BaseModel):
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
     longitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
 
+    # Social
+    link_twitter = models.URLField(_('Twitter'), null=True, blank=True)
+    link_instagram = models.URLField(_('Instagram'), null=True, blank=True)
+    link_facebook = models.URLField(_('Facebook'), null=True, blank=True)
+
     class Meta:
         verbose_name = _('Instituição')
         verbose_name_plural = _('Instituições')

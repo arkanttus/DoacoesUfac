@@ -1,7 +1,9 @@
-from rest_framework import viewsets, permissions, response
+from rest_framework import viewsets, permissions, response, status
 from rest_framework.decorators import action
 
-from .serializers import InstitutionReadSerializer, TypeInstitutionSerializer
+from .serializers import (
+    InstitutionReadSerializer, TypeInstitutionSerializer, InstitutionCreateSerializer, InstitutionUpdateSerializer
+)
 from apps.base.models import Institution, TypeInstitution
 from apps.donates.models import Donate
 from apps.donates.serializers import DonateSerializer
@@ -11,8 +13,24 @@ from apps.need_donate.serializers import NeedDonateSerializer
 
 class InstitutionView(viewsets.ModelViewSet):
     queryset = Institution.objects.all()
-    serializer_class = InstitutionReadSerializer
     permission_classes = (permissions.AllowAny,)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return InstitutionReadSerializer
+        return InstitutionUpdateSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = InstitutionCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        try:
+            qs = Institution.objects.get(id=serializer.instance.id)
+            serializer_read = InstitutionReadSerializer(qs)
+        except Institution.DoesNotExist:
+            return response.Response({'errors': 'Instituição não encontrada'}, status=status.HTTP_404_NOT_FOUND)
+        headers = self.get_success_headers(serializer_read.data)
+        return response.Response(serializer_read.data, status=status.HTTP_201_CREATED, headers=headers)
 
     @action(methods=['get'], detail=True)
     def donates(self, request, pk=None):
@@ -27,7 +45,7 @@ class InstitutionView(viewsets.ModelViewSet):
         return response.Response(serializer.data)
 
 
-class TypeInstitutionView(viewsets.ModelViewSet):
+class TypeInstitutionView(viewsets.ReadOnlyModelViewSet):
     queryset = TypeInstitution.objects.all()
     serializer_class = TypeInstitutionSerializer
     permission_classes = (permissions.AllowAny,)
