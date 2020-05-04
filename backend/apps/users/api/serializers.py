@@ -83,7 +83,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     def validate_phoneNumber(self, value):
         number = re.sub(r'\D', '', value)
-        if len(number) > 11 or len(number) < 11:
+        if len(number) > 11 or len(number) < 10:
             raise exceptions.ValidationError(_('Número Inválido'))
         return number
 

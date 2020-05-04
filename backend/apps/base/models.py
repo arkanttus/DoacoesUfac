@@ -57,7 +57,7 @@ class Institution(BaseModel):
     city = models.CharField(_('Cidade'), max_length=150)
 
     # Social
-    link_twitter = models.CharField(_('Twitter'), null=True, blank=True, max_length=200),
+    link_twitter = models.CharField(_('Twitter'), null=True, blank=True, max_length=200)
     link_instagram = models.CharField(_('Instagram'), null=True, blank=True, max_length=200)
     link_facebook = models.CharField(_('Facebook'), null=True, blank=True, max_length=200)
 
