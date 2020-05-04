@@ -68,7 +68,11 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_data = validated_data.pop('owner')
+        password_user = user_data.pop('password', None)
+
         user = User.objects.create(**user_data)
+        user.set_password(password_user)
+        user.save()
         return Institution.objects.create(owner=user, **validated_data)
 
     def validate(self, attrs):
