@@ -87,9 +87,15 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
     longitude = serializers.CharField(required=False, max_length=20)
     uf = serializers.CharField(required=True, max_length=100)
     city = serializers.CharField(required=True, max_length=100)
-    linkTwitter = serializers.CharField(source='link_twitter', required=False, max_length=200)
-    linkInstagram = serializers.CharField(source='link_instagram', required=False, max_length=200)
-    linkFacebook = serializers.CharField(source='link_facebook', required=False, max_length=200)
+    linkTwitter = serializers.CharField(
+        source='link_twitter', required=False, max_length=200, allow_null=True, allow_blank=True
+    )
+    linkInstagram = serializers.CharField(
+        source='link_instagram', required=False, max_length=200, allow_null=True, allow_blank=True
+    )
+    linkFacebook = serializers.CharField(
+        source='link_facebook', required=False, max_length=200, allow_null=True, allow_blank=True
+    )
 
     class Meta:
         model = Institution
