@@ -50,19 +50,16 @@ class Institution(BaseModel):
     description = models.TextField(_('Descrição da Instituição'), max_length=500)
     image = models.ImageField(_('Foto da instituição'), upload_to=path_image_institution, null=True, blank=True)
 
-    # Address
-    street = models.CharField(_('Rua'), max_length=200)
-    neighborhood = models.CharField(_('Bairro'), max_length=155)
-    number = models.IntegerField(_('Número'), null=True, blank=True)
-
     # Geo
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
     longitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
+    uf = models.CharField(_('Estado'), max_length=100)
+    city = models.CharField(_('Cidade'), max_length=150)
 
     # Social
-    link_twitter = models.URLField(_('Twitter'), null=True, blank=True)
-    link_instagram = models.URLField(_('Instagram'), null=True, blank=True)
-    link_facebook = models.URLField(_('Facebook'), null=True, blank=True)
+    link_twitter = models.CharField(_('Twitter'), null=True, blank=True, max_length=200),
+    link_instagram = models.CharField(_('Instagram'), null=True, blank=True, max_length=200)
+    link_facebook = models.CharField(_('Facebook'), null=True, blank=True, max_length=200)
 
     class Meta:
         verbose_name = _('Instituição')
@@ -72,11 +69,11 @@ class Institution(BaseModel):
         return f'{self.name} - Owner: {self.owner.name}'
 
     def clean(self):
-        if self.type_institution.name.startswith('Outro') and not self.other_type:
+        if self.type_institution and self.type_institution.name.startswith('Outro') and not self.other_type:
             raise ValidationError(_('Especifique o tipo de instituição'))
 
     @property
-    def get_institution_others(self):
+    def get_institution(self):
         if self.type_institution.name.startswith('Outro'):
             return f'{self.other_type}'
         else:

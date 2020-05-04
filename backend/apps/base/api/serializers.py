@@ -20,11 +20,10 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     otherType = serializers.ReadOnlyField(source='other_type')
     image = serializers.ImageField(use_url=True)
     description = serializers.ReadOnlyField()
-    street = serializers.ReadOnlyField()
-    neighborhood = serializers.ReadOnlyField()
-    number = serializers.ReadOnlyField()
     latitude = serializers.ReadOnlyField()
     longitude = serializers.ReadOnlyField()
+    uf = serializers.ReadOnlyField()
+    city = serializers.ReadOnlyField()
     linkTwitter = serializers.ReadOnlyField(source='link_twitter')
     linkInstagram = serializers.ReadOnlyField(source='link_instagram')
     linkFacebook = serializers.ReadOnlyField(source='link_facebook')
@@ -32,8 +31,8 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Institution
         fields = (
-            'id', 'name', 'owner', 'typeInstitution', 'otherType', 'image', 'description', 'street', 'neighborhood',
-            'number', 'latitude', 'longitude', 'linkTwitter', 'linkInstagram', 'linkFacebook'
+            'id', 'name', 'owner', 'typeInstitution', 'otherType', 'image', 'description','latitude', 'longitude',
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
         )
 
 
@@ -46,20 +45,19 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
     otherType = serializers.CharField(source='other_type', required=False)
     image = serializers.ImageField(required=False)
     description = serializers.CharField(required=False, max_length=500)
-    street = serializers.CharField(required=True, max_length=200)
-    neighborhood = serializers.CharField(required=True, max_length=155)
-    number = serializers.IntegerField(required=False)
     latitude = serializers.CharField(required=False, max_length=20)
     longitude = serializers.CharField(required=False, max_length=20)
-    linkTwitter = serializers.URLField(source='link_twitter', required=False)
-    linkInstagram = serializers.URLField(source='link_instagram', required=False)
-    linkFacebook = serializers.URLField(source='link_facebook', required=False)
+    uf = serializers.CharField(required=True, max_length=100)
+    city = serializers.CharField(required=True, max_length=100)
+    linkTwitter = serializers.CharField(source='link_twitter', required=False, max_length=200)
+    linkInstagram = serializers.CharField(source='link_instagram', required=False, max_length=200)
+    linkFacebook = serializers.CharField(source='link_facebook', required=False, max_length=200)
 
     class Meta:
         model = Institution
         fields = (
-            'name', 'owner', 'typeInstitution', 'image', 'description', 'street', 'neighborhood',
-            'number', 'latitude', 'longitude', 'otherType', 'linkTwitter', 'linkInstagram', 'linkFacebook'
+            'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude', 'otherType',
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
         )
 
     def create(self, validated_data):
@@ -85,23 +83,21 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
     otherType = serializers.CharField(source='other_type')
     image = serializers.ImageField(required=False)
     description = serializers.CharField(required=False, max_length=500)
-    street = serializers.CharField(required=True, max_length=200)
-    neighborhood = serializers.CharField(required=True, max_length=155)
-    number = serializers.IntegerField(required=False)
     latitude = serializers.CharField(required=False, max_length=20)
     longitude = serializers.CharField(required=False, max_length=20)
-    linkTwitter = serializers.URLField(source='link_twitter', required=False)
-    linkInstagram = serializers.URLField(source='link_instagram', required=False)
-    linkFacebook = serializers.URLField(source='link_facebook', required=False)
+    uf = serializers.CharField(required=True, max_length=100)
+    city = serializers.CharField(required=True, max_length=100)
+    linkTwitter = serializers.CharField(source='link_twitter', required=False, max_length=200)
+    linkInstagram = serializers.CharField(source='link_instagram', required=False, max_length=200)
+    linkFacebook = serializers.CharField(source='link_facebook', required=False, max_length=200)
 
     class Meta:
         model = Institution
         fields = (
-            'name', 'owner', 'typeInstitution', 'image', 'description', 'street', 'neighborhood',
-            'number', 'latitude', 'longitude', 'otherType', 'linkTwitter', 'linkInstagram', 'linkFacebook'
+            'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude', 'otherType',
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
         )
 
-    def create(self, validated_data):
+    def update(self, instance, validated_data):
         user_data = validated_data.pop('owner')
-        user = User.objects.create(**user_data)
-        return Institution.objects.create(owner=user, **validated_data)
+        return super(InstitutionUpdateSerializer, self).update(instance, validated_data)
