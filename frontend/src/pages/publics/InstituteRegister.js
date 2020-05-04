@@ -23,11 +23,12 @@ import CallIcon from '@material-ui/icons/Call';
 import TipoIcon from '@material-ui/icons/HomeWork';
 import DescricaoIcon from '@material-ui/icons/BorderColorOutlined';
 import LocationIcon from '@material-ui/icons/LocationOn';
-
+import Modal from '@material-ui/core/Modal';
 
 import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
+import MapRegister from '../../components/Map/MapRegister'
 
 import { sendRequest,getInstitutionTypes } from "../../services/api";
 
@@ -90,6 +91,17 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             padding: 0
         }
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+    paper2: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
     },
 }));
 
@@ -154,7 +166,7 @@ export default function CadastroInstituicao({props}) {
     const [password, setPassword] = React.useState('');
     const [type,setType] = React.useState("");
     const [types,setTypes] = React.useState(null);
-
+    const [openMapa, setOpenMapa] = React.useState(false)
 
     async function loadData() {
         let res = await getInstitutionTypes()
@@ -167,8 +179,8 @@ export default function CadastroInstituicao({props}) {
     }
 
     React.useEffect(() => {
-        loadData();
-    }, []);
+        //loadData();
+    }, [loadData]);
 
 
     function handleChange (e){
@@ -235,7 +247,7 @@ export default function CadastroInstituicao({props}) {
     }
    
     return(
-        <Grid container className={classes.container}>
+    <Grid container className={classes.container}>
         <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
             <CssBaseline />
             { screen === 0 ? (
@@ -359,13 +371,12 @@ export default function CadastroInstituicao({props}) {
                                         <Grid container item xs={10} sm={11}>
                                              <label style={{ color: "#555"}}>Localização da Instituição</label>
                                         </Grid>
-                                    </Grid>
-
-                                    <Grid container style={{ padding: 10 }} alignItems="flex-end">
-                                        <Grid item xs={12} >            
-                                            <iframe style={{ border:"1px solid", width:"100%" }} src={mapUrl} title="map" frameborder="0" className={classes.map} allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                                        <Grid container item xs={10} sm={11}>
+                                             <Button onClick={() => setOpenMapa(true)}> Abrir Mapa</Button>
                                         </Grid>
                                     </Grid>
+
+                                    
                                 </Grid>   
                                 
                                 <Grid container spacing={3}>
@@ -378,10 +389,15 @@ export default function CadastroInstituicao({props}) {
                     </Grid>                          
             ) }      
         </Container>
+        <Modal open={openMapa} className={classes.modal} onClose={() => setOpenMapa(false)} >
+            <div className={classes.paper2}>
+                <MapRegister />
+            </div>
+        </Modal>
     </Grid>
-    ) 
-        
     
+) 
+        
     
 }
 
