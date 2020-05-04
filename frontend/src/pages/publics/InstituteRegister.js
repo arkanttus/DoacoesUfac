@@ -31,6 +31,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
+import MapRegister from '../../components/Map/MapRegister'
 
 import { sendRequest,getInstitutionTypes } from "../../services/api";
 
@@ -93,6 +94,17 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             padding: 0
         }
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+    paper2: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
     },
 }));
 
@@ -162,6 +174,7 @@ export default function CadastroInstituicao({props}) {
     const [linkInstagram, setLinkInstagram] = React.useState("");
     const [linkTwitter, setLinkTwitter] = React.useState("");
 
+    const [openMapa, setOpenMapa] = React.useState(false)
 
     async function loadData() {
         let res = await getInstitutionTypes()
@@ -174,8 +187,8 @@ export default function CadastroInstituicao({props}) {
     }
 
     React.useEffect(() => {
-        loadData();
-    }, []);
+        //loadData();
+    }, [loadData]);
 
 
     function handleChange (e){
@@ -347,7 +360,7 @@ export default function CadastroInstituicao({props}) {
     }
    
     return(
-        <Grid container className={classes.container}>
+    <Grid container className={classes.container}>
         <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
             <CssBaseline />
             { screen === 0 ? (
@@ -527,10 +540,11 @@ export default function CadastroInstituicao({props}) {
                     </Grid>                          
             ) }      
         </Container>
+       
     </Grid>
-    ) 
-        
     
+) 
+        
     
 }
 
