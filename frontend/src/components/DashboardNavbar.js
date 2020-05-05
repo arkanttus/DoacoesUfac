@@ -257,7 +257,7 @@ const Menu = withRouter((props) => {
 
     return (
         <>
-            {user.typeUser === 'Doador' ? (
+            { user && user.typeUser === 'Doador' ? (
                 <>
                     <Link to="/dashboard" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Instituições</Button></Link>
                     <Link to="/minhas-doacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Minhas Doações</Button></Link>

@@ -152,6 +152,8 @@ export default function CadastroInstituicao({props}) {
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
     
     const [ screen,setScreen] = React.useState(0);
+    const [other,setOther] = React.useState(0);
+
     const [description, setDescription] = React.useState('');
     const [name, setName] = React.useState('');
     const [nameResponsible, setNameResponsible] = React.useState('');
@@ -163,6 +165,7 @@ export default function CadastroInstituicao({props}) {
     const [type,setType] = React.useState("");
     const [typeID, setTypeID] = React.useState("");
     const [types,setTypes] = React.useState(null);
+    const [otherType,setOtherType] = React.useState("");
     const [uf, setUF] = React.useState("");
     const [citiesArray, setCitiesArray] = React.useState([]);
     const [city, setCity] = React.useState("");
@@ -189,6 +192,13 @@ export default function CadastroInstituicao({props}) {
     function handleChange (e){
         setType(e.target.value);
         setTypeID(types.filter(obj => { return obj.name === e.target.value })[0].id);
+
+        if (e.target.value.toLowerCase()==="outro"){
+            setOther(1)
+        } else{
+            setOther(0)
+        }
+
     }
 
     function handleSelectCities(e) {
@@ -279,7 +289,7 @@ export default function CadastroInstituicao({props}) {
             });
         }
         //Tipo de Instituição vazio
-        if(type === "") {
+        if(type === "" || otherType==="") {
             Swal.fire({
                 title: "Este campo não pode ser vazio!",
                 text: "Tipo de Instituição",
@@ -324,6 +334,7 @@ export default function CadastroInstituicao({props}) {
             owner: { name: nameResponsible, email, password1: password, cpf: CPF, typeUser: "R", phoneNumber: phone},
             name,
             typeInstitution: typeID,
+            otherType,
             description,
             latitude: "Arrumar depois",
             longitude: "Arrumar depois",
@@ -507,13 +518,26 @@ export default function CadastroInstituicao({props}) {
                                                 <Select value={type} onChange={handleChange} input={<Input />}>    
                                                 { types ? types.map((type) => (
                                                     <MenuItem key={type.id} value={type.name}>
-                                                    {type.name}
+                                                        {type.name}
                                                     </MenuItem>
-                                                )) : <> </> }
+                                                ))
+                                                 : <> </> }
                                                 </Select>
                                             </FormControl>
                                         </Grid>
                                     </Grid>
+                                        {other === 1 ? 
+                                            <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                                 <Grid item>
+                                                    <TipoIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                                </Grid>
+                                                <Grid item xs={10} sm={11}> 
+                                                    <TextField onChange={e => setOtherType(e.target.value)} value={otherType} variant="standard" required fullWidth name="type" label="Tipo de Instituicão"  id="tipo" autoComplete="tipo"/>
+                                                </Grid>   
+                                            </Grid>    
+                                        : <> </> }
+                                      
+                                    
 
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                         <Grid item>
