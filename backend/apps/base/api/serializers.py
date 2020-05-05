@@ -77,6 +77,10 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
         user.save()
         return Institution.objects.create(owner=user, **validated_data)
 
+    def update(self, instance, validated_data):
+        # user_data = validated_data.pop('owner')
+        return super(InstitutionCreateSerializer, self).update(instance, validated_data)
+
     def validate(self, attrs):
         user = attrs.get('owner', None)
         type_user = user.get('type_user', None)
@@ -117,5 +121,5 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('owner')
+        # user_data = validated_data.pop('owner')
         return super(InstitutionUpdateSerializer, self).update(instance, validated_data)
