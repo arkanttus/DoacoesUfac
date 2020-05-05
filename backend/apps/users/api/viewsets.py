@@ -60,11 +60,11 @@ class UserView(viewsets.ModelViewSet):
         Token.objects.exclude(user=instance)
         return response.Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(methods=['get'], detail=True)
-    def donates(self, request, pk=None):
-        queryset = Donate.objects.filter(donator_id=pk)
-        serializer = UserDonateSerializer(queryset, many=True)
-        return response.Response(serializer.data)
+    # @action(methods=['get'], detail=True)
+    # def donates(self, request, pk=None):
+    #     queryset = Donate.objects.filter(donator_id=pk)
+    #     serializer = UserDonateSerializer(queryset, many=True)
+    #     return response.Response(serializer.data)
 
     @action(methods=['post'], detail=True)
     def change_password(self, request, pk=None):
@@ -97,10 +97,10 @@ class Login(ObtainAuthToken):
             pass
         token, created = Token.objects.get_or_create(user=user)
         serializer_user = UserReadSerializer(user)
-        if user.type_user == User.RECEIVER:
-            institution = user.institution_set.all()[0]
+        try:
+            institution = Institution.objects.get(owner_id=user.id)
             serializer_institution = InstitutionReadSerializer(institution)
-        else:
+        except Institution.DoesNotExist:
             institution = None
             serializer_institution = None
         return response.Response({

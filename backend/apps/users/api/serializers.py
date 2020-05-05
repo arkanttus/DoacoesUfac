@@ -9,6 +9,7 @@ from django.conf import settings
 # Get the UserModel
 UserModel = get_user_model()
 
+
 class UserReadSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField()
     cpf = serializers.ReadOnlyField()
