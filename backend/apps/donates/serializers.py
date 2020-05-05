@@ -11,10 +11,9 @@ from apps.users.api.serializers import UserReadSerializer
 User = get_user_model()
 
 
-class DonateSerializer(serializers.ModelSerializer):
-    needDonate = NeedDonateSerializer(many=True, read_only=True)
+class InstitutionDonateSerializer(serializers.ModelSerializer):
+    needDonates = NeedDonateSerializer(many=True, read_only=True)
     donator = UserReadSerializer(read_only=True)
-    institution = InstitutionReadSerializer(read_only=True)
     setNeedDonates = serializers.PrimaryKeyRelatedField(
         source='need_donate', write_only=True, queryset=NeedDonate.objects.all(),
         required=True, many=True
@@ -22,16 +21,19 @@ class DonateSerializer(serializers.ModelSerializer):
     setDonator = serializers.PrimaryKeyRelatedField(
         source='donator', write_only=True, queryset=User.objects.all(), required=True
     )
-    setInstitution = serializers.PrimaryKeyRelatedField(
-        source='institution', write_only=True, queryset=Institution.objects.all(), required=True
-    )
 
     class Meta:
         model = Donate
         fields = (
-            'id', 'needDonate', 'donator', 'institution', 'setNeedDonates', 'setDonator',
-            'setInstitution', 'donated'
+            'id', 'needDonates', 'donator', 'setNeedDonates', 'setDonator', 'donated'
         )
+
+class UserDonateSerializer(serializers.ModelSerializer):
+    institution = InstitutionReadSerializer(read_only=True)
+
+    class Meta:
+        model = Donate
+        fields = ( 'id', 'need_donate', 'institution', 'created_at', 'donated')
 
 
 

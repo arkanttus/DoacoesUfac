@@ -8,7 +8,7 @@ from .serializers import UserReadSerializer, UserCreateSerializer, PasswordChang
 from .permissions import PostOnlyPermissions
 from apps.users.models import User
 from apps.donates.models import Donate
-from apps.donates.serializers import DonateSerializer
+from apps.donates.serializers import UserDonateSerializer
 from apps.base.api.serializers import InstitutionReadSerializer
 from apps.base.models import Institution
 
@@ -64,7 +64,7 @@ class UserView(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True)
     def donates(self, request, pk=None):
         queryset = Donate.objects.filter(donator_id=pk)
-        serializer = DonateSerializer(queryset, many=True)
+        serializer = UserDonateSerializer(queryset, many=True)
         return response.Response(serializer.data)
 
     @action(methods=['post'], detail=True)
