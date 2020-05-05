@@ -98,18 +98,15 @@ class Login(ObtainAuthToken):
         token, created = Token.objects.get_or_create(user=user)
         serializer_user = UserReadSerializer(user)
         if user.type_user == User.RECEIVER:
-            try:
-                institution = user.institution_set.get()
-                serializer_institution = InstitutionReadSerializer(institution)
-            except AttributeError:
-                institution = None
-                serializer_institution = None
+            institution = user.institution_set.all()[0]
+            serializer_institution = InstitutionReadSerializer(institution)
         else:
+            institution = None
             serializer_institution = None
         return response.Response({
             'token': token.key,
             'user': serializer_user.data,
-            'institution': serializer_institution.data if serializer_institution else None
+            'institution': serializer_institution.data if institution else None
         }, status=status.HTTP_200_OK
         )
 
