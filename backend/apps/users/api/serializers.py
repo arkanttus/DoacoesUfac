@@ -6,10 +6,8 @@ import re
 from django.contrib.auth.forms import SetPasswordForm
 from django.conf import settings
 
-
 # Get the UserModel
 UserModel = get_user_model()
-
 
 class UserReadSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField()
@@ -28,7 +26,7 @@ class UserReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = (
-            'id', 'email', 'cpf', 'name', 'staffUser', 'isActive', 'superUser', 'dateJoined', 'emailConfirm',
+            'id', 'email', 'cpf', 'name', 'institution', 'staffUser', 'isActive', 'superUser', 'dateJoined', 'emailConfirm',
             'shareEmail', 'sharePhone', 'phoneNumber', 'typeUser'
         )
 

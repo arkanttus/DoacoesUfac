@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from .serializers import (
     InstitutionReadSerializer, TypeInstitutionSerializer, InstitutionCreateSerializer, InstitutionUpdateSerializer
 )
+from .permissions import IsOwner
 from apps.base.models import Institution, TypeInstitution
 from apps.donates.models import Donate
 from apps.donates.serializers import DonateSerializer

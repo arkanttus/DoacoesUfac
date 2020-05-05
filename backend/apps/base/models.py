@@ -42,7 +42,7 @@ def path_image_institution(instance, filename):
 class Institution(BaseModel):
     # Info
     name = models.CharField(_('Instituição'), max_length=200)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Responsável pela Instituição'))
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Responsável pela Instituição'), related_name='institution')
     type_institution = models.ForeignKey(
         TypeInstitution, on_delete=models.PROTECT, verbose_name=_('Tipo de Instituição')
     )

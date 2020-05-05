@@ -12,7 +12,7 @@ User = get_user_model()
 
 
 class DonateSerializer(serializers.ModelSerializer):
-    needDonate = NeedDonateSerializer(many=True, read_only=True)
+    needDonate = NeedDonateSerializer(source='need_donate', many=True, read_only=True)
     donator = UserReadSerializer(read_only=True)
     institution = InstitutionReadSerializer(read_only=True)
     setNeedDonates = serializers.PrimaryKeyRelatedField(
@@ -31,6 +31,14 @@ class DonateSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'needDonate', 'donator', 'institution', 'setNeedDonates', 'setDonator',
             'setInstitution', 'donated'
+        )
+
+class DonateUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Donate
+        fields = (
+            'donated'
         )
 
 

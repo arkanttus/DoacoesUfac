@@ -30,7 +30,7 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Institution
         fields = (
-            'id', 'name', 'owner', 'typeInstitution', 'otherType', 'image', 'description','latitude', 'longitude',
+            'id', 'name', 'owner', 'typeInstitution', 'image', 'description','latitude', 'longitude',
             'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
         )
 
