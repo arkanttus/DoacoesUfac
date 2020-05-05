@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from apps.base.models import Institution, TypeInstitution
 from apps.users.api.serializers import UserCreateSerializer
+from apps.need_donate.models import NeedDonate
 
 
 User = get_user_model()
@@ -26,12 +27,14 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     linkTwitter = serializers.ReadOnlyField(source='link_twitter')
     linkInstagram = serializers.ReadOnlyField(source='link_instagram')
     linkFacebook = serializers.ReadOnlyField(source='link_facebook')
+    needDonates = serializers.PrimaryKeyRelatedField(
+        source='need_donates', queryset=NeedDonate.objects.all(), many=True)
 
     class Meta:
         model = Institution
         fields = (
             'id', 'name', 'owner', 'typeInstitution', 'image', 'description','latitude', 'longitude',
-            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates'
         )
 
 
@@ -41,7 +44,7 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
     typeInstitution = serializers.PrimaryKeyRelatedField(
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
-    otherType = serializers.CharField(source='other_type', required=False)
+    otherType = serializers.CharField(source='other_type', required=False, allow_null=True)
     image = serializers.ImageField(required=False)
     description = serializers.CharField(required=False, max_length=500)
     latitude = serializers.CharField(required=False, max_length=20)
@@ -89,7 +92,7 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
     typeInstitution = serializers.PrimaryKeyRelatedField(
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
-    otherType = serializers.CharField(source='other_type')
+    otherType = serializers.CharField(source='other_type', required=False, allow_null=True)
     image = serializers.ImageField(required=False)
     description = serializers.CharField(required=False, max_length=500)
     latitude = serializers.CharField(required=False, max_length=20)

@@ -19,11 +19,9 @@ class NeedDonateSerializer(serializers.ModelSerializer):
     setOwner = serializers.PrimaryKeyRelatedField(
         source='owner', write_only=True, queryset=User.objects.all(), required=True
     )
-    setInstitution = serializers.PrimaryKeyRelatedField(
-        source='institution', write_only=True, queryset=Institution.objects.all(), required=True
-    )
-    setTypeDonate = serializers.PrimaryKeyRelatedField(
-        source='type_donate', write_only=True, queryset=TypeDonate.objects.all(), required=True
+    setTypeDonates = serializers.PrimaryKeyRelatedField(
+        source='type_donate', write_only=True, queryset=TypeDonate.objects.all(), required=True,
+        many=True
     )
     
     class Meta:

@@ -10,9 +10,8 @@ from apps.users.api.serializers import UserReadSerializer
 
 User = get_user_model()
 
-
 class DonateSerializer(serializers.ModelSerializer):
-    needDonate = NeedDonateSerializer(source='need_donate', many=True, read_only=True)
+    needDonate = NeedDonateSerializer(many=True, read_only=True)
     donator = UserReadSerializer(read_only=True)
     institution = InstitutionReadSerializer(read_only=True)
     setNeedDonates = serializers.PrimaryKeyRelatedField(
@@ -33,6 +32,7 @@ class DonateSerializer(serializers.ModelSerializer):
             'setInstitution', 'donated'
         )
 
+
 class DonateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -40,6 +40,24 @@ class DonateUpdateSerializer(serializers.ModelSerializer):
         fields = (
             'donated'
         )
+'''
+class InstitutionDonateSerializer(serializers.ModelSerializer):
+    needDonates = NeedDonateSerializer(many=True, read_only=True)
+    donator = UserReadSerializer(read_only=True)
+    setNeedDonates = serializers.PrimaryKeyRelatedField(
+        source='need_donate', write_only=True, queryset=NeedDonate.objects.all(),
+        required=True, many=True
+    )
+    setDonator = serializers.PrimaryKeyRelatedField(
+        source='donator', write_only=True, queryset=User.objects.all(), required=True
+    )
+
+    class Meta:
+        model = Donate
+        fields = (
+            'id', 'needDonates', 'donator', 'setNeedDonates', 'setDonator', 'donated'
+        )
+'''
 
 
 

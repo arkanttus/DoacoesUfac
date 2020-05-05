@@ -7,7 +7,7 @@ from .serializers import (
 from .permissions import IsOwner
 from apps.base.models import Institution, TypeInstitution
 from apps.donates.models import Donate
-from apps.donates.serializers import DonateSerializer
+from apps.donates.serializers import InstitutionDonateSerializer
 from apps.need_donate.models import NeedDonate
 from apps.need_donate.serializers import NeedDonateSerializer
 
@@ -22,7 +22,7 @@ class InstitutionView(viewsets.ModelViewSet):
         return InstitutionUpdateSerializer
 
     def create(self, request, *args, **kwargs):
-        serializer = InstitutionCreateSerializer(data=request.data)
+        serializer = InstitutionCreateSerializer(data=request.data, context=self.get_serializer_context())
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         try:
@@ -36,14 +36,28 @@ class InstitutionView(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True)
     def donates(self, request, pk=None):
         queryset = Donate.objects.filter(institution_id=pk)
-        serializer = DonateSerializer(queryset, many=True)
+        serializer = InstitutionDonateSerializer(queryset, many=True, context={'request': request})
         return response.Response(serializer.data)
-
+'''
+    @action(methods=['post'], detail=True)
+    def donate(self, request, pk=None):
+        serializer = InstitutionDonateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(institution_id=pk)
+        return response.Response({"id": serializer.instance.id}, status=status.HTTP_201_CREATED)
+'''
     @action(methods=['get'], detail=True)
     def need_donates(self, request, pk=None):
         queryset = NeedDonate.objects.filter(institution_id=pk)
         serializer = NeedDonateSerializer(queryset, many=True)
         return response.Response(serializer.data)
+
+    @action(methods=['post'], url_path="need_donates", detail=True)
+    def add_need_donates(self, request, pk=None):
+        serializer = InstitutionDonateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(institution_id=pk)
+        return response.Response({"id": serializer.instance.id}, status=status.HTTP_201_CREATED)
 
 
 class TypeInstitutionView(viewsets.ReadOnlyModelViewSet):
