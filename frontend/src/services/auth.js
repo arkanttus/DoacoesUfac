@@ -12,7 +12,7 @@ export const setUser  = (data) => localStorage.setItem('USER', JSON.stringify(da
 export const login = data => {
     localStorage.setItem(TOKEN_KEY, data['token']);
     localStorage.setItem('USER', JSON.stringify(data['user']));
-    if(data['user'].userType === 'Instituição')
+    if(data['user'].typeUser === 'Receptor')
         localStorage.setItem('INSTITUTION', JSON.stringify(data['institution']));
     
 };
