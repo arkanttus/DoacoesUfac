@@ -40,7 +40,8 @@ class DonateUpdateSerializer(serializers.ModelSerializer):
         fields = (
             'donated'
         )
-'''
+
+
 class InstitutionDonateSerializer(serializers.ModelSerializer):
     needDonates = NeedDonateSerializer(many=True, read_only=True)
     donator = UserReadSerializer(read_only=True)
@@ -57,7 +58,7 @@ class InstitutionDonateSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'needDonates', 'donator', 'setNeedDonates', 'setDonator', 'donated'
         )
-'''
+
 
 
 

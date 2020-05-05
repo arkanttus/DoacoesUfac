@@ -38,14 +38,14 @@ class InstitutionView(viewsets.ModelViewSet):
         queryset = Donate.objects.filter(institution_id=pk)
         serializer = InstitutionDonateSerializer(queryset, many=True, context={'request': request})
         return response.Response(serializer.data)
-'''
+    '''
     @action(methods=['post'], detail=True)
     def donate(self, request, pk=None):
         serializer = InstitutionDonateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(institution_id=pk)
         return response.Response({"id": serializer.instance.id}, status=status.HTTP_201_CREATED)
-'''
+    '''
     @action(methods=['get'], detail=True)
     def need_donates(self, request, pk=None):
         queryset = NeedDonate.objects.filter(institution_id=pk)

@@ -8,7 +8,6 @@ from .serializers import UserReadSerializer, UserCreateSerializer, PasswordChang
 from .permissions import PostOnlyPermissions
 from apps.users.models import User
 from apps.donates.models import Donate
-from apps.donates.serializers import UserDonateSerializer
 from apps.base.api.serializers import InstitutionReadSerializer
 from apps.base.models import Institution
 
