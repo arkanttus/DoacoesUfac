@@ -77,6 +77,6 @@ class Institution(BaseModel):
         if self.type_institution.name.startswith('Outro'):
             return f'{self.other_type}'
         else:
-            return self.type_institution.name
+            return self.type_institution.name if self.type_institution else ''
 
 
