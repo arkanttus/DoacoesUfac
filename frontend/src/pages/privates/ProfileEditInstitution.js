@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         height: 'fit-content',
+        maxWidth: "850px"
     },
     titulo: {
         display: 'block',
@@ -84,15 +85,41 @@ export default function ProfileEditInstitution() {
     const classes = useStyles();
     const user = getUser();
     const institution = getInstitution();
+    const Swal = require('sweetalert2');
+    console.log(institution);
+
     const [screen, setScreen] = React.useState(0);
     const [description, setDescription] = React.useState(institution.description);
     const [name, setName] = React.useState(institution.name);
     const [nameResponsible, setNameResponsible] = React.useState(user.name);
     const [CPF, setCPF] = React.useState(user.cpf);
     const [email, setEmail] = React.useState(user.email);
-    const [phone, setPhone] = React.useState(user.phone);
+    const [phone, setPhone] = React.useState(user.phoneNumber);
     const [password, setPassword] = React.useState('');
     const [newPassword, setNewPassword] = React.useState('');
+
+    //Atualizar perfil
+    async function handleUpdateProfile() {
+        
+        //Descrição vazia
+        if(description === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Breve descrição das atividade",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Nome vazio
+        if(name === "") {
+            Swal.fire({
+
+            });
+        }
+
+
+    }//Atualizar perfil
     
     return(
         <Grid container className={classes.containerRoot}>
@@ -109,7 +136,7 @@ export default function ProfileEditInstitution() {
                         Google Maps Frame
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth value={description} onChange={(e) => setDescription(e.target.value)} label="Breve descrição das atividades" />
+                        <TextField fullWidth required value={description} onChange={(e) => setDescription(e.target.value)} label="Breve descrição das atividades" />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField fullWidth value={name} onChange={(e) => setName(e.target.value)} label="Nome da Instituição" />
@@ -138,10 +165,10 @@ export default function ProfileEditInstitution() {
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.buttonLeft} xs={12} sm={6}>
-                        <Button onClick={() => setScreen(1)} style={{ fontSize: '1.1rem', borderRadius: 10, backgroundColor: '#247BA0' }}>EDITAR PERFIL</Button>
+                        <Button onClick={() => setScreen(1)} style={{ fontSize: '1.1rem', borderRadius: 10, backgroundColor: '#247BA0' }}>ALTERAR SENHA</Button>
                     </Grid>
                     <Grid item className={classes.buttonRight} xs={12} sm={6}>
-                        <Button style={{ display: 'block', fontSize: '1.2rem', borderRadius: 10, backgroundColor: '#008B00' }}>CONFIRMAR</Button>
+                        <Button onClick={handleUpdateProfile} style={{ display: 'block', fontSize: '1.2rem', borderRadius: 10, backgroundColor: '#008B00' }}>CONFIRMAR</Button>
                     </Grid>
                 </Grid>
 
@@ -155,7 +182,7 @@ export default function ProfileEditInstitution() {
                         </Grid>
 
                         <Grid item className={classes.buttonLeft} xs={12} sm={6}>
-                            <Button onClick={() => setScreen(0)} style={{ fontSize: '1.1rem', borderRadius: 10, backgroundColor: '#247BA0' }}>ALTERAR SENHA</Button>
+                            <Button onClick={() => setScreen(0)} style={{ fontSize: '1.1rem', borderRadius: 10, backgroundColor: '#247BA0' }}>EDITAR PERFIL</Button>
                         </Grid>
                         <Grid item className={classes.buttonRight} xs={12} sm={6}>
                             <Button style={{ display: 'block', fontSize: '1.2rem', borderRadius: 10, backgroundColor: '#008B00' }}>CONFIRMAR</Button>

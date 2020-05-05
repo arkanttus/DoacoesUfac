@@ -22,7 +22,8 @@ import InstituicaoIcon from '@material-ui/icons/AccountBalance';
 import CallIcon from '@material-ui/icons/Call';
 import TipoIcon from '@material-ui/icons/HomeWork';
 import DescricaoIcon from '@material-ui/icons/BorderColorOutlined';
-import LocationIcon from '@material-ui/icons/LocationOn';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import GpsFixedIcon from '@material-ui/icons/GpsFixed';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -31,6 +32,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
+import { Cities } from "../../components/Cities";
 import MapRegister from '../../components/Map/MapRegister'
 
 import { sendRequest,getInstitutionTypes } from "../../services/api";
@@ -143,22 +145,12 @@ function CPFMask(props) {
 
 export default function CadastroInstituicao({props}) {
     const classes = useStyles();
-    const institution = {
-        name: "Educandário BCA",
-        phone: "(68) 4002-8922",
-        email: "educandariobca@gmail.com",
-        donated: [
-            { name: "Produtos de limpeza"},
-            { name: "Cestas básicas"},
-            { name: "Alimentos não perecíveis"}
-        ],
-        lat: '67.82543436532767',
-        long: '9.970694704824691'
-    }
-    const mapUrl = "https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d982.3893816689978!2d-"+institution.lat+"!3d-"+institution.long+"!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e2!4m3!3m2!1d-"+institution.long+"!2d-"+institution.lat+"!4m3!3m2!1d-"+institution.long+"!2d-"+institution.lat+"!5e0!3m2!1spt-BR!2sbr!4v1588062121261!5m2!1spt-BR!2sbr"
-
     const Swal = require('sweetalert2');
-
+    const cities = Cities();
+    const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
+                "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
+                "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
+    
     const [ screen,setScreen] = React.useState(0);
     const [description, setDescription] = React.useState('');
     const [name, setName] = React.useState('');
@@ -169,30 +161,39 @@ export default function CadastroInstituicao({props}) {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const [type,setType] = React.useState("");
+    const [typeID, setTypeID] = React.useState("");
     const [types,setTypes] = React.useState(null);
-    const [linkFacebook, setLinkFacebook] = React.useState("");
-    const [linkInstagram, setLinkInstagram] = React.useState("");
-    const [linkTwitter, setLinkTwitter] = React.useState("");
+    const [uf, setUF] = React.useState("");
+    const [citiesArray, setCitiesArray] = React.useState([]);
+    const [city, setCity] = React.useState("");
+    const [linkFacebook, setLinkFacebook] = React.useState(null);
+    const [linkInstagram, setLinkInstagram] = React.useState(null);
+    const [linkTwitter, setLinkTwitter] = React.useState(null);
 
     const [openMapa, setOpenMapa] = React.useState(false)
 
     async function loadData() {
         let res = await getInstitutionTypes()
         if(res) {
-           setTypes(res.results)
-           console.log(types)
-          
+           setTypes(res.results);
+           console.log(types);
         }
         
     }
 
     React.useEffect(() => {
-        //loadData();
-    }, [loadData]);
+        loadData();
+    }, []);
 
 
     function handleChange (e){
-        setType(e.target.value)
+        setType(e.target.value);
+        setTypeID(types.filter(obj => { return obj.name === e.target.value })[0].id);
+    }
+
+    function handleSelectCities(e) {
+        setUF(e.target.value);
+        setCitiesArray(cities[e.target.value].cidades);
     }
 
     async function confirmRegister(e) {
@@ -268,6 +269,15 @@ export default function CadastroInstituicao({props}) {
             });
             return;
         }
+        //Telefone vazio
+        if(phone === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Telefone",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+        }
         //Tipo de Instituição vazio
         if(type === "") {
             Swal.fire({
@@ -288,17 +298,37 @@ export default function CadastroInstituicao({props}) {
             });
             return;
         }
+        //Estado vazio
+        if(uf === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Estado",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        //Cidade vazio
+        if(city === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Cidade",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
         
 
         const response = await sendRequest('POST', "institutions/", { 
-            owner: { name: nameResponsible, email, password1: password, CPF, typeUser: "R", phoneNumber: phone},
+            owner: { name: nameResponsible, email, password1: password, cpf: CPF, typeUser: "R", phoneNumber: phone},
             name,
-            street: "Rua sem saída",
-            neighborhood: "Perto da Torre dos Vingadores",
-            typeInstitution: type,
+            typeInstitution: typeID,
             description,
-            latitude: institution.lat,
-            longitude: institution.long,
+            latitude: "Arrumar depois",
+            longitude: "Arrumar depois",
+            uf,
+            city,
             linkFacebook, linkInstagram,
             linkTwitter,
             }
@@ -315,6 +345,14 @@ export default function CadastroInstituicao({props}) {
             });
             
         } else {
+            if(response.data.owner.cpf) {
+                Swal.fire({
+                    title: response.data.owner.cpf,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+                return;
+            }
             if(response.data.name) {
                 Swal.fire({
                     title: response.data.name,
@@ -449,7 +487,7 @@ export default function CadastroInstituicao({props}) {
                                         </Grid>
                                                 <Grid item xs={10} sm={11}>
                                                 <FormControl fullWidth>
-                                                <InputLabel htmlFor="formatted-text-mask-input">Telefone</InputLabel>
+                                                <InputLabel required htmlFor="formatted-text-mask-input">Telefone</InputLabel>
                                                 <Input
                                                 name="textmask"
                                                 value={phone}
@@ -482,28 +520,51 @@ export default function CadastroInstituicao({props}) {
                                             <DescricaoIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                         </Grid>
                                         <Grid container item xs={10} sm={11}>
-                                            <TextField   onChange={e => setDescription(e.target.value)} value={description} variant="standard" required fullWidth name="descricao" label="Breve descrição"  id="descricao" autoComplete="descricao"/>
+                                            <TextField onChange={e => setDescription(e.target.value)} value={description} variant="standard" required fullWidth name="descricao" label="Breve descrição"  id="descricao" autoComplete="descricao"/>
                                         </Grid>
                                     </Grid>
 
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                         <Grid item>
-                                            <LocationIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                            <LocationOnIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                         </Grid>
-                                        <Grid container item xs={10} sm={11}>
-                                             <label style={{ color: "#555"}}>Localização da Instituição</label>
+                                        <Grid item xs={10} sm={11}>
+                                            <FormControl fullWidth>
+                                                <InputLabel>Estado *</InputLabel>
+                                                <Select value={uf} onChange={handleSelectCities} input={<Input />}>    
+                                                {itemsEstados.map((item) => (
+                                                    <MenuItem key={item} value={item}>
+                                                    {item}
+                                                    </MenuItem>
+                                                ))}
+                                                </Select>
+                                            </FormControl>
                                         </Grid>
                                     </Grid>
 
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
-                                        <Grid item xs={12} >            
-                                            <iframe style={{ border:"1px solid", width:"100%" }} src={mapUrl} title="map" frameBorder="0" className={classes.map} allowFullScreen="" aria-hidden="false" tabIndex="0"></iframe>
+                                        <Grid item>
+                                            <GpsFixedIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                        </Grid>
+                                        <Grid item xs={10} sm={11}>
+                                            <FormControl fullWidth>
+                                                <InputLabel>Cidade *</InputLabel>
+                                                <Select value={city} onChange={(e) => setCity(e.target.value)} input={<Input />}>    
+                                                {citiesArray ? (citiesArray.map((item) => (
+                                                    <MenuItem key={item} value={item}>
+                                                    {item}
+                                                    </MenuItem>
+                                                ))) : (
+                                                    <></>
+                                                )}
+                                                </Select>
+                                            </FormControl>
                                         </Grid>
                                     </Grid>
                                 </Grid>
 
                             
-                                <label style={{ fontWeight: 'bold', display: 'flex', justifyContent: 'center', fontSize: '1.2rem' }}>Redes Sociais</label>
+                                <label style={{ fontWeight: 'bold', display: 'flex', justifyContent: 'center', fontSize: '1.2rem', paddingTop: 10, marginBottom: "-13px" }}>Redes Sociais</label>
 
                                 <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                     <Grid item>
