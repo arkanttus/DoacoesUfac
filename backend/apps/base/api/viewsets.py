@@ -21,7 +21,7 @@ class InstitutionView(viewsets.ModelViewSet):
         return InstitutionUpdateSerializer
 
     def create(self, request, *args, **kwargs):
-        serializer = InstitutionCreateSerializer(data=request.data)
+        serializer = InstitutionCreateSerializer(data=request.data, context=self.get_serializer_context())
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         try:

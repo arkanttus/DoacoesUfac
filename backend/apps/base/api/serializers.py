@@ -44,7 +44,7 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
     typeInstitution = serializers.PrimaryKeyRelatedField(
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
-    otherType = serializers.CharField(source='other_type', required=False)
+    otherType = serializers.CharField(source='other_type', required=False, allow_null=True)
     image = serializers.ImageField(required=False)
     description = serializers.CharField(required=False, max_length=500)
     latitude = serializers.CharField(required=False, max_length=20)
@@ -92,7 +92,7 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
     typeInstitution = serializers.PrimaryKeyRelatedField(
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
-    otherType = serializers.CharField(source='other_type')
+    otherType = serializers.CharField(source='other_type', required=False, allow_null=True)
     image = serializers.ImageField(required=False)
     description = serializers.CharField(required=False, max_length=500)
     latitude = serializers.CharField(required=False, max_length=20)
