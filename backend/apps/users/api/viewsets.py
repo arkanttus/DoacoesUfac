@@ -98,7 +98,12 @@ class Login(ObtainAuthToken):
         token, created = Token.objects.get_or_create(user=user)
         serializer_user = UserReadSerializer(user)
         if user.type_user == User.RECEIVER:
-            serializer_institution = InstitutionReadSerializer(user.institution_set.get())
+            try:
+                institution = user.institution_set.get()
+                serializer_institution = InstitutionReadSerializer(institution)
+            except AttributeError:
+                institution = None
+                serializer_institution = None
         else:
             serializer_institution = None
         return response.Response({
