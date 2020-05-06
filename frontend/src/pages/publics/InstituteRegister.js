@@ -189,8 +189,6 @@ export default function CadastroInstituicao({props}) {
         lat: '67.82543436532767',
         long: '9.970694704824691'
     }
-    const mapUrl = "https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d982.3893816689978!2d-"+institution.lat+"!3d-"+institution.long+"!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e2!4m3!3m2!1d-"+institution.long+"!2d-"+institution.lat+"!4m3!3m2!1d-"+institution.long+"!2d-"+institution.lat+"!5e0!3m2!1spt-BR!2sbr!4v1588062121261!5m2!1spt-BR!2sbr"
-
 
     async function loadData() {
         let res = await getInstitutionTypes()
@@ -203,7 +201,7 @@ export default function CadastroInstituicao({props}) {
 
     React.useEffect(() => {
         loadData();
-    }, []);
+    }, [loadData]);
 
 
     function handleChange (e){
