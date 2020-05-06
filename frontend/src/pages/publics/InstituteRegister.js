@@ -175,21 +175,7 @@ export default function CadastroInstituicao({props}) {
     const [linkInstagram, setLinkInstagram] = React.useState(null);
     const [linkTwitter, setLinkTwitter] = React.useState(null);
 
-    const [openMapa, setOpenMapa] = React.useState(false)
-
-    const institution = {
-        name: "Educandário BCA",
-        phone: "(68) 4002-8922",
-        email: "educandariobca@gmail.com",
-        donated: [
-            { name: "Produtos de limpeza"},
-            { name: "Cestas básicas"},
-            { name: "Alimentos não perecíveis"}
-        ],
-        lat: '67.82543436532767',
-        long: '9.970694704824691'
-    }
-
+    
     async function loadData() {
         let res = await getInstitutionTypes()
         if(res) {
