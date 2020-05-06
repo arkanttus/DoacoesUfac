@@ -15,9 +15,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
         minHeight: '85vh',
-        '& div': {
-            height: 'fit-content'
-        }
     },
     container: {
         height: 'fit-content'
@@ -100,14 +97,12 @@ export default function Home() {
                     Mapa das Instituições
                 </Grid>
         
-                {/* MAPA*/}
-                <Grid container>
+                
                     <Grid item xs={12}>
-                       <MapNextLocations>
-                       </MapNextLocations>
+                       <MapNextLocations />
                     </Grid>
-                </Grid>
-                <Grid style={{paddingLeft:350}} >
+                
+                <Grid >
                     <FormControl >
                         <InputLabel>Estado </InputLabel>
                         <Select value={uf} onChange={handleSelectCities} input={<Input/>}>    

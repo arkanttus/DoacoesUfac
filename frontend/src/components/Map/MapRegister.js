@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import L from "leaflet";
 import * as ELG from "esri-leaflet-geocoder";
 import { Map, TileLayer, Marker } from "react-leaflet";
-import "./Map.css";
 import LocateControl from "./Locate";
+import { withStyles } from "@material-ui/core";
 
 // import marker icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -14,6 +14,16 @@ L.Icon.Default.mergeOptions({
   iconUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png"
 });
+
+const myStyles = {
+  mapa: {
+    width: "90%",
+    height: "65%",
+    zIndex: "100",
+    position: "absolute"
+  }
+}
+
 
 class MapComp extends Component {
   constructor(props) {
@@ -54,7 +64,7 @@ class MapComp extends Component {
   render() {
     const center = [-9.973879999999951, -67.80755999999997];
     const marker = this.state.marker;
-    console.log(marker);
+    const {classes} = this.props
     const locateOptions = {
       showPopup: false,
       position: "topleft",
@@ -66,6 +76,7 @@ class MapComp extends Component {
 
     return (
       <Map
+        className={classes.mapa}
         center={center}
         zoom="12"
         minZoom="4"
@@ -89,4 +100,4 @@ class MapComp extends Component {
   }
 }
 
-export default MapComp;
+export default withStyles(myStyles)(MapComp);
