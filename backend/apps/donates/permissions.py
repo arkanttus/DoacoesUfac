@@ -9,12 +9,11 @@ class IsRelated(permissions.BasePermission):
         if request.user.type_user == User.DONATOR:
             return request.user.id == obj.donator.id 
         else:
-            print(request.user.__dict__)
             return request.user.id == obj.institution.owner.id
 
 
 class IsInstitution(permissions.BasePermission):
-    message = 'Você precisa ser uma instituição e estar relacionado com esta doação para realizar esta ação!'
+    message = 'Você precisa ter uma instituição e estar relacionado com esta doação para realizar esta ação!'
 
     def has_object_permission(self, request, view, obj):
         return request.user.type_user == User.RECEIVER and request.user.id == obj.institution.owner.id
