@@ -61,9 +61,11 @@ export default function Donate({ props }) {
     const [institution, setInstitution] = React.useState({})
     const [items, setItems] = React.useState({})
     const [loading, setLoading] = React.useState(true)
+    const institutionId = props.match.params.institutionId;
+    const Swal = require('sweetalert2');
 
     async function loadData() {
-        let res = await getInstitutionById(props.match.params.institutionId)
+        let res = await getInstitutionById(institutionId)
         if(res) {
             setInstitution(res)
 
@@ -93,13 +95,18 @@ export default function Donate({ props }) {
     };
 
     async function handleSubmit() {
-        const response = await sendRequest("POST", `institutions/${institution.id}/donate/`, { setNeedDonates: items })
+        const response = await sendRequest("POST", `donates/`, { setNeedDonates: items.map(obj => { return obj.id }), setInstitution: institutionId })
         
-        if(response.status === 200) {
+        if(response.status === 201) {
             props.history.push("/doado/"+response.data.id);
         }
         else {
-            alert("IIIHH")
+            Swal.fire({
+                title: "Não foi possível efetuar a doação :(",
+                text: "Falha",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
         }
     }
 
