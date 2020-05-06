@@ -28,11 +28,10 @@ import Donated from './pages/privates/Donated';
 import Donate from './pages/privates/Donate';
 import DonationList from './pages/privates/DonationList';
 import MyDonations from './pages/privates/MyDonations';
-import ProfileEditDonator from './pages/privates/ProfileEditDonator';
+import ProfileEdit from './pages/privates/ProfileEdit';
 import SelectDonationTypes from './pages/privates/SelectDonationTypes';
-import ProfileEditInstitution from './pages/privates/ProfileEditInstitution';
 
-import { isAuthenticated, getUser } from './services/auth';
+import { isAuthenticated, } from './services/auth';
 
 function RouteWithLayout({layout: Layout, component: Component, ...rest}){
   return (
@@ -64,9 +63,6 @@ const NotAuthenticateRoute = ({ component: Component, ...rest }) => (
   )}/>
 );
 
-const user = getUser();
-
-console.log(user);
 const Routes = () => (
   <BrowserRouter>
     <Switch>
@@ -82,15 +78,12 @@ const Routes = () => (
       <NotAuthenticateRoute path="/instituicao" layout={FormLayout} component={InstituteRegister} />
       <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
 
-      <PrivateRoute path="/dashboard" layout={DashboardLayout} component={user && user.typeUser === 'Doador' ? Dashboard : DonationList} />
+      <PrivateRoute path="/dashboard" layout={DashboardLayout} component={Dashboard} />
       <PrivateRoute path="/doacoes" layout={DashboardLayout} component={DonationList} />
       <PrivateRoute path="/minhas-doacoes" layout={DashboardLayout} component={MyDonations} />
-      <PrivateRoute path="/doado" layout={DashboardLayout} component={Donated} />
-      <PrivateRoute path="/doar" layout={DashboardLayout} component={Donate} />
-      <PrivateRoute path="/perfil-doador" layout={DashboardLayout} component={ProfileEditDonator} />
-      <PrivateRoute path="/perfil-instituicao" layout={DashboardLayout} component={ProfileEditInstitution} />
+      <PrivateRoute path="/doado/:donationId" layout={DashboardLayout} component={Donated} />
       <PrivateRoute path="/doar/:institutionId" layout={DashboardLayout} component={Donate} />
-      <PrivateRoute path="/conta" layout={DashboardLayout} component={user && user.typeUser === 'Doador' ? ProfileEditDonator : ProfileEditInstitution} />
+      <PrivateRoute path="/conta" layout={DashboardLayout} component={ProfileEdit} />
       <PrivateRoute path="/selecionar-doacoes" layout={DashboardLayout} component={SelectDonationTypes} />
     </Switch>
   </BrowserRouter>

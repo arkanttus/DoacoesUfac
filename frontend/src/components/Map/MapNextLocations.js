@@ -67,6 +67,8 @@ class MapComp extends Component {
         style={{ height: "100vh" }}
         center={center}
         zoom="12"
+        minZoom="4"
+        maxZoom="19"
         ref={m => {
           this.leafletMap = m;
         }}
