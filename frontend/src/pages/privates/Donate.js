@@ -66,12 +66,12 @@ export default function Donate({ props }) {
         let res = await getInstitutionById(props.match.params.institutionId)
         if(res) {
             setInstitution(res)
-            const items = await getDonationsByInstitutionId(props.match.params.institutionId)
-            items.forEach(function(name) {
+
+            res.needDonates.forEach(function(name) {
                 name.checked = false
             });
-            console.log(items)
-            setItems(items)
+
+            setItems(res.needDonates)
             setLoading(false)
         }
         else
@@ -81,26 +81,6 @@ export default function Donate({ props }) {
     React.useEffect(() => {
         loadData();
     }, []);
-
-    /*const institution = {
-        name: "Educandário BCA",
-        description: "Somos uma instituição de apoio a crianças órfãs ou em situação de abandono familiar.",
-        items: [
-            {name: "Cestas básicas"},
-            {name: "Produtos de limpeza"},
-            {name: "Roupas"},
-            {name: "Alimentos não perecíveis"},
-            {name: "Dinheiro"}
-        ]
-    }*/
-
-
-    /*const [items, setItems] = React.useState([
-        {name: "Cestas básicas", checked: false},
-        {name: "Produtos de limpeza", checked: false},
-        {name: "Roupas", checked: false},
-        {name: "Alimentos não perecíveis", checked: false}
-    ]);*/
     
     const handleChange = (itemId) => {
         const newItems = items.map(item => {
@@ -113,12 +93,13 @@ export default function Donate({ props }) {
     };
 
     async function handleSubmit() {
-        const response = await sendRequest("POST", `institutions/${institution.id}/donates/`, { items })
-        
+        const response = await sendRequest("POST", `institutions/${institution.id}/donate/`, { setNeedDonates: items })
         
         if(response.status === 200) {
+            props.history.push("/doado/"+response.data.id);
         }
         else {
+            alert("IIIHH")
         }
     }
 

@@ -85,8 +85,7 @@ const Routes = () => (
       <PrivateRoute path="/dashboard" layout={DashboardLayout} component={user && user.typeUser === 'Doador' ? Dashboard : DonationList} />
       <PrivateRoute path="/doacoes" layout={DashboardLayout} component={DonationList} />
       <PrivateRoute path="/minhas-doacoes" layout={DashboardLayout} component={MyDonations} />
-      <PrivateRoute path="/doado" layout={DashboardLayout} component={Donated} />
-      <PrivateRoute path="/doar" layout={DashboardLayout} component={Donate} />
+      <PrivateRoute path="/doado/:donationId" layout={DashboardLayout} component={Donated} />
       <PrivateRoute path="/perfil-doador" layout={DashboardLayout} component={ProfileEditDonator} />
       <PrivateRoute path="/perfil-instituicao" layout={DashboardLayout} component={ProfileEditInstitution} />
       <PrivateRoute path="/doar/:institutionId" layout={DashboardLayout} component={Donate} />
