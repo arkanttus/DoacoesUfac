@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from apps.base.models import Institution, TypeInstitution
-from apps.users.api.serializers import UserCreateSerializer
+from apps.users.api.serializers import UserCreateSerializer, UserReadSerializer
 from apps.need_donate.models import NeedDonate
+from apps.need_donate.serializers import NeedDonateSerializer
 
 
 User = get_user_model()
@@ -16,8 +17,8 @@ class TypeInstitutionSerializer(serializers.ModelSerializer):
 
 class InstitutionReadSerializer(serializers.ModelSerializer):
     name = serializers.ReadOnlyField()
-    owner = serializers.PrimaryKeyRelatedField(read_only=True)
-    typeInstitution = serializers.ReadOnlyField(source='get_institution', read_only=True)
+    owner = UserReadSerializer(read_only=True)
+    typeInstitution = serializers.ReadOnlyField(source='get_type_institution_display', read_only=True)
     image = serializers.ImageField(use_url=True)
     description = serializers.ReadOnlyField()
     latitude = serializers.ReadOnlyField()
@@ -27,14 +28,14 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     linkTwitter = serializers.ReadOnlyField(source='link_twitter')
     linkInstagram = serializers.ReadOnlyField(source='link_instagram')
     linkFacebook = serializers.ReadOnlyField(source='link_facebook')
-    needDonates = serializers.PrimaryKeyRelatedField(
-        source='need_donates', queryset=NeedDonate.objects.all(), many=True)
+    needDonates = NeedDonateSerializer(source='need_donates', many=True, read_only=True)
+    otherType = serializers.ReadOnlyField(source='other_type')
 
     class Meta:
         model = Institution
         fields = (
             'id', 'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude',
-            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates'
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates', 'otherType'
         )
 
 
