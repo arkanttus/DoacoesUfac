@@ -104,7 +104,7 @@ class PasswordChangeSerializer(serializers.Serializer):
         return value
 
     def validate(self, attrs):
-        if self.new_password1 != self.new_password2:
+        if attrs['new_password1'] != attrs['new_password2']:
             raise serializers.ValidationError('Senhas não iguais')
         return attrs
 
