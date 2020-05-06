@@ -1,10 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Carousel from 'react-material-ui-carousel';
-import WarningIcon from '@material-ui/icons/Warning';
 import InstitutionCard from '../../components/InstitutionCard';
 import Pagination from '@material-ui/lab/Pagination';
+import MapNextLocations from '../../components/Map/MapNextLocations'
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { Cities } from "../../components/Cities";
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -15,12 +21,6 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         height: 'fit-content'
-    },
-    containerCarousel: {
-        padding: '0 20%',
-        [theme.breakpoints.down('sm')]: {
-            padding: 0
-        }
     },
     carouselImage: {
         maxWidth: '80%'
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     titulo1: {
         textAlign: 'center',
-        color: 'red',
+        color: 'grey',
         fontSize: '2rem',
         padding: '5vh 0vh 3vh 0vh'
     },
@@ -45,6 +45,15 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             padding: '5vh 0vh'
         }
+    },
+    legenda:{
+        textAlign: 'center', 
+        padding: '10vh 0vh 5vh 0vh', 
+        fontSize: '1rem',
+        [theme.breakpoints.down('sm')]: {
+            padding: '5vh 0vh'
+        }
+
     }
 
 }));
@@ -52,6 +61,20 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
     const classes = useStyles();
     let institutions = []
+
+    const cities = Cities();
+    const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
+                "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
+                "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
+   
+    const [uf, setUF] = React.useState("");
+    const [citiesArray, setCitiesArray] = React.useState([]);
+    const [city, setCity] = React.useState("");
+
+    function handleSelectCities(e) {
+        setUF(e.target.value);
+        setCitiesArray(cities[e.target.value].cidades);
+    }
 
     for(let i = 0; i < 8; i++) {
         institutions.push({
@@ -74,23 +97,52 @@ export default function Home() {
             <Grid container className={classes.container}>
 
                 <Grid item xs={12} className={classes.titulo1}>
-                    Instituições sem doações <WarningIcon />
+                    Mapa das Instituições
                 </Grid>
         
-                {/* CARROUSEL*/}
+                {/* MAPA*/}
                 <Grid container>
                     <Grid item xs={12}>
-                        <Carousel interval={5000}>
-                            { withoutDonations.map( institution => (
-                                <Grid container className={classes.containerCarousel}>
-                                    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <img src={institution.img} className={classes.carouselImage} alt="logo"/>
-                                    </Grid>
-                                </Grid>
-                            ) )}
-                        </Carousel>
+                       <MapNextLocations>
+                       </MapNextLocations>
                     </Grid>
                 </Grid>
+                <Grid style={{paddingLeft:350}} >
+                    <FormControl >
+                        <InputLabel>Estado </InputLabel>
+                        <Select value={uf} onChange={handleSelectCities} input={<Input/>}>    
+                            {itemsEstados.map((item) => (
+                                <MenuItem key={item} value={item}>
+                                {item}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid  style={{paddingLeft:50}}>
+                    <FormControl >
+                        <InputLabel>Cidade *</InputLabel>
+                        <Select value={city} onChange={(e) => setCity(e.target.value)} input={<Input />}>    
+                        {citiesArray ? (citiesArray.map((item) => (
+                            <MenuItem key={item} value={item}>
+                            {item}
+                            </MenuItem>
+                        ))) : (
+                            <></>
+                        )}
+                        </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid container style={{ marginLeft:120, marginTop:20}}> 
+                        <LocationOnIcon style={{ color: "#27AE60" }} />
+                        <label >Próximas</label>
+                        <LocationOnIcon style={{ color: "#EB5757" }} />
+                        <label >Sem doações</label>
+                </Grid>
+              
+
+                
 
                 <Grid container>
                     <Grid item xs={12} className={classes.todasTitle}>

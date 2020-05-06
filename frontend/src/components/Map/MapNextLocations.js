@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import L from "leaflet";
 import * as ELG from "esri-leaflet-geocoder";
 import { Map, TileLayer, Marker } from "react-leaflet";
-import "./Map.css";
+import "./Map2.css";
 import LocateControl from "./Locate";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -64,7 +64,7 @@ class MapComp extends Component {
 
     return (
       <Map
-        style={{ height: "100vh" }}
+        style={{ height: "70vh" }}
         center={center}
         zoom="12"
         minZoom="4"
