@@ -33,7 +33,7 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Institution
         fields = (
-            'id', 'name', 'owner', 'typeInstitution', 'image', 'description','latitude', 'longitude',
+            'id', 'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude',
             'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates'
         )
 
@@ -77,10 +77,6 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
         user.save()
         return Institution.objects.create(owner=user, **validated_data)
 
-    def update(self, instance, validated_data):
-        # user_data = validated_data.pop('owner')
-        return super(InstitutionCreateSerializer, self).update(instance, validated_data)
-
     def validate(self, attrs):
         user = attrs.get('owner', None)
         type_user = user.get('type_user', None)
@@ -92,7 +88,7 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
 
 class InstitutionUpdateSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, max_length=200)
-    owner = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    owner = serializers.PrimaryKeyRelatedField(required=True, queryset=User.objects.all())
     typeInstitution = serializers.PrimaryKeyRelatedField(
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
@@ -120,6 +116,3 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
             'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
         )
 
-    def update(self, instance, validated_data):
-        # user_data = validated_data.pop('owner')
-        return super(InstitutionUpdateSerializer, self).update(instance, validated_data)

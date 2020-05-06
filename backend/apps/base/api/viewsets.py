@@ -19,7 +19,7 @@ class InstitutionView(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return InstitutionReadSerializer
-        return InstitutionCreateSerializer
+        return InstitutionUpdateSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = InstitutionCreateSerializer(data=request.data, context=self.get_serializer_context())
