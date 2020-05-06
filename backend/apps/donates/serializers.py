@@ -25,7 +25,7 @@ class DonateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Donate
         fields = (
-            'id', 'needDonate', 'donator', 'institution', 'setNeedDonates',
+            'id', 'needDonates', 'donator', 'institution', 'setNeedDonates',
             'setInstitution', 'donated'
         )
 
