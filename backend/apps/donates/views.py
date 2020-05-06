@@ -28,5 +28,5 @@ class DonateView(viewsets.ModelViewSet):
         return DonateSerializer
     
     def perform_create(self, serializer):
-        donator = self.request.user.id
+        donator = self.request.user
         serializer.save(donator=donator)
