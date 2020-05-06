@@ -68,6 +68,8 @@ class MapComp extends Component {
       <Map
         center={center}
         zoom="12"
+        minZoom="4"
+        maxZoom="19"
         ref={m => {
           this.leafletMap = m;
         }}
