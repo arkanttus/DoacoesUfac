@@ -26,4 +26,7 @@ class DonateView(viewsets.ModelViewSet):
         if self.action == 'update':
             return DonateUpdateSerializer
         return DonateSerializer
-        
+    
+    def perform_create(self, serializer):
+        donator = self.request.user.id
+        serializer.save(donator=owner)
