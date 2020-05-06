@@ -99,7 +99,7 @@ class PasswordChangeSerializer(serializers.Serializer):
         self.user = getattr(self.request, 'user', None)
 
     def validate_old_password(self, value):
-        if not self.user and not self.user.check_password(value):
+        if not self.user.check_password(value):
             raise serializers.ValidationError('Senha invalida')
         return value
 
@@ -109,7 +109,8 @@ class PasswordChangeSerializer(serializers.Serializer):
         return attrs
 
     def save(self):
-        self.user.set_password(self.new_password1)
+        self.user.set_password(self.validated_data['new_password1'])
+        self.user.save()
 
 
 
