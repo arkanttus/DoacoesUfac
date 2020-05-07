@@ -198,6 +198,7 @@ export default function ProfileEditInstitution() {
                         icon: "success",
                         confirmButtonText: "Ok"
                     });
+                    setInstitution(response.data);
                     setInstitutionAvatar(response.data.image);
                     setNewAvatar(null);
                     handleCloseModal();
