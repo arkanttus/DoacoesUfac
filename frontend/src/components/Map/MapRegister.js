@@ -32,6 +32,8 @@ class MapComp extends Component {
     this.state = {
       marker: null
     };
+
+    this.handleCoordinates = this.props.handleCoordinates
   }
 
   componentDidMount() {
@@ -54,14 +56,18 @@ class MapComp extends Component {
   }
 
   addMarker = e => {
-    this.setState({ marker: e.latlng });
+    const marker = e.latlng
+    this.setState({ marker });
+    this.handleCoordinates(marker.lat, marker.lng)
   };
 
   handleClose = () => {
     this.setState({ marker: null });
+    this.handleCoordinates('', '')
   };
 
   render() {
+    const {handleCoordinates} = this.props
     const center = [-9.973879999999951, -67.80755999999997];
     const marker = this.state.marker;
     const {classes} = this.props
@@ -73,7 +79,7 @@ class MapComp extends Component {
       },
       onActivate: () => {} // callback before engine starts retrieving locations
     };
-
+    console.log(marker)
     return (
       <Map
         className={classes.mapa}
