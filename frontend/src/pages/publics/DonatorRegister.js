@@ -1,25 +1,33 @@
 import React from 'react';
-
+//Material UI
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import EmailIcon from '@material-ui/icons/Email';
-import LockIcon from '@material-ui/icons/Lock';
-import FaceIcon from '@material-ui/icons/Face';
-import PhoneIcon from '@material-ui/icons/Phone';
 import MaskedInput from 'react-text-mask';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
+//Icons Material UI
+import EmailIcon from '@material-ui/icons/Email';
+import LockIcon from '@material-ui/icons/Lock';
+import FaceIcon from '@material-ui/icons/Face';
+import PhoneIcon from '@material-ui/icons/Phone';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import GpsFixedIcon from '@material-ui/icons/GpsFixed';
+
+//Components
 import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
+import { Cities } from "../../components/Cities";
 
-import { sendRequest } from "../../services/api";
+import { sendRequest, getInstitutionTypes } from "../../services/api";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -118,15 +126,88 @@ function PhoneMask(props) {
 }
 
 export default function CadastroInstituicao({ props }) {
+    const cities = Cities();
+    const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
+    "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
+    "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
+
     const classes = useStyles();
     const Swal = require('sweetalert2');
-    const [ name, setName ] = React.useState('');
-    const [ email, setEmail ] = React.useState('');
-    const [ phoneNumber, setPhoneNumber ] = React.useState('');
-    const [ password, setPassword ] = React.useState('');
+    const [typesInstitutions, setTypesInstitutions] = React.useState("");
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [phoneNumber, setPhoneNumber] = React.useState('');
+    const [uf, setUF] = React.useState("");
+    const [citiesArray, setCitiesArray] = React.useState([]);
+    const [city, setCity] = React.useState("");
+    const [password, setPassword] = React.useState('');
+    const [confirmPassword, setConfirmPassword] = React.useState("");
+
+    async function loadData() {
+        let res = await getInstitutionTypes()
+        if(res) {
+            setTypesInstitutions(res.results);
+            console.log(typesInstitutions);
+        }
+        
+    }
+    React.useEffect(() => {
+        loadData();
+    },[]);
+    function handleSelectCities(e) {
+        setUF(e.target.value);
+        setCity("");
+        setCitiesArray(cities[e.target.value].cidades);
+    }
 
     async function confirmRegister(e) {
         e.preventDefault();
+
+        if(uf === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Estado",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
+        if(city === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Cidade!",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
+        if(password === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Senha de acesso",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
+        if(confirmPassword === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Confirmar senha de acesso",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
+        if(password !== confirmPassword) {
+            Swal.fire({
+                title: "As senhas não correspondem!",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
+
         const response = await sendRequest('POST', "users/", { name, email, password1: password, phoneNumber, typeUser: "D" });
 
         if(response.status === 201) {
@@ -200,7 +281,7 @@ export default function CadastroInstituicao({ props }) {
                                         <FaceIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
                                     </Grid>
                                     <Grid item xs={10} sm={11}>
-                                        <TextField value={name} onChange={(e) => setName(e.target.value)} variant="standard" required fullWidth id="nome" label="Nome completo" autoComplete="nome"/>
+                                        <TextField value={name} onChange={(e) => setName(e.target.value)} variant="standard" required fullWidth label="Nome completo" autoComplete="nome"/>
                                     </Grid>
                                 </Grid>
                                 
@@ -209,7 +290,7 @@ export default function CadastroInstituicao({ props }) {
                                         <EmailIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
                                     </Grid>
                                     <Grid item xs={10} sm={11}>
-                                        <TextField value={email} onChange={(e) => setEmail(e.target.value)} variant="standard" required fullWidth id="email" label="Email" name="email" autoComplete="email"/>
+                                        <TextField value={email} onChange={(e) => setEmail(e.target.value)} variant="standard" required fullWidth id="email" label="Email" autoComplete="email" />
                                     </Grid>
                                 </Grid>
 
@@ -232,12 +313,60 @@ export default function CadastroInstituicao({ props }) {
 
                                 <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                     <Grid item>
+                                        <LocationOnIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <FormControl fullWidth>
+                                            <InputLabel>Estado *</InputLabel>
+                                            <Select value={uf} onChange={handleSelectCities} input={<Input />}>    
+                                            {itemsEstados.map((item) => (
+                                                <MenuItem key={item} value={item}>
+                                                {item}
+                                                </MenuItem>
+                                            ))}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <GpsFixedIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <FormControl fullWidth>
+                                            <InputLabel>Cidade *</InputLabel>
+                                            <Select value={city} onChange={(e) => setCity(e.target.value)} input={<Input />}>    
+                                            {citiesArray ? (citiesArray.map((item) => (
+                                                <MenuItem key={item} value={item}>
+                                                {item}
+                                                </MenuItem>
+                                            ))) : (
+                                                <></>
+                                            )}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
                                         <LockIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                     </Grid>
                                     <Grid item xs={10} sm={11}>
-                                        <TextField value={password} onChange={(e) => setPassword(e.target.value)} variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password"/>
+                                        <TextField value={password} onChange={(e) => setPassword(e.target.value)} variant="standard" required fullWidth label="Senha de acesso" type="password" />
                                     </Grid>
                                 </Grid>
+                                
+                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <Grid item>
+                                        <LockIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
+                                    </Grid>
+                                    <Grid item xs={10} sm={11}>
+                                        <TextField value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} variant="standard" required fullWidth label="Confirmar senha de acesso" type="password" />
+                                    </Grid>
+                                </Grid>
+
                             </Grid>
                             <Button onClick={(e) => confirmRegister(e)} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
                         </CardBody>
