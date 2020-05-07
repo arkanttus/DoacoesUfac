@@ -27,7 +27,7 @@ class InstitutionView(viewsets.ModelViewSet):
         self.perform_create(serializer)
         try:
             qs = Institution.objects.get(id=serializer.instance.id)
-            serializer_read = InstitutionReadSerializer(qs)
+            serializer_read = InstitutionReadSerializer(qs, context=self.get_serializer_context())
         except Institution.DoesNotExist:
             return response.Response({'errors': 'Instituição não encontrada'}, status=status.HTTP_404_NOT_FOUND)
         headers = self.get_success_headers(serializer_read.data)
@@ -46,7 +46,7 @@ class InstitutionView(viewsets.ModelViewSet):
             instance._prefetched_objects_cache = {}
         try:
             qs = Institution.objects.get(id=serializer.instance.id)
-            serializer_read = InstitutionReadSerializer(qs, context=self.get_serializer_context())
+            serializer_read = InstitutionReadSerializer(qs, context={'request': request})
         except Institution.DoesNotExist:
             return response.Response({'errors': 'Instituição não encontrada'}, status=status.HTTP_404_NOT_FOUND)
         return response.Response(serializer_read.data)

@@ -99,7 +99,7 @@ class Login(ObtainAuthToken):
         serializer_user = UserReadSerializer(user)
         try:
             institution = Institution.objects.get(owner_id=user.id)
-            serializer_institution = InstitutionReadSerializer(institution)
+            serializer_institution = InstitutionReadSerializer(institution, context={'request': request})
         except Institution.DoesNotExist:
             institution = None
             serializer_institution = None
