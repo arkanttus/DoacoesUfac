@@ -30,8 +30,11 @@ class MapComp extends Component {
     super(props);
 
     this.state = {
-      marker: null
+      marker: null,
+      showCurrent: false
     };
+
+    this.handleCoordinates = this.props.handleCoordinates
   }
 
   componentDidMount() {
@@ -48,22 +51,33 @@ class MapComp extends Component {
       if (marker) self.addMarker(marker);
     });
 
-    map.once("locationfound", function(ev) {
+    map.on("locationfound", function(ev) {
+      self.setState({ showCurrent: true });
       self.addMarker(ev);
     });
   }
 
   addMarker = e => {
-    this.setState({ marker: e.latlng });
+    const marker = e.latlng
+    this.setState({ marker });
+    this.handleCoordinates(marker.lat, marker.lng)
+  };
+
+  clickMapa = e => {
+    this.setState({ showCurrent: false });
+    this.addMarker(e);
   };
 
   handleClose = () => {
     this.setState({ marker: null });
+    this.handleCoordinates('', '')
   };
 
   render() {
+    const {handleCoordinates} = this.props
     const center = [-9.973879999999951, -67.80755999999997];
     const marker = this.state.marker;
+    const showCurrent = this.state.showCurrent;
     const {classes} = this.props
     const locateOptions = {
       showPopup: false,
@@ -73,7 +87,7 @@ class MapComp extends Component {
       },
       onActivate: () => {} // callback before engine starts retrieving locations
     };
-
+    console.log(marker)
     return (
       <Map
         className={classes.mapa}
@@ -84,14 +98,14 @@ class MapComp extends Component {
         ref={m => {
           this.leafletMap = m;
         }}
-        onClick={this.addMarker}
+        onClick={this.clickMapa}
       >
         <TileLayer
           attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
           url={"http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
         />
 
-        <LocateControl options={locateOptions} on={true} />
+        <LocateControl options={locateOptions} on={showCurrent} />
 
         <div className="pointer" />
         {marker && <Marker position={marker} onClick={this.handleClose} />}

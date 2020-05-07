@@ -174,8 +174,10 @@ export default function CadastroInstituicao({props}) {
     const [linkFacebook, setLinkFacebook] = React.useState(null);
     const [linkInstagram, setLinkInstagram] = React.useState(null);
     const [linkTwitter, setLinkTwitter] = React.useState(null);
-
+    const [longitude, setLongitude] = React.useState(null)
+    const [latitude, setLatitude] = React.useState(null)
     
+
     async function loadData() {
         let res = await getInstitutionTypes()
         if(res) {
@@ -187,8 +189,12 @@ export default function CadastroInstituicao({props}) {
 
     React.useEffect(() => {
         loadData();
-    }, [loadData]);
+    },[]);
 
+    const handleCoordinates = (lat, lng) => {
+        setLatitude(lat)
+        setLongitude(lng)
+    }
 
     function handleChange (e){
         setType(e.target.value);
@@ -630,7 +636,7 @@ export default function CadastroInstituicao({props}) {
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                         <h3 style={{ color: "#555",textAlign: 'center'}}>Digite o endereço da Instituição ou selecione no mapa</h3>
                                         <Grid item xs={12} >   
-                                            <MapRegister></MapRegister>         
+                                            <MapRegister handleCoordinates={handleCoordinates}/>       
                                         </Grid>
                                     </Grid>
                                 </Grid>
