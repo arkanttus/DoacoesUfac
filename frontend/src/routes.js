@@ -27,9 +27,9 @@ import Dashboard from './pages/privates/Dashboard';
 import Donated from './pages/privates/Donated';
 import Donate from './pages/privates/Donate';
 import DonationList from './pages/privates/DonationList';
+import SelectDonationTypes from './pages/privates/SelectDonationTypes';
 import MyDonations from './pages/privates/MyDonations';
 import ProfileEdit from './pages/privates/ProfileEdit';
-import SelectDonationTypes from './pages/privates/SelectDonationTypes';
 
 import { isAuthenticated, } from './services/auth';
 
@@ -79,12 +79,13 @@ const Routes = () => (
       <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
 
       <PrivateRoute path="/dashboard" layout={DashboardLayout} component={Dashboard} />
-      <PrivateRoute path="/doacoes" layout={DashboardLayout} component={DonationList} />
       <PrivateRoute path="/minhas-doacoes" layout={DashboardLayout} component={MyDonations} />
       <PrivateRoute path="/doado/:donationId" layout={DashboardLayout} component={Donated} />
       <PrivateRoute path="/doar/:institutionId" layout={DashboardLayout} component={Donate} />
       <PrivateRoute path="/conta" layout={DashboardLayout} component={ProfileEdit} />
-      <PrivateRoute path="/selecionar-doacoes" layout={DashboardLayout} component={SelectDonationTypes} />
+
+      <PrivateRoute path="/doacoes" layout={DashboardLayout} component={DonationList} />
+      <PrivateRoute path="/solicitacoes" layout={DashboardLayout} component={SelectDonationTypes} />
     </Switch>
   </BrowserRouter>
 );
