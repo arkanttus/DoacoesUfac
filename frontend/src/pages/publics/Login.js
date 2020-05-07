@@ -121,7 +121,7 @@ export default function Login({ props }) {
         const response = await sendRequest("POST", "login/", { username: email, password })
         
         if(response.status === 200) {
-            login(response.data)
+           await login(response.data)
             props.history.push("/dashboard")
         }
         else {

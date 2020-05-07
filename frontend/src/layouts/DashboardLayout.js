@@ -42,13 +42,13 @@ export default function DashboardLayout(props) {
     const classes = useStyles();
     
     return(
-        <div>
+        <>
             <DashboardNavbar />
             <main className={classes.main}>
                 {props.children}
                 <Footer/>
             </main>
-        </div>
+        </>
         
     );
 }

@@ -152,6 +152,8 @@ export default function CadastroInstituicao({props}) {
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
     
     const [ screen,setScreen] = React.useState(0);
+    const [ screen2,setScreen2] = React.useState(0);
+
     const [other,setOther] = React.useState(0);
 
     const [description, setDescription] = React.useState('');
@@ -172,8 +174,9 @@ export default function CadastroInstituicao({props}) {
     const [linkFacebook, setLinkFacebook] = React.useState(null);
     const [linkInstagram, setLinkInstagram] = React.useState(null);
     const [linkTwitter, setLinkTwitter] = React.useState(null);
-
-    const [openMapa, setOpenMapa] = React.useState(false)
+    const [longitude, setLongitude] = React.useState(null)
+    const [latitude, setLatitude] = React.useState(null)
+    
 
     async function loadData() {
         let res = await getInstitutionTypes()
@@ -186,8 +189,12 @@ export default function CadastroInstituicao({props}) {
 
     React.useEffect(() => {
         loadData();
-    }, []);
+    },[]);
 
+    const handleCoordinates = (lat, lng) => {
+        setLatitude(lat)
+        setLongitude(lng)
+    }
 
     function handleChange (e){
         setType(e.target.value);
@@ -478,7 +485,8 @@ export default function CadastroInstituicao({props}) {
                    </Card>
                </Grid>            
             ): (
-                <Grid item xs={12} className={classes.gridCard}>
+                screen2===0 ? (
+                    <Grid item xs={12} className={classes.gridCard}>
                         <Card style={{width: "35rem"}}>
                             <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                             <CardBody style={{ paddingRight:15, paddingLeft:15}}>
@@ -535,9 +543,7 @@ export default function CadastroInstituicao({props}) {
                                                     <TextField onChange={e => setOtherType(e.target.value)} value={otherType} variant="standard" required fullWidth name="type" label="Tipo de Instituicão"  id="tipo" autoComplete="tipo"/>
                                                 </Grid>   
                                             </Grid>    
-                                        : <> </> }
-                                      
-                                    
+                                        : <> </> }    
 
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                         <Grid item>
@@ -585,9 +591,7 @@ export default function CadastroInstituicao({props}) {
                                             </FormControl>
                                         </Grid>
                                     </Grid>
-                                </Grid>
-
-                            
+                                </Grid>         
                                 <label style={{ fontWeight: 'bold', display: 'flex', justifyContent: 'center', fontSize: '1.2rem', paddingTop: 10, marginBottom: "-13px" }}>Redes Sociais</label>
 
                                 <Grid container style={{ padding: 10 }} alignItems="flex-end">
@@ -615,14 +619,36 @@ export default function CadastroInstituicao({props}) {
                                     </Grid>
                                 </Grid>
                                 
-                                <Grid container spacing={3}>
+                                <Grid container spacing={3} style={{paddingTop: 20, paddingBottom: 20}}>
                                     <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">VOLTAR</Button>
-                                    <Button onClick={confirmRegister} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
+                                    <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">CONTINUAR</Button>
                                 </Grid> 
-
                             </CardBody>
                         </Card>
-                    </Grid>                          
+                    </Grid>   
+
+                ):(
+                    <Grid item xs={12} className={classes.gridCard}>
+                        <Card style={{width: "35rem", height:"30rem"}}>
+                            <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
+                            <CardBody style={{ paddingRight:15, paddingLeft:15}}>
+                                <Grid container>
+                                    <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                        <h3 style={{ color: "#555",textAlign: 'center'}}>Digite o endereço da Instituição ou selecione no mapa</h3>
+                                        <Grid item xs={12} >   
+                                            <MapRegister handleCoordinates={handleCoordinates}/>       
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </CardBody>
+                            <Grid container spacing={3} style={{paddingTop: 25, paddingBottom: 10}}>
+                                    <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
+                                    <Button onClick={confirmRegister} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15, zIndex:1 }} color="primary">FINALIZAR</Button>
+                            </Grid> 
+                        </Card>
+                    </Grid>        
+                 )
+                
             ) }      
         </Container>
        
