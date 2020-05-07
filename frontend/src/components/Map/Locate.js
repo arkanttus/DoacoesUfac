@@ -25,7 +25,7 @@ class LocateControl extends Component {
   render() {
     const { on } = this.props;
 
-    if (!on) this.lc.stop();
+    if (this.lc && !on) this.lc.stop();
 
     return null;
   }
