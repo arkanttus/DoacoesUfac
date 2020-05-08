@@ -14,6 +14,7 @@ class DonateSerializer(serializers.ModelSerializer):
     needDonates = NeedDonateSerializer(source="need_donate", many=True, read_only=True)
     donator = UserReadSerializer(read_only=True)
     institution = InstitutionReadSerializer(read_only=True)
+    createdAt = serializers.ReadOnlyField(source='created_at', read_only=True)
     setNeedDonates = serializers.PrimaryKeyRelatedField(
         source='need_donate', write_only=True, queryset=NeedDonate.objects.all(),
         required=True, many=True
@@ -26,7 +27,7 @@ class DonateSerializer(serializers.ModelSerializer):
         model = Donate
         fields = (
             'id', 'needDonates', 'donator', 'institution', 'setNeedDonates',
-            'setInstitution', 'donated'
+            'setInstitution', 'donated', 'createdAt'
         )
 
 

@@ -4,6 +4,9 @@ from .serializers import DonateSerializer, DonateUpdateSerializer
 from .models import Donate
 from .permissions import *
 
+from apps.base.models import Institution
+from apps.users.models import User
+
 class DonateView(viewsets.ModelViewSet):
     queryset = Donate.objects.all()
     serializer_class = DonateSerializer
@@ -18,9 +21,16 @@ class DonateView(viewsets.ModelViewSet):
         elif self.action == 'retrieve':
             permission_classes += [IsRelated]
         else:
-            permission_classes += [Nobody]
+            permission_classes += [IsRelated]
 
         return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.type_user == User.DONATOR:
+            return Donate.objects.filter(donator=user)
+        else:
+            return Donate.objects.filter(institution=Institution.objects.filter(owner=user)[0])
 
     def get_serializer_class(self):
         if self.action == 'update':
