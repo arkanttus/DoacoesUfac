@@ -1,7 +1,9 @@
 from rest_framework import response, status, viewsets, views, permissions, generics
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.utils.translation import gettext_lazy as _
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 
 from .serializers import UserReadSerializer, UserCreateSerializer, PasswordChangeSerializer
@@ -16,9 +18,17 @@ from apps.base.utils import gerar_token
 class UserView(viewsets.ModelViewSet):
     model = User
     # PermissionsClasses só permite AllowAny no POST
-    permission_classes = [
-        PostOnlyPermissions,
-    ]
+    #permission_classes = [
+    #    PostOnlyPermissions,
+    #]
+
+    def get_permissions(self):
+        if self.action == 'create':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+            
+        return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -65,22 +75,6 @@ class UserView(viewsets.ModelViewSet):
         token = gerar_token(tam=10)
         serializer.save(token=token)
 
-    # http://localhost:8000/api/v1/users/<id>/validate/<token>/
-    @action(methods=['get'], detail=False, url_path='(?P<pk>[^/.]+)/validate/(?P<token>\w+)')
-    def validate(self, request, pk=None, token=None):
-        user = get_object_or_404(User, id=pk)
-
-        if user.token == token:
-            user.email_confirm = True
-            user.save()
-
-            serializer = UserCreateSerializer(user, context={'request': request})
-            user_data = serializer.data
-
-            return Response({'User': user_data}, status=status.HTTP_202_ACCEPTED)
-        
-        return Response({'Token': 'Token Inválido'}, status=status.HTTP_406_NOT_ACCEPTABLE)
-
     @action(methods=['post'], detail=True)
     def change_password(self, request, pk=None):
         if str(self.request.user.id) != pk:
@@ -91,6 +85,24 @@ class UserView(viewsets.ModelViewSet):
         serializer.save()
         return response.Response({}, status=status.HTTP_200_OK)
 
+class ValidateView(viewsets.ViewSet):
+    permission_classes = (AllowAny,)
+
+    # http://localhost:8000/api/v1/validate/email/<id>/<token>/
+    @action(methods=['get'], detail=False, url_path='email/(?P<pk>[^/.]+)/(?P<token>\w+)')
+    def validate(self, request, pk=None, token=None):
+        user = get_object_or_404(User, id=pk)
+
+        if user.token == token:
+            user.email_confirm = True
+            user.save()
+
+            serializer = UserCreateSerializer(user, context={'request': request})
+            user_data = serializer.data
+
+            return response.Response({'User': user_data}, status=status.HTTP_202_ACCEPTED)
+        
+        return response.Response({'Token': 'Token Inválido'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 class Login(ObtainAuthToken):
 
