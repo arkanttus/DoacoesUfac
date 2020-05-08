@@ -58,7 +58,7 @@ export async function getInstitutionTypes() {
 }
 
 export async function getDonationsByUserId(id) {
-    return await getFromRequest("GET", `user/${id}/donates`, {})
+    return await getFromRequest("GET", `donates/`, {})
 }
 
 export async function getDonationsByInstitutionId(id) {
