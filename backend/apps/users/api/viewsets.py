@@ -10,6 +10,7 @@ from apps.users.models import User
 from apps.donates.models import Donate
 from apps.base.api.serializers import InstitutionReadSerializer
 from apps.base.models import Institution
+from apps.base.utils import gerar_token
 
 
 class UserView(viewsets.ModelViewSet):
@@ -60,11 +61,25 @@ class UserView(viewsets.ModelViewSet):
         Token.objects.exclude(user=instance)
         return response.Response(status=status.HTTP_204_NO_CONTENT)
 
-    # @action(methods=['get'], detail=True)
-    # def donates(self, request, pk=None):
-    #     queryset = Donate.objects.filter(donator_id=pk)
-    #     serializer = UserDonateSerializer(queryset, many=True)
-    #     return response.Response(serializer.data)
+    def perform_create(self, serializer):
+        token = gerar_token(tam=10)
+        serializer.save(token=token)
+
+    # http://localhost:8000/api/v1/users/<id>/validate/<token>/
+    @action(methods=['get'], detail=False, url_path='(?P<pk>[^/.]+)/validate/(?P<token>\w+)')
+    def validate(self, request, pk=None, token=None):
+        user = get_object_or_404(User, id=pk)
+
+        if user.token == token:
+            user.email_confirm = True
+            user.save()
+
+            serializer = UserCreateSerializer(user, context={'request': request})
+            user_data = serializer.data
+
+            return Response({'User': user_data}, status=status.HTTP_202_ACCEPTED)
+        
+        return Response({'Token': 'Token Inválido'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
     @action(methods=['post'], detail=True)
     def change_password(self, request, pk=None):
