@@ -3,7 +3,9 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Permis
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.core.mail import send_mail
 from localflavor.br.validators import BRCPFValidator
+from apps.base.utils import gerar_token
 
 
 class UserManager(BaseUserManager):
@@ -76,6 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(_('Último Login'), blank=True, null=True)
     date_joined = models.DateTimeField(_('Criação da Conta'), default=timezone.now)
     email_confirm = models.BooleanField(_('Email Confirmado'), default=False)
+    token = models.CharField(_('Token para validação de e-mail'), max_length=255, null=True, blank=True)
     share_email = models.BooleanField(_('Compartilhar Email'), default=False)
     share_phone = models.BooleanField(_('Compartilhar Telefone'), default=False)
     phone_number = models.CharField(_('Número de Telefone'), max_length=20)
@@ -94,6 +97,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f'{self.name} {self.phone_number}'
 
+    def verify_email(self, **kwargs):
+        subject = 'Navigo - Validar e-mail'
+        message = 'Olá ' + self.name + ', seja bem vindo ao Navigo! \n Para validar o seu email, acesse o link abaixo: \n http://127.0.0.1:3000/verify/' + str(self.id) + '/' + self.token + '\n' 
+        send_mail(subject, message, 'doacoesufac@gmail.com', [self.email], **kwargs)
+
     @property
     def get_short_name(self):
         return self.name[:30]
+    

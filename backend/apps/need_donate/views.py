@@ -22,16 +22,12 @@ class NeedDonateView(viewsets.ModelViewSet):
 
         return [permission() for permission in permission_classes]
 
-    def get_serializer_class(self):
-        if self.action == 'update':
-            return NeedDonateSerializer
-        return NeedDonateSerializer
     
     def perform_create(self, serializer):
         donator = self.request.user
         institution = Institution.objects.filter(owner=donator)[0]
-        serializer.save(owner=donator, institution=institution)
         institution.need_donates.all().update(is_active=False)
+        serializer.save(owner=donator, institution=institution)
 
     # permission_classes = (permissions.IsAuthenticated,)
 
