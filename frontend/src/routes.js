@@ -14,6 +14,7 @@ import FormLayout from './layouts/FormLayout';
 import Login from './pages/publics/Login'
 import DonatorRegister from './pages/publics/DonatorRegister'
 import InstituteRegister from './pages/publics/InstituteRegister'
+import EmailValidation from './pages/publics/EmailValidation';
 
 import Institutions from './pages/publics/Institutions'
 import HowToDonate from './pages/publics/HowToDonate'
@@ -77,6 +78,7 @@ const Routes = () => (
       <NotAuthenticateRoute path="/login" layout={FormLayout} component={Login} />
       <NotAuthenticateRoute path="/instituicao" layout={FormLayout} component={InstituteRegister} />
       <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
+      <Route path="/validar-email/:id/:token" component={EmailValidation} />
 
       <PrivateRoute path="/dashboard" layout={DashboardLayout} component={Dashboard} />
       <PrivateRoute path="/minhas-doacoes" layout={DashboardLayout} component={MyDonations} />
