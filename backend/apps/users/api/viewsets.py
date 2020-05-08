@@ -90,7 +90,7 @@ class ValidateView(viewsets.ViewSet):
 
     # http://localhost:8000/api/v1/validate/email/<id>/<token>/
     @action(methods=['get'], detail=False, url_path='email/(?P<pk>[^/.]+)/(?P<token>\w+)')
-    def validate(self, request, pk=None, token=None):
+    def email(self, request, pk=None, token=None):
         user = get_object_or_404(User, id=pk)
 
         if user.token == token:

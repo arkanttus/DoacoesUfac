@@ -10,7 +10,7 @@ from django.conf.urls.static import static, settings
 
 router = routers.DefaultRouter()
 router.register(r'users', UserView, basename='UserApp')
-router.register(r'validate', ValidateView, basename='UserApp')
+router.register(r'validate', ValidateView, basename='ValidateView')
 router.register(r'donates', DonateView, basename='DonateApp')
 router.register(r'type_donates', TypeDonateView, basename='TypeDonateApp')
 router.register(r'institutions', InstitutionView, basename='InstitutionApp')
