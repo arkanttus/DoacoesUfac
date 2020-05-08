@@ -26,8 +26,8 @@ class NeedDonateView(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         donator = self.request.user
         institution = Institution.objects.filter(owner=donator)[0]
-        serializer.save(owner=donator, institution=institution)
         institution.need_donates.all().update(is_active=False)
+        serializer.save(owner=donator, institution=institution)
 
     # permission_classes = (permissions.IsAuthenticated,)
 

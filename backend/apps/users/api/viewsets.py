@@ -18,17 +18,9 @@ from apps.base.utils import gerar_token
 class UserView(viewsets.ModelViewSet):
     model = User
     # PermissionsClasses só permite AllowAny no POST
-    #permission_classes = [
-    #    PostOnlyPermissions,
-    #]
-
-    def get_permissions(self):
-        if self.action == 'create':
-            permission_classes = [AllowAny]
-        else:
-            permission_classes = [IsAuthenticated]
-            
-        return [permission() for permission in permission_classes]
+    permission_classes = [
+        PostOnlyPermissions,
+    ]
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
