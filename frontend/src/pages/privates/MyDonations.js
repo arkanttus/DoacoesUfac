@@ -8,6 +8,11 @@ import Card from '../../components/MaterialKit/Card/Card';
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 
+import WaitLoading from '../../components/WaitLoading';
+import { getDonationsByUserId } from '../../services/api';
+import { getUser } from '../../services/auth';
+import moment from 'moment';
+
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
         minHeight: '85vh',
@@ -42,45 +47,75 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.56)',
         color: '#FFF'
     },
-
+    noneDonation: {
+        color: '#555', 
+        textAlign: 'center', 
+        padding: '4% 0 2% 0', 
+        fontSize: '25px',
+        [theme.breakpoints.down('sm')]: {
+            padding: '4% 0 5% 0',  
+        }
+    },
 }));
 
-export default function MyDonations() {
+export default function MyDonations({ props  }) {
     const classes = useStyles();
+    const user = getUser();
+    const [donations, setDonations] = React.useState(null)
+    const [loading, setLoading] = React.useState(true)
 
-    let donations = []
-    for(let i = 0; i < 10; i++) {
-        donations.push({
-            name: "José Fulano",
-            text: "Cesta Básica",
-            date: "22/07/1999"
-        })
+    async function loadData() {
+        let res = await getDonationsByUserId(user.id)
+        if(res) {
+            res.results.forEach((donation) => {
+                donation.items = donation.needDonates.map((need, index) => {
+                    let msg = need.typeDonate
+                    if(index > 0)
+                        msg = msg.toLowerCase()
+                    if(index != donation.needDonates.length-1)
+                        return `${msg}, `;
+                    return `${msg}.`;
+                })
+            })
+            setDonations(res.results)
+            setLoading(false)
+        }
     }
+
+    React.useEffect(() => {
+        loadData();
+    }, []);
 
     return(
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
-                <Grid item xs={12} className={classes.titulo1}>
-                    <ThumbUpIcon /> Minhas doações
-                </Grid>
+                <WaitLoading isLoading={loading} type="spin">
+                    <Grid item xs={12} className={classes.titulo1}>
+                        <ThumbUpIcon /> Minhas doações
+                    </Grid>
 
-                <Grid container>
-                    { donations.map( donation => (
-                        <Grid item xs={12} sm={4} md={3} className={classes.gridCardContainer}>
-                            <Card style={{ width: '19rem'}}>
-                                <CardHeader className={classes.cardHeader}>
-                                    <label>
-                                        <strong>Instituição:</strong> {donation.name}
-                                    </label>
-                                </CardHeader>
-                                <CardBody>
-                                    <p><strong>Doação: </strong>{donation.text}</p>
-                                    <p><strong>Data: </strong>{donation.date}</p>
-                                </CardBody>
-                            </Card>
-                        </Grid>
-                    ) )}
-                </Grid>
+                    <Grid container>
+                        { donations ? donations.map( donation => (
+                            <Grid item xs={12} sm={4} md={3} className={classes.gridCardContainer}>
+                                <Card style={{ width: '19rem'}}>
+                                    <CardHeader className={classes.cardHeader}>
+                                        <label>
+                                            <strong>Instituição:</strong> {donation.institution.name}
+                                        </label>
+                                    </CardHeader>
+                                    <CardBody>
+                                        <p><strong>Doação: </strong>{donation.items}</p>
+                                        <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY HH:mm')}</p>
+                                    </CardBody>
+                                </Card>
+                            </Grid>
+                        ) ) : (
+                            <Grid item xs={12} className={classes.noneDonation}>
+                                Faça já sua primeira doação!
+                            </Grid>
+                        )}
+                    </Grid>
+                </WaitLoading>
             </Grid>
         </Grid>
     );
