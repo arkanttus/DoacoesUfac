@@ -50,7 +50,21 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             padding: '5vh 0vh'
         }
-
+    },
+    containerMapSubtitle: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    subtitle1: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingRight: 25,
+        paddingTop: 23,
+        [theme.breakpoints.down('xs')]: {
+            justifyContent: 'center',
+            paddingRight: 0
+        }
     }
 
 }));
@@ -98,11 +112,73 @@ export default function Home() {
                 </Grid>
         
                 
-                    <Grid item xs={12}>
-                       <MapNextLocations />
-                    </Grid>
+                <Grid item xs={12}>
+                    <MapNextLocations />
+                </Grid>
                 
-                <Grid >
+                <Grid item xs={12} style={{ maxWidth: '80%', display: 'block', margin: 'auto' }}>
+                    <Grid container className={classes.containerMapSubtitle}>
+                        <Grid item xs={12} sm={6} style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', paddingTop: 23 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                                <LocationOnIcon style={{ color: "#27AE60" }} />
+                                <label >Próximas</label>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                                <LocationOnIcon style={{ color: "#EB5757" }} />
+                                <label >Sem doações</label>
+                            </div>
+                        </Grid>
+                        {/*
+                        <Grid item xs={6} sm={3} className={classes.subtitle1}>
+                            <LocationOnIcon style={{ color: "#27AE60" }} />
+                            <label >Próximas</label>
+                        </Grid>
+                        <Grid item xs={6} sm={3} style={{ display: 'flex', alignItems: 'center', paddingTop: 23 }}>
+                            <LocationOnIcon style={{ color: "#EB5757" }} />
+                            <label >Sem doações</label>
+                        </Grid>
+                         */}
+                        
+                        <Grid item xs={12} sm={6}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12} sm={2} style={{ display: 'flex', alignItems: 'center', paddingTop: 23 }}>
+                                    Filtrar:
+                                </Grid>
+                                <Grid item xs={12} sm={5}>
+                                <FormControl fullWidth>
+                                    <InputLabel>Estado </InputLabel>
+                                    <Select value={uf} onChange={handleSelectCities} input={<Input/>}>    
+                                        {itemsEstados.map((item) => (
+                                            <MenuItem key={item} value={item}>
+                                            {item}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                </Grid>
+                                <Grid item xs={12} sm={5}>
+                                <FormControl fullWidth>
+                                    <InputLabel>Cidade *</InputLabel>
+                                    <Select value={city} onChange={(e) => setCity(e.target.value)} input={<Input />}>    
+                                    {citiesArray ? (citiesArray.map((item) => (
+                                        <MenuItem key={item} value={item}>
+                                        {item}
+                                        </MenuItem>
+                                    ))) : (
+                                        <></>
+                                    )}
+                                    </Select>
+                                </FormControl>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        
+                    </Grid> 
+                </Grid>
+              
+                {
+                    /*
+                    <Grid >
                     <FormControl >
                         <InputLabel>Estado </InputLabel>
                         <Select value={uf} onChange={handleSelectCities} input={<Input/>}>    
@@ -128,15 +204,8 @@ export default function Home() {
                         </Select>
                     </FormControl>
                 </Grid>
-
-                <Grid container style={{ marginLeft:120, marginTop:20}}> 
-                        <LocationOnIcon style={{ color: "#27AE60" }} />
-                        <label >Próximas</label>
-                        <LocationOnIcon style={{ color: "#EB5757" }} />
-                        <label >Sem doações</label>
-                </Grid>
-              
-
+                     */
+                }
                 
 
                 <Grid container>
