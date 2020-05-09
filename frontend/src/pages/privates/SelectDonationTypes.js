@@ -9,9 +9,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '../../components/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { sendRequest } from '../../services/api';
+import { sendRequest,getInstitutionById } from '../../services/api';
 import WaitLoading from '../../components/WaitLoading';
-import { getInstitution } from '../../services/auth';
+import { getInstitution,setInstitution } from '../../services/auth';
+
+import TextField from '@material-ui/core/TextField';
+
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -42,13 +45,27 @@ export default function SelectDOnationTypes({ props }) {
     const [items, setItems] = React.useState(null)
     const [loading, setLoading] = React.useState(true)
     const Swal = require('sweetalert2');
+    const institution = getInstitution();
 
     async function loadData() {
         let res = await sendRequest("GET", "type_donates/", {})
+        console.log(res)
+    
         if(res.status == 200) {
             res.data.results.forEach(function(name) {
                 name.checked = false
+                name.description= " "
             });
+            
+            if (institution.needDonates){
+                institution.needDonates.forEach( needDonate=>{
+                    const typeDonate = res.data.results.find(item=> item.id===needDonate.typeDonate.id)
+                    typeDonate.checked = true
+                    typeDonate.description = needDonate.description
+    
+                });
+            }
+           
 
             setItems(res.data.results)
             setLoading(false)
@@ -65,6 +82,18 @@ export default function SelectDOnationTypes({ props }) {
         const newItems = items.map(item => {
             if(itemId === item.id) {
                 item.checked = !item.checked
+                
+            }
+            return item
+        });
+        setItems(newItems)
+    };
+
+    const handleChangeDescription = (itemId, description) => {
+        const newItems = items.map(item => {
+            if(itemId === item.id) {
+                item.description = description
+                
             }
             return item
         });
@@ -72,8 +101,11 @@ export default function SelectDOnationTypes({ props }) {
     };
 
     async function handleSubmit() {
-        const response = await sendRequest("POST", `donates/`, { /*setNeedDonates: items.map(obj => { return obj.id }), setInstitution: institutionId*/ })
-        
+        const filter = items.filter(item => item.checked === true)
+        const response = await sendRequest("POST", `need_donates/`, { 
+            setTypeDonates: filter.map(obj => { return obj.id }), 
+            setDescriptions: filter.map(obj => { return obj.description }) })
+
         if(response.status === 201) {
             Swal.fire({
                 title: "Os itens solicitados foram atualizados!",
@@ -81,6 +113,7 @@ export default function SelectDOnationTypes({ props }) {
                 icon: "success",
                 confirmButtonText: "Ok"
             });
+            setInstitution(getInstitutionById(institution.id))
         }
         else {
             Swal.fire({
@@ -104,16 +137,23 @@ export default function SelectDOnationTypes({ props }) {
                                 </Box>
                             </Typography>
 
-                            <Grid container style={{ padding: 30 }}>
-                                <Grid container spacing={4}>
+                            <Grid container style={{ padding: 30}}>
+                                <Grid container spacing={4} >
                                     {items ? items.map( item => (
                                         <Grid item xs={12} sm={4} md={6}>
                                             <Card>
                                                 <CardContent className={classes.content}>
-                                                    <Grid container direction="row" alignItems="center">
-                                                        <Grid item>
-                                                            <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0" }}/>
-                                                        </Grid>
+                                                    <Grid container direction="row" alignItems="center"> 
+                                                            <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0" }}/>                                       
+                                                            {
+                                                                item.checked===true ?
+                                                                 (  
+                                                                    <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Observações:(opcional)" />
+                                                                     
+                                                                 )
+
+                                                                 : (<></>)
+                                                            }   
                                                     </Grid>
                                                 </CardContent>
                                             </Card>
@@ -134,3 +174,4 @@ export default function SelectDOnationTypes({ props }) {
     );
 
 }
+

@@ -11,6 +11,10 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { setInstitution } from '../../services/auth';
+import WaitLoading from '../../components/WaitLoading';
+import { sendRequest,getInstitutionById } from '../../services/api';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -69,10 +73,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Home() {
+export default function Home({props}){
     const classes = useStyles();
-    let institutions = []
-
     const cities = Cities();
     const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
@@ -81,18 +83,44 @@ export default function Home() {
     const [uf, setUF] = React.useState("");
     const [citiesArray, setCitiesArray] = React.useState([]);
     const [city, setCity] = React.useState("");
+    const [institutions,setInstitutions] = React.useState(null);
+    const [loading,setLoading] = React.useState(true)
+
+    async function loadData() {
+        let res = await sendRequest("GET", "institutions/", {})
+        
+        if(res.status == 200) {
+            res.data.results.forEach((institution) => {
+                institution.items = institution.needDonates.map((need, index) => {
+                    let msg = need.typeDonate.name
+                    if(index > 0)
+                        msg = msg.toLowerCase()
+                    if(index != institution.needDonates.length-1)
+                        return `${msg}, `;
+                    return `${msg}.`;
+                })
+            })
+            setInstitutions(res.data.results)
+            setLoading(false)
+            
+
+        }
+        else
+            props.history.push("/dashboard");
+    }
+
+    React.useEffect(() => {
+        loadData();
+    }, []);
+
 
     function handleSelectCities(e) {
         setUF(e.target.value);
         setCitiesArray(cities[e.target.value].cidades);
     }
 
-    for(let i = 0; i < 8; i++) {
-        institutions.push({
-            name: "Educandário BCA",
-            img: "/images/HEADER.png"
-        })
-    }
+    
+    
 
     const withoutDonations = [{
         name: "Orfanato Fulano de Tal",
@@ -213,17 +241,21 @@ export default function Home() {
                         Todas as Instituições
                     </Grid>
                 </Grid>
-                
-                <Grid container spacing={4} className={classes.cardContainer}>
-                { institutions.map( institution => (
-                    <Grid item xs={12} sm={6} md={3} className={classes.cardItem}>
-                        <InstitutionCard title={institution.name} photo={institution.img}/>
-                    </Grid>
-                ) )}
-                </Grid>
-                
-                <Pagination count={10} color="primary" style={{ display: 'block', margin: '3vh auto 3vh auto' }} />
+                <WaitLoading isLoading={loading} type="spin">
+                    <Grid container spacing={4} className={classes.cardContainer}>
+                    { institutions ? institutions.map( institution => (
+                        <Grid item xs={12} sm={6} md={3} className={classes.cardItem}>
+                           <Link to={`doar/${institution.id}`} style={{ textDecoration: 'none' }}>
+                                <InstitutionCard title={institution.name} text={institution.items} photo={institution.image}/>
+                            </Link>
+                        </Grid>
 
+
+                    )): <></>} 
+                    </Grid>
+                    
+                    <Pagination count={10} color="primary" style={{ display: 'block', margin: '3vh auto 3vh auto' }} />
+                 </WaitLoading>
             </Grid>
         </Grid>
     );
