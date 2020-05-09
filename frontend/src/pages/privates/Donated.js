@@ -110,7 +110,7 @@ export default function Donated({ props }) {
                                     <Typography variant="body2" color="textSecondary" component="p" style={{ color: "#247BA0" }} >
                                         <Box fontWeight="fontWeightBold" m={1} textAlign="center">
                                             { donation.needDonates ? donation.needDonates.map( item => (
-                                                <label>{item.typeDonate};<br/></label>
+                                                <label>{item.typeDonate.name};<br/></label>
                                             ) ) : <></>}
                                         </Box>
                                     </Typography>

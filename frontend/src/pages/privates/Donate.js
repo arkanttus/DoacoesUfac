@@ -139,13 +139,13 @@ export default function Donate({ props }) {
 
                                         <Grid container style={{ padding: 30 }}>
                                             <Grid container spacing={4}>
-                                                { items.map( item => (
+                                                { items.map( (item) => (
                                                     <Grid item xs={12} sm={4} md={6}>
                                                         <Card>
                                                             <CardContent className={classes.content}>
                                                                 <Grid container direction="row" alignItems="center">
                                                                     <Grid item>
-                                                                        <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.typeDonate} style={{ color: "#247BA0" }}/>
+                                                                        <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.typeDonate.name} style={{ color: "#247BA0" }}/>
                                                                     </Grid>
                                                                 </Grid>
                                                             </CardContent>
