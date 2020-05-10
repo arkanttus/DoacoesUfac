@@ -25,8 +25,8 @@ class UserReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = (
-            'id', 'email', 'cpf', 'name', 'institution', 'staffUser', 'isActive', 'superUser', 'dateJoined',
-            'emailConfirm', 'shareEmail', 'sharePhone', 'phoneNumber', 'typeUser', 'uf', 'city'
+            'id', 'email', 'cpf', 'name', 'institution', 'isActive', 'dateJoined', 'emailConfirm', 'shareEmail',
+            'sharePhone', 'phoneNumber', 'typeUser', 'uf', 'city'
         )
 
 
