@@ -110,12 +110,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login({ props }) {
     const classes = useStyles();
+    const Swal = require('sweetalert2');
 
     const [ email, setEmail ] = React.useState("");
     const [ password, setPassword ] = React.useState("");
     const [ open, setOpen ] = React.useState(false);
     const [ error, setError ] = React.useState("");
-
+  
     async function validateForm(e) {
         e.preventDefault()
         const response = await sendRequest("POST", "login/", { username: email, password })
@@ -123,6 +124,15 @@ export default function Login({ props }) {
         if(response.status === 200) {
            await login(response.data)
             props.history.push("/dashboard")
+        }
+        if(response.status === 400){
+            Swal.fire({
+                title: "Desculpe",
+                text: "Usuário ou senha inválido.",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
         }
         else {
             setError(`Erro ${response.status} - ${response.data.errors}`)
@@ -155,6 +165,7 @@ export default function Login({ props }) {
                                         <Grid item xs={10} sm={11}>
                                             <TextField variant="standard" required fullWidth name="password" label="Senha de acesso" type="password" id="password" autoComplete="current-password" value={password} onChange={e => { setPassword(e.target.value) }}/>
                                         </Grid>
+                                 
                                     </Grid>
                                 </Grid>
                                 <Button type="submit" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">ENTRAR</Button>
