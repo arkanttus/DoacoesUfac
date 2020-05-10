@@ -14,7 +14,7 @@ class UserAdmin(DjangoUserAdmin):
                 'phone_number',
                 'email_confirm',
                 'type_user',
-                'cpf'
+                'cpf',
                 'uf',
                 'city'
             )
