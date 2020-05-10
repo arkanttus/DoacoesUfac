@@ -10,6 +10,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '../../components/Button';
 import WaitLoading from '../../components/WaitLoading';
 import { getInstitutionById, getDonationsByInstitutionId, sendRequest } from '../../services/api';
+import Modal from '@material-ui/core/Modal';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -53,7 +55,12 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         padding: "0px 10px !important",
-    }
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 }));
 
 export default function Donate({ props }) {
@@ -61,6 +68,7 @@ export default function Donate({ props }) {
     const [institution, setInstitution] = React.useState({})
     const [items, setItems] = React.useState({})
     const [loading, setLoading] = React.useState(true)
+    const [open, setOpen] = React.useState(false)
     const institutionId = props.match.params.institutionId;
     const Swal = require('sweetalert2');
 
@@ -94,8 +102,13 @@ export default function Donate({ props }) {
         setItems(newItems)
     };
 
-    async function handleSubmit() {
-        const response = await sendRequest("POST", `donates/`, { setNeedDonates: items.map(obj => { return obj.id }), setInstitution: institutionId })
+    async function onChangeRecaptcha (value) {
+
+        await handleSubmit(value)
+    }
+
+    async function handleSubmit(captcha) {
+        const response = await sendRequest("POST", `donates/`, { setNeedDonates: items.map(obj => { return obj.id }), setInstitution: institutionId, "g-recaptcha-response": captcha })
         
         if(response.status === 201) {
             props.history.push("/doado/"+response.data.id);
@@ -140,7 +153,7 @@ export default function Donate({ props }) {
                                         <Grid container style={{ padding: 30 }}>
                                             <Grid container spacing={4}>
                                                 { items.map( (item) => (
-                                                    <Grid item xs={12} sm={4} md={6}>
+                                                    <Grid item xs={12} sm={12} md={6}>
                                                         <Card>
                                                             <CardContent className={classes.content}>
                                                                 <Grid container direction="row" alignItems="center">
@@ -156,7 +169,7 @@ export default function Donate({ props }) {
                                         </Grid>
 
                                         <Grid item>
-                                            <Button onClick={handleSubmit} variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>CONFIRMAR</Button>
+                                            <Button onClick={() => setOpen(true)} variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>CONFIRMAR</Button>
                                         </Grid>
                                     </Grid>
                                 </>
@@ -173,6 +186,10 @@ export default function Donate({ props }) {
                     </Grid>
                 </WaitLoading>
             </Grid>
+
+            <Modal open={open} aria-labelledby="server-modal-title" aria-describedby="server-modal-description" onClose={() => setOpen(false)} className={classes.modal}>
+                <ReCAPTCHA sitekey="6LfNRPUUAAAAAKDYI9Jlq9bUxyHoGMLj4j_XestT" onChange={onChangeRecaptcha}/>
+            </Modal>
         </Grid>
     );
 }
