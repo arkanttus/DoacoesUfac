@@ -84,6 +84,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(_('Número de Telefone'), max_length=20)
     type_user = models.CharField(_('Tipo de Usuario'), max_length=1, choices=TYPE_USER_CHOICES, null=True)
     cpf = models.CharField(_('CPF'), max_length=14, validators=[BRCPFValidator()], unique=True, null=True, blank=True)
+    uf = models.CharField(_('Estado'), max_length=100)
+    city = models.CharField(_('Cidade'), max_length=150)
 
     objects = UserManager()
 

@@ -3,8 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from localflavor.br.validators import BRCPFValidator
 import re
-from django.contrib.auth.forms import SetPasswordForm
-from django.conf import settings
 
 # Get the UserModel
 UserModel = get_user_model()
@@ -14,21 +12,21 @@ class UserReadSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField()
     cpf = serializers.ReadOnlyField()
     name = serializers.ReadOnlyField()
-    staffUser = serializers.BooleanField(source='is_staff', read_only=True)
     isActive = serializers.BooleanField(source='is_active', read_only=True)
-    superUser = serializers.BooleanField(source='is_superuser', read_only=True)
     dateJoined = serializers.BooleanField(source='date_joined', read_only=True)
     emailConfirm = serializers.BooleanField(source='email_confirm', read_only=True)
     shareEmail = serializers.BooleanField(source='share_email', read_only=True)
     sharePhone = serializers.BooleanField(source='share_phone', read_only=True)
     phoneNumber = serializers.CharField(source='phone_number', read_only=True)
     typeUser = serializers.CharField(source='get_type_user_display', read_only=True)
+    uf = serializers.ReadOnlyField()
+    city = serializers.ReadOnlyField()
 
     class Meta:
         model = UserModel
         fields = (
-            'id', 'email', 'cpf', 'name', 'institution', 'staffUser', 'isActive', 'superUser', 'dateJoined', 'emailConfirm',
-            'shareEmail', 'sharePhone', 'phoneNumber', 'typeUser'
+            'id', 'email', 'cpf', 'name', 'institution', 'staffUser', 'isActive', 'superUser', 'dateJoined',
+            'emailConfirm', 'shareEmail', 'sharePhone', 'phoneNumber', 'typeUser', 'uf', 'city'
         )
 
 
@@ -57,11 +55,14 @@ class UserCreateSerializer(serializers.ModelSerializer):
         source='type_user', required=True, error_messages={'required': _('Campo Obrigatório')},
         choices=UserModel.TYPE_USER_CHOICES
     )
+    uf = serializers.CharField(max_length=100, required=True, error_messages={'required': _('Campo Obrigatório')})
+    city = serializers.CharField(max_length=150, required=True, error_messages={'required': _('Campo Obrigatório')})
 
     class Meta:
         model = UserModel
         fields = (
-            'email', 'name', 'cpf', 'emailConfirm', 'shareEmail', 'sharePhone', 'phoneNumber', 'password1', 'typeUser'
+            'email', 'name', 'cpf', 'emailConfirm', 'shareEmail', 'sharePhone', 'phoneNumber', 'password1', 'typeUser',
+            'uf', 'city'
         )
 
     def create(self, validated_data):
@@ -69,6 +70,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
         user = UserModel.objects.create(**validated_data)
         user.set_password(password)
         user.verify_email()
+        if user.type_user == UserModel.RECEIVER:
+            user.is_active = False
         user.save()
         return user
 

@@ -42,13 +42,15 @@ def path_image_institution(instance, filename):
 class Institution(BaseModel):
     # Info
     name = models.CharField(_('Instituição'), max_length=200)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Responsável pela Instituição'), related_name='institution')
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name=_('Responsável pela Instituição'), related_name='institution'
+    )
     type_institution = models.ForeignKey(
         TypeInstitution, on_delete=models.PROTECT, verbose_name=_('Tipo de Instituição')
     )
     other_type = models.CharField(_('Outro tipo'), max_length=100, null=True, blank=True)
     description = models.TextField(_('Descrição da Instituição'), max_length=500)
-    image = models.ImageField(_('Foto da instituição'), upload_to=path_image_institution, null=True, blank=True)
+    image = models.ImageField(_('Foto da instituição'), upload_to=path_image_institution)
 
     # Geo
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)

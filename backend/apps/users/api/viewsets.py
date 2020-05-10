@@ -9,7 +9,6 @@ from rest_framework.decorators import action
 from .serializers import UserReadSerializer, UserCreateSerializer, PasswordChangeSerializer
 from .permissions import PostOnlyPermissions
 from apps.users.models import User
-from apps.donates.models import Donate
 from apps.base.api.serializers import InstitutionReadSerializer
 from apps.base.models import Institution
 from apps.base.utils import gerar_token
@@ -31,12 +30,19 @@ class UserView(viewsets.ModelViewSet):
         return User.objects.filter(is_active=True)
 
     def list(self, request, *args, **kwargs):
-        # return super(UserView, self).list(request, *args, **kwargs)
         return response.Response({}, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        user = super(UserView, self).create(request, *args, **kwargs)
-        return user
+        serializer = UserCreateSerializer(data=request.data, context=self.get_serializer_context())
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        try:
+            qs = User.objects.get(id=serializer.instance.id)
+            serializer_read = UserReadSerializer(qs, context={'request': request})
+        except User.DoesNotExist:
+            return response.Response({'errors': 'Usuário não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+        headers = self.get_success_headers(serializer_read.data)
+        return response.Response(serializer_read.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
@@ -51,7 +57,7 @@ class UserView(viewsets.ModelViewSet):
             instance._prefetched_objects_cache = {}
         try:
             qs = User.objects.get(id=instance.id)
-            serializer_read = UserReadSerializer(qs)
+            serializer_read = UserReadSerializer(qs, context={'request': request})
         except User.DoesNotExist:
             return response.Response({'errors': _('Usuário não encontrado')}, status=status.HTTP_404_NOT_FOUND)
         return response.Response(serializer_read.data)
@@ -77,6 +83,7 @@ class UserView(viewsets.ModelViewSet):
         serializer.save()
         return response.Response({}, status=status.HTTP_200_OK)
 
+
 class ValidateView(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
@@ -96,6 +103,7 @@ class ValidateView(viewsets.ViewSet):
         
         return response.Response({'Token': 'Token Inválido'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
+
 class Login(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
@@ -104,7 +112,10 @@ class Login(ObtainAuthToken):
         )
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-
+        if user.type_user == User.RECEIVER and not user.is_active:
+            return response.Response(
+                {'error': _("Verificação da conta está em andamento")}, status=status.HTTP_401_UNAUTHORIZED
+            )
         # if not user.email_confirm:
         #     return response.Response(data={
         #         'detail': "Usuário não confirmou e-mail"

@@ -7,6 +7,7 @@ from .permissions import *
 from apps.base.models import Institution
 from apps.users.models import User
 
+
 class DonateView(viewsets.ModelViewSet):
     queryset = Donate.objects.all()
     serializer_class = DonateSerializer
