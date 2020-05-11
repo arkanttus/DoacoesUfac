@@ -21,6 +21,7 @@ class UserReadSerializer(serializers.ModelSerializer):
     typeUser = serializers.CharField(source='get_type_user_display', read_only=True)
     uf = serializers.ReadOnlyField()
     city = serializers.ReadOnlyField()
+    totalDonations = serializers.ReadOnlyField(source='get_all_donations')
 
     class Meta:
         model = UserModel

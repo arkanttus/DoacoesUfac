@@ -107,4 +107,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def get_short_name(self):
         return self.name[:30]
-    
+
+    @property
+    def get_all_donations(self):
+        return self.donates.filter(donated=True).count()

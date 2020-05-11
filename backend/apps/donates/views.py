@@ -31,7 +31,7 @@ class DonateView(viewsets.ModelViewSet):
         if user.type_user == User.DONATOR:
             return Donate.objects.filter(donator=user)
         else:
-            return Donate.objects.filter(institution=Institution.objects.filter(owner=user)[0])
+            return Donate.objects.filter(institution=Institution.objects.filter(owner=user)[0]).order_by('donated')
 
     def get_serializer_class(self):
         if self.action == 'update':
