@@ -88,7 +88,7 @@ class ValidateView(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
     # http://localhost:8000/api/v1/validate/email/<id>/<token>/
-    @action(methods=['get'], detail=False, url_path='email/(?P<pk>[^/.]+)/(?P<token>\w+)')
+    @action(methods=['get'], detail=False, url_path=r'email/(?P<pk>[^/.]+)/(?P<token>\w+)')
     def email(self, request, pk=None, token=None):
         user = get_object_or_404(User, id=pk)
 
@@ -100,7 +100,7 @@ class ValidateView(viewsets.ViewSet):
             user_data = serializer.data
 
             return response.Response({'User': user_data}, status=status.HTTP_202_ACCEPTED)
-        
+
         return response.Response({'Token': 'Token Inválido'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
@@ -161,4 +161,3 @@ class LogoutView(views.APIView):
         res = response.Response({"detail": _("Deslogado com sucesso.")}, status=status.HTTP_200_OK)
 
         return res
-

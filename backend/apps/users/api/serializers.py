@@ -27,7 +27,7 @@ class UserReadSerializer(serializers.ModelSerializer):
         model = UserModel
         fields = (
             'id', 'email', 'cpf', 'name', 'institution', 'isActive', 'dateJoined', 'emailConfirm', 'shareEmail',
-            'sharePhone', 'phoneNumber', 'typeUser', 'uf', 'city'
+            'sharePhone', 'phoneNumber', 'typeUser', 'uf', 'city', 'totalDonations'
         )
 
 

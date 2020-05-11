@@ -2,6 +2,7 @@ import requests
 
 from navigo.settings import GOOGLE_RECAPTCHA_SECRET_KEY
 
+
 def validate_recaptcha(recaptcha_response):
     values = {
         'secret': GOOGLE_RECAPTCHA_SECRET_KEY,
