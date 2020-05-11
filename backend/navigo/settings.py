@@ -14,6 +14,8 @@ PRODUCTION = True if env('SETTINGS') == 'PROD' else False
 
 SECRET_KEY = env('SECRET_KEY')
 
+GOOGLE_RECAPTCHA_SECRET_KEY = "6LfNRPUUAAAAAA_l4IEPhjqFexMqIbx_hKhAEvGX"
+
 if PRODUCTION:
     ALLOWED_HOSTS = ['200.129.173.207', 'localhost']
 else:
