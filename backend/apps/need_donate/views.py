@@ -7,7 +7,7 @@ from apps.base.models import Institution
 
 
 class NeedDonateView(viewsets.ModelViewSet):
-    queryset = NeedDonate.objects.all()
+    queryset = NeedDonate.objects.filter(is_active=True)
     serializer_class = NeedDonateSerializer
 
     def get_permissions(self):
@@ -22,7 +22,6 @@ class NeedDonateView(viewsets.ModelViewSet):
 
         return [permission() for permission in permission_classes]
 
-    
     def perform_create(self, serializer):
         donator = self.request.user
         institution = Institution.objects.filter(owner=donator)[0]
