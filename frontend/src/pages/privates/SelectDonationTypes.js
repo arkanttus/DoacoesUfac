@@ -51,7 +51,7 @@ export default function SelectDOnationTypes({ props }) {
         let res = await sendRequest("GET", "type_donates/", {})
         console.log(res)
     
-        if(res.status == 200) {
+        if(res.status === 200) {
             res.data.results.forEach(function(name) {
                 name.checked = false
                 name.description= " "

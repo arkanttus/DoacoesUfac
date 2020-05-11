@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 
 //Material UI
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -61,7 +60,7 @@ export default function EmailValidation() {
     let { token } = useParams();
     console.log("id: " + id);
     console.log("token: " + token);
-    const [validation, setValidation] = React.useState(20);
+    const [validation] = React.useState(20);
 
     return(
         <div className={classes.containerRoot}>
