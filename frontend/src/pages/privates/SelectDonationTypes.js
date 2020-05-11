@@ -54,7 +54,7 @@ export default function SelectDOnationTypes({ props }) {
         if(res.status === 200) {
             res.data.results.forEach(function(name) {
                 name.checked = false
-                name.description= " "
+                name.description= ""
             });
             
             if (institution.needDonates){
@@ -113,7 +113,7 @@ export default function SelectDOnationTypes({ props }) {
                 icon: "success",
                 confirmButtonText: "Ok"
             });
-            setInstitution(getInstitutionById(institution.id))
+            setInstitution(await getInstitutionById(institution.id))
         }
         else {
             Swal.fire({

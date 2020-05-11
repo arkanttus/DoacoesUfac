@@ -103,12 +103,12 @@ export default function Donate({ props }) {
     };
 
     async function onChangeRecaptcha (value) {
-
         await handleSubmit(value)
     }
 
     async function handleSubmit(captcha) {
-        const response = await sendRequest("POST", `donates/`, { setNeedDonates: items.map(obj => { return obj.id }), setInstitution: institutionId, "g-recaptcha-response": captcha })
+        let actives = items.filter(obj => obj.checked === true)
+        const response = await sendRequest("POST", `donates/`, { setNeedDonates: actives.map(obj => { return obj.id }), setInstitution: institutionId, "g-recaptcha-response": captcha })
         
         if(response.status === 201) {
             props.history.push("/doado/"+response.data.id);
