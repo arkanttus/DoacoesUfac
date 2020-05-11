@@ -27,7 +27,7 @@ class TypeDonate(BaseModel):
 
 
 class NeedDonate(BaseModel):
-    description = models.CharField(_('Descrição'), max_length=255)
+    description = models.CharField(_('Descrição'), max_length=255, blank=True)
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='need_donates', verbose_name=_('Criador do pedido de doação')
     )
