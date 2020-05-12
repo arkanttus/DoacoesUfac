@@ -119,18 +119,6 @@ export default function Home({props}){
         setCitiesArray(cities[e.target.value].cidades);
     }
 
-    
-    
-
-    const withoutDonations = [{
-        name: "Orfanato Fulano de Tal",
-        img: "/images/Example1.svg"
-    },
-    {
-        name: "Orfanato Fulano de Tal",
-        img: "/images/Example1.svg"
-    }]
-
     return (
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>

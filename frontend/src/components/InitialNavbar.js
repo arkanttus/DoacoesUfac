@@ -16,6 +16,8 @@ import {
     drawerWidth
   } from "./MaterialKit/material-kit-react.js";
 
+import Logo from '../assets/Logo.svg';
+
 const useStyles = makeStyles((theme) => ({
     noLinkStyle: {
         textDecoration: 'none',
@@ -221,7 +223,7 @@ const MenuLeft = (props) => {
     const classes = useStyles()
     return (
         <div className={classes.logo}>
-            <img src="images/Logo.svg" alt="logo" className={classes.img} />
+            <img src={Logo} alt="logo" className={classes.img} />
             <Typography variant="h6" className={classes.title}>
                     Doações
             </Typography>

@@ -65,9 +65,8 @@ export default function EmailValidation() {
     const classes = useStyles();
     let { id } = useParams();
     let { token } = useParams();
-    console.log("id: " + id);
-    console.log("token: " + token);
-    const [validation, setValidation] = React.useState(20);
+
+    const [validation] = React.useState(20);
 
 
     return(

@@ -4,7 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import InstitutionCard from '../../components/InstitutionCard';
 import Typography from "@material-ui/core/Typography";
 import Box from '@material-ui/core/Box';
-
+import { Link } from 'react-router-dom';
+import WaitLoading from '../../components/WaitLoading';
+import { sendRequest } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
     buttonFix: {
@@ -60,15 +62,37 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Institutions() {
+export default function Institutions({ props }) {
     const classes = useStyles();
-    let institutions = []
-    for(let i = 0; i < 10; i++) {
-        institutions.push({
-            name: "Educandário BCA",
-            img: "images/HEADER.png"
-        })
+    const [institutions,setInstitutions] = React.useState(null);
+    const [loading,setLoading] = React.useState(true)
+
+    async function loadData() {
+        let res = await sendRequest("GET", "institutions/", {})
+        
+        if(res.status === 200) {
+            res.data.results.forEach((institution) => {
+                institution.items = institution.needDonates.map((need, index) => {
+                    let msg = need.typeDonate.name
+                    if(index > 0)
+                        msg = msg.toLowerCase()
+                    if(index !== institution.needDonates.length-1)
+                        return `${msg}, `;
+                    return `${msg}.`;
+                })
+            })
+            setInstitutions(res.data.results)
+            setLoading(false)
+            
+
+        }
+        else
+            props.history.push("/dashboard");
     }
+
+    React.useEffect(() => {
+        loadData();
+    }, []);
 
     return(
         <Grid container className={classes.container}>
@@ -84,11 +108,15 @@ export default function Institutions() {
             
             <Grid container className={classes.fatherContainer}>
                 <Grid container spacing={4} className={classes.cardContainer}>
-                    { institutions.map( institution => (
-                        <Grid item xs={12} sm={6} lg={3} className={classes.cardItem}>
-                            <InstitutionCard title={institution.name} photo={institution.img}/>
-                        </Grid>
-                    ) )}
+                    <WaitLoading isLoading={loading} type="spin">
+                        { institutions ? institutions.map( institution => (
+                            <Grid item xs={12} sm={6} lg={3} className={classes.cardItem}>
+                                <Link to={`doar/${institution.id}`} style={{ textDecoration: "none" }}>
+                                    <InstitutionCard title={institution.name} photo={institution.image}/>
+                                </Link>
+                            </Grid>
+                        ) ) : <></>}
+                    </WaitLoading>
                 </Grid>
             </Grid>
         </Grid>

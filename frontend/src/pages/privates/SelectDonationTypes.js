@@ -51,10 +51,10 @@ export default function SelectDOnationTypes({ props }) {
         let res = await sendRequest("GET", "type_donates/", {})
         console.log(res)
     
-        if(res.status == 200) {
+        if(res.status === 200) {
             res.data.results.forEach(function(name) {
                 name.checked = false
-                name.description= " "
+                name.description= ""
             });
             
             if (institution.needDonates){
@@ -113,7 +113,7 @@ export default function SelectDOnationTypes({ props }) {
                 icon: "success",
                 confirmButtonText: "Ok"
             });
-            setInstitution(getInstitutionById(institution.id))
+            setInstitution(await getInstitutionById(institution.id))
         }
         else {
             Swal.fire({

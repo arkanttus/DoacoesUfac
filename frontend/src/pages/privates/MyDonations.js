@@ -8,6 +8,7 @@ import Card from '../../components/MaterialKit/Card/Card';
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 
+import { Link } from 'react-router-dom';
 import WaitLoading from '../../components/WaitLoading';
 import { getDonationsByUserId } from '../../services/api';
 import { getUser } from '../../services/auth';
@@ -69,10 +70,10 @@ export default function MyDonations({ props  }) {
         if(res) {
             res.results.forEach((donation) => {
                 donation.items = donation.needDonates.map((need, index) => {
-                    let msg = need.typeDonate
+                    let msg = need.typeDonate.name
                     if(index > 0)
                         msg = msg.toLowerCase()
-                    if(index != donation.needDonates.length-1)
+                    if(index !== donation.needDonates.length-1)
                         return `${msg}, `;
                     return `${msg}.`;
                 })
@@ -97,17 +98,19 @@ export default function MyDonations({ props  }) {
                     <Grid container>
                         { donations ? donations.map( donation => (
                             <Grid item xs={12} sm={4} md={3} className={classes.gridCardContainer}>
-                                <Card style={{ width: '19rem'}}>
-                                    <CardHeader className={classes.cardHeader}>
-                                        <label>
-                                            <strong>Instituição:</strong> {donation.institution.name}
-                                        </label>
-                                    </CardHeader>
-                                    <CardBody>
-                                        <p><strong>Doação: </strong>{donation.items}</p>
-                                        <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY HH:mm')}</p>
-                                    </CardBody>
-                                </Card>
+                                <Link to={`doado/${donation.id}`} style={{ textDecoration: "none" }}>
+                                    <Card style={{ width: '19rem'}}>
+                                        <CardHeader className={classes.cardHeader}>
+                                            <label>
+                                                <strong>Instituição:</strong> {donation.institution.name}
+                                            </label>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <p><strong>Doação: </strong>{donation.items}</p>
+                                            <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY HH:mm')}</p>
+                                        </CardBody>
+                                    </Card>
+                                </Link>
                             </Grid>
                         ) ) : (
                             <Grid item xs={12} className={classes.noneDonation}>
