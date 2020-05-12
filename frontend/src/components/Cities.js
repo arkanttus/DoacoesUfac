@@ -1,8 +1,8 @@
 export const Cities = () => {
     return {
-        "Acre": {
+        "AC": {
             "sigla": "AC",
-            "nome": "Acre",
+            "nome": "AC",
             "cidades": [
                 "Acrelândia",
                 "Assis Brasil",
@@ -28,7 +28,7 @@ export const Cities = () => {
                 "Xapuri"
             ]
         },
-        "Alagoas": {
+        "AL": {
             "sigla": "AL",
             "nome": "Alagoas",
             "cidades": [
@@ -136,7 +136,7 @@ export const Cities = () => {
                 "Viçosa"
             ]
         },
-        "Amazonas": {
+        "AM": {
             "sigla": "AM",
             "nome": "Amazonas",
             "cidades": [
@@ -204,7 +204,7 @@ export const Cities = () => {
                 "Urucurituba"
             ]
         },
-        "Amapá": {
+        "AP": {
             "sigla": "AP",
             "nome": "Amapá",
             "cidades": [
@@ -226,7 +226,7 @@ export const Cities = () => {
                 "Vitória do Jari"
             ]
         },
-        "Bahia": {
+        "BA": {
             "sigla": "BA",
             "nome": "Bahia",
             "cidades": [
@@ -649,7 +649,7 @@ export const Cities = () => {
                 "Xique-Xique"
             ]
         },
-        "Ceará": {
+        "CE": {
             "sigla": "CE",
             "nome": "Ceará",
             "cidades": [
@@ -839,7 +839,7 @@ export const Cities = () => {
                 "Viçosa do Ceará"
             ]
         },
-        "Distrito Federal":  {
+        "DF":  {
             "sigla": "DF",
             "nome": "Distrito Federal",
             "cidades": [
@@ -856,7 +856,7 @@ export const Cities = () => {
                 "Taguatinga"
             ]
         },
-        "Espírito Santo": {
+        "ES": {
             "sigla": "ES",
             "nome": "Espírito Santo",
             "cidades": [
@@ -940,7 +940,7 @@ export const Cities = () => {
                 "Vitória"
             ]
         },
-        "Goiás": {
+        "GO": {
             "sigla": "GO",
             "nome": "Goiás",
             "cidades": [
@@ -1192,7 +1192,7 @@ export const Cities = () => {
                 "Vila Propício"
             ]
         },
-        "Maranhão": {
+        "MA": {
             "sigla": "MA",
             "nome": "Maranhão",
             "cidades": [
@@ -1415,7 +1415,7 @@ export const Cities = () => {
                 "Zé Doca"
             ]
         },
-        "Minas Gerais": {
+        "MG": {
             "sigla": "MG",
             "nome": "Minas Gerais",
             "cidades": [
@@ -2274,7 +2274,7 @@ export const Cities = () => {
                 "Wenceslau Braz"
             ]
         },
-        "Mato Grosso do Sul":{
+        "MS":{
             "sigla": "MS",
             "nome": "Mato Grosso do Sul",
             "cidades": [
@@ -2357,7 +2357,7 @@ export const Cities = () => {
                 "Vicentina"
             ]
         },
-        "Mato Grosso": {
+        "MG": {
             "sigla": "MT",
             "nome": "Mato Grosso",
             "cidades": [
@@ -2502,7 +2502,7 @@ export const Cities = () => {
                 "Vila Rica"
             ]
         },
-        "Pará": {
+        "PA": {
             "sigla": "PA",
             "nome": "Pará",
             "cidades": [
@@ -2651,7 +2651,7 @@ export const Cities = () => {
                 "Xinguara"
             ]
         },
-        "Paraíba": {
+        "PA": {
             "sigla": "PB",
             "nome": "Paraíba",
             "cidades": [
@@ -2880,7 +2880,7 @@ export const Cities = () => {
                 "Zabelê"
             ]
         },
-        "Pernambuco": {
+        "PE": {
             "sigla": "PE",
             "nome": "Pernambuco",
             "cidades": [
@@ -3071,7 +3071,7 @@ export const Cities = () => {
                 "Xexéu"
             ]
         },
-        "Piauí": {
+        "PI": {
             "sigla": "PI",
             "nome": "Piauí",
             "cidades": [
@@ -3299,7 +3299,7 @@ export const Cities = () => {
                 "Wall Ferraz"
             ]
         },
-        "Paraná": {
+        "PR": {
             "sigla": "PR",
             "nome": "Paraná",
             "cidades": [
@@ -3704,7 +3704,7 @@ export const Cities = () => {
                 "Xambrê"
             ]
         },
-        "Rio de Janeiro": {
+        "RJ": {
             "sigla": "RJ",
             "nome": "Rio de Janeiro",
             "cidades": [
@@ -3802,7 +3802,7 @@ export const Cities = () => {
                 "Volta Redonda"
             ]
         },
-        "Rio Grande do Norte": {
+        "RN": {
             "sigla": "RN",
             "nome": "Rio Grande do Norte",
             "cidades": [
@@ -3975,7 +3975,7 @@ export const Cities = () => {
                 "Vila Flor"
             ]
         },
-        "Rondônia": {
+        "RO": {
             "sigla": "RO",
             "nome": "Rondônia",
             "cidades": [
@@ -4033,7 +4033,7 @@ export const Cities = () => {
                 "Vilhena"
             ]
         },
-        "Roraima": {
+        "RR": {
             "sigla": "RR",
             "nome": "Roraima",
             "cidades": [
@@ -4054,7 +4054,7 @@ export const Cities = () => {
                 "Uiramutã"
             ]
         },
-        "Rio Grande do Sul": {
+        "RS": {
             "sigla": "RS",
             "nome": "Rio Grande do Sul",
             "cidades": [
@@ -4556,7 +4556,7 @@ export const Cities = () => {
                 "Xangri-lá"
             ]
         },
-        "Santa Catarina": {
+        "SC": {
             "sigla": "SC",
             "nome": "Santa Catarina",
             "cidades": [
@@ -4855,7 +4855,7 @@ export const Cities = () => {
                 "Zortéa"
             ]
         },
-        "Sergipe": {
+        "SE": {
             "sigla": "SE",
             "nome": "Sergipe",
             "cidades": [
@@ -4936,7 +4936,7 @@ export const Cities = () => {
                 "Umbaúba"
             ]
         },
-        "São Paulo": {
+        "SP": {
             "sigla": "SP",
             "nome": "São Paulo",
             "cidades": [
@@ -5587,7 +5587,7 @@ export const Cities = () => {
                 "Zacarias"
             ]
         },
-        "Tocantins": {
+        "TO": {
             "sigla": "TO",
             "nome": "Tocantins",
             "cidades": [
