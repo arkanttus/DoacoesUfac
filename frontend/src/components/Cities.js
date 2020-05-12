@@ -2,7 +2,7 @@ export const Cities = () => {
     return {
         "AC": {
             "sigla": "AC",
-            "nome": "AC",
+            "nome": "Acre",
             "cidades": [
                 "Acrelândia",
                 "Assis Brasil",
