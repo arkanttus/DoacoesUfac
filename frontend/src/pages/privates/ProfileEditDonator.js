@@ -1,4 +1,6 @@
 import React from 'react';
+
+//Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -8,8 +10,15 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Container from '@material-ui/core/Container';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
+//Services
 import { setUser, getUser } from '../../services/auth';
 import { sendRequest } from "../../services/api";
+
+//Components
+import { Cities } from "../../components/Cities";
 
 function PhoneMask(props) {
     const { inputRef, ...other } = props;
@@ -71,14 +80,30 @@ export default function ProfileEditDonator() {
     const classes = useStyles();
     const user = getUser();
     const Swal = require('sweetalert2');
+    console.log(user);
+
+    const cities = Cities();
+    const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
+                "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
+                "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
+    
 
     const [screen, setScreen] = React.useState(0);
     const [name, setName] = React.useState(user.name);
     const [email, setEmail] = React.useState(user.email);
     const [phone, setPhone] = React.useState(user.phoneNumber);
+    const [uf, setUF] = React.useState(itemsEstados.filter(obj => {return obj === user.uf})[0]);
+    const [citiesArray, setCitiesArray] = React.useState(cities[user.uf].cidades);
+    const [city, setCity] = React.useState(user.city);
     const [password, setPassword] = React.useState('');
     const [newPassword1, setNewPassword1] = React.useState('');
     const [newPassword2, setNewPassword2] = React.useState('');
+
+    function handleSelectCities(e) {
+        setUF(e.target.value);
+        setCity("");
+        setCitiesArray(cities[e.target.value].cidades);
+    }
 
     //Atualizar perfil
     async function handleUpdateProfile() {
@@ -102,7 +127,26 @@ export default function ProfileEditDonator() {
             });
             return;
         }
-        const response = await sendRequest("PATCH", "users/" + user.id + "/", { name, email, phoneNumber: phone });
+        if(uf === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Estado",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        if(city === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Cidade",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+
+        const response = await sendRequest("PATCH", "users/" + user.id + "/", { name, email, phoneNumber: phone, uf, city });
         if(response.status === 200) {
             Swal.fire({
                 title: "Seus dados foram atualizados!",
@@ -218,16 +262,44 @@ export default function ProfileEditDonator() {
                     <Grid container spacing={4} className={classes.containerForm}>
                         <label className={classes.titulo1}>Edição de Conta</label>
                         <Grid item xs={12}>
-                            <TextField fullWidth value={name} onChange={(e) => setName(e.target.value)} label="Nome Completo" />
+                            <TextField fullWidth required value={name} onChange={(e) => setName(e.target.value)} label="Nome Completo" />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField fullWidth value={email} onChange={(e) => setEmail(e.target.value)} label="Email" />
+                            <TextField fullWidth required value={email} onChange={(e) => setEmail(e.target.value)} label="Email" />
                         </Grid>
                         <Grid item xs={12}>
-                        <FormControl fullWidth>
+                        <FormControl fullWidth required>
                             <InputLabel htmlFor="formatted-text-mask-input">Telefone</InputLabel>
                             <Input name="textmask" id="formatted-text-mask-input" inputComponent={PhoneMask} value={phone} onChange={(e) => setPhone(e.target.value)}/>
                         </FormControl>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <FormControl fullWidth>
+                            <InputLabel>Estado *</InputLabel>
+                                <Select value={uf ? uf : ""} onChange={handleSelectCities} input={<Input />}>    
+                                {itemsEstados.map((item) => (
+                                    <MenuItem key={item} value={item}>
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <FormControl fullWidth>
+                                <InputLabel>Cidade *</InputLabel>
+                                    <Select value={city ? city : ""} onChange={(e) => setCity(e.target.value)} input={<Input />}>    
+                                    {citiesArray ? (citiesArray.map((item) => (
+                                        <MenuItem key={item} value={item}>
+                                        {item}
+                                        </MenuItem>
+                                    ))) : (
+                                        <div></div>
+                                    )}
+                                    </Select>
+                            </FormControl>
                         </Grid>
 
                         <Grid item className={classes.buttonLeft} xs={12} sm={6}>

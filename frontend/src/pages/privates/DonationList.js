@@ -8,6 +8,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Card from '../../components/MaterialKit/Card/Card';
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
+import moment from 'moment';
+
+//api
+import api,  { sendRequest, getDonations } from "../../services/api";
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -47,23 +51,75 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListDonation() {
     const classes = useStyles();
+    const Swal = require('sweetalert2');
+    const [donations, setDonations] = React.useState([]);
 
-    let donations = []
+    React.useEffect(() => {
+        let response = getDonations();
+        if(response) {
+            response.then(function(result) {
+                setDonations(result.results);
+            }, err => {
+                console.log(err);
+            });
+        }
+    }, []);
+
+    console.log(donations);
+
+    /*let donations = []
     for(let i = 0; i < 10; i++) {
         donations.push({
             name: "José Fulano",
             text: "Cesta Básica",
             date: "22/07/1999"
         })
-    }
+    }*/
 
     const [state, setState] = React.useState({
-        checked: true,
+        checked: false,
       });
     
-      const handleChange = (event) => {
-        //setState({ ...state, [event.target.name]: event.target.checked });
-        setState({ checked:! state.checked })
+      const handleChange = (id) => {
+        Swal.fire({
+            title: 'Deseja confirmar esta doação?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim',
+            cancelButtonText: 'Não',
+          }).then((result) => {
+            if (result.value) {
+            api.patch('/donates/' + id + '/', {donated: true}).then(response => {
+                if(response.status === 200) {
+                    const newDonations = donations.map(donation => {
+                        if(donation.id === id) {
+                            donation.donated = !donation.donated;
+                        }
+                        return donation;
+                    });
+                    setDonations(newDonations);
+                    Swal.fire({
+                        title: 'Confirmado!',
+                        icon: 'success'
+                    });
+                } else {
+                    Swal.fire({
+                        title: '1Aconteceu um erro. Tente novamente mais tarde!',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            }).catch(err => {
+                Swal.fire({
+                    title: 'Aconteceu um erro. Tente novamente mais tarde!',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            });
+            }
+          })
       };
 
     return(
@@ -82,14 +138,14 @@ export default function ListDonation() {
                             <Card style={{backgroundColor:"#ECE9E9",width: "19rem"}}>
                                 <CardHeader className={classes.cardHeader}>
                                     <label>
-                                        <strong>Doador:</strong> {donation.name}
+                                        <strong>Doador:</strong> {donation.donator.name}
                                     </label>
-                                    { state.checked === true ? (
-                                            <IconButton onClick={handleChange} >  
+                                    { donation.donated === true ? (
+                                            <IconButton onClick={() => handleChange(donation.id)}>
                                                     <FavoriteIcon style={{ color:"#E53935", marginRight: -8 }}/>
                                             </IconButton>
                                         ) : ( 
-                                            <IconButton onClick={handleChange} >
+                                            <IconButton onClick={() => handleChange(donation.id)}>
                                                 <FavoriteBorderIcon style={{color:"#ffffff", marginRight: -8 }} />
                                             </IconButton>      
                                         ) 
@@ -97,8 +153,14 @@ export default function ListDonation() {
                                    
                                 </CardHeader>
                                 <CardBody>
-                                    <p><strong>Doação: </strong>{donation.text}</p>
-                                    <p><strong>Data: </strong>{donation.date}</p>
+                                    <p><strong>Doação: </strong>{donation.needDonates.map((item, index) => (
+                                        index === (donation.needDonates.length - 1) ? (
+                                            item.typeDonate.name
+                                        ) : (
+                                            `${item.typeDonate.name}, `
+                                        )         
+                                    ))}</p>
+                                    <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY')}</p>
                                     <Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
                                         <label> 2410 </label>
                                         <FavoriteIcon style={{ color:"#E53935", marginRight: -8, marginLeft: 5 }}/>     
