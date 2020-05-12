@@ -36,7 +36,7 @@ class TypeInstitution(BaseModel):
 
 def path_image_institution(instance, filename):
     extension = os.path.splitext(filename)[-1]
-    return f'institution/{instance.name}_{instance.type_institution.name}{extension}'
+    return f'institution/{instance.id}_{instance.name}{extension}'
 
 
 class Institution(BaseModel):
@@ -73,6 +73,15 @@ class Institution(BaseModel):
     def clean(self):
         if self.type_institution and self.type_institution.name.startswith('Outro') and not self.other_type:
             raise ValidationError(_('Especifique o tipo de instituição'))
+
+    def save(self, *args, **kwargs):
+        try:
+            obj = Institution.objects.get(id=self.id)
+            if obj.image != self.image:
+                obj.image.delete(save=False)
+        except:
+            pass
+        return super(Institution, self).save(*args, **kwargs)
 
     @property
     def get_institution(self):
