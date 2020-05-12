@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import WaitLoading from '../../components/WaitLoading';
+import MapViewer from '../../components/Map/MapViewer';
 import { getDonationById } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
@@ -154,7 +155,7 @@ export default function Donated({ props }) {
                         </Grid>
                             
                         <Grid container item xs={12} alignItems="center" justify="center" direction="column">
-                            <iframe src={mapUrl} title="map" frameborder="0" className={classes.map} allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                            <MapViewer institution={donation.institution}/>
                         </Grid>
                     </Grid>
                 </WaitLoading>

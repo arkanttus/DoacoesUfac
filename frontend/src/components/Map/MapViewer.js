@@ -35,14 +35,7 @@ class MapViewer extends Component {
   componentDidMount() {
     const self = this;
 
-    const marker = {
-      id: 3,
-      name: "a",
-      latitude: -9.973879999999951,
-      longitude: -67.80755999999997
-    };
-
-    self.addMarker(marker);
+    self.addMarker(self.props.institution);
   }
 
   addMarker = e => {
