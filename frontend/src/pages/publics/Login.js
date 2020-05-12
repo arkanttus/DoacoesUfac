@@ -173,7 +173,6 @@ export default function Login({ props }) {
                         </CardBody>
                     </Card>
                 </Grid>
-                
             </Container>
 
             <Modal open={open} aria-labelledby="server-modal-title" aria-describedby="server-modal-description" onClose={() => setOpen(false)} className={classes.modal}>
