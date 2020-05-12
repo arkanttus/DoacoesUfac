@@ -54,9 +54,9 @@ class InstitutionView(viewsets.ModelViewSet):
             serializer = InstitutionReadSerializer(queryset, many=True)
             institutions = serializer.data
 
-            return response.Response({'Institutions': institutions}, status=status.HTTP_202_ACCEPTED)
+            return response.Response({'Institutions': institutions}, status=status.HTTP_200_OK)
 
-        return response.Response({'Error': 'Cidade não encontrada'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        return response.Response({'Error': 'Cidade não encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
 class TypeInstitutionView(viewsets.ReadOnlyModelViewSet):
     queryset = TypeInstitution.objects.all()
