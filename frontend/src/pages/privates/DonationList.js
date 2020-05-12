@@ -54,27 +54,41 @@ export default function ListDonation() {
     const Swal = require('sweetalert2');
     const [donations, setDonations] = React.useState([]);
 
-    React.useEffect(() => {
-        let response = getDonations();
+    async function loadData() {
+        let response = await getDonations();
         if(response) {
-            response.then(function(result) {
-                setDonations(result.results);
-            }, err => {
-                console.log(err);
-            });
+            console.log(response)
+            response.results.forEach((donation) => {
+                donation.items = donation.needDonates.map((need, index) => {
+                    let msg = need.typeDonate.name
+                    if(index > 0)
+                        msg = msg.toLowerCase()
+                    if(index !== donation.needDonates.length-1)
+                        return `${msg}, `;
+                    return `${msg}.`;
+                })
+            })
+            setDonations(response.results);
         }
-    }, []);
+    }
 
+<<<<<<< HEAD
     console.log(donations);
 
+=======
+    React.useEffect(() => {
+        loadData()
+    }, []);
+>>>>>>> 9b1d060c41a50f7b5c05532729847612c7c50e7f
 
     const [state, setState] = React.useState({
         checked: false,
       });
     
-      const handleChange = (id) => {
+      const handleChange = (donation) => {
         Swal.fire({
             title: 'Deseja confirmar esta doação?',
+            text: "Não será possível cancelar, futuramente.",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -83,6 +97,7 @@ export default function ListDonation() {
             cancelButtonText: 'Não',
           }).then((result) => {
             if (result.value) {
+<<<<<<< HEAD
             api.patch('/donates/' + id + '/', {donated: true}).then(response => {
                 if(response.status === 200) {
                     const newDonations = donations.map(donation => {
@@ -103,6 +118,29 @@ export default function ListDonation() {
                         confirmButtonText: 'Ok'
                     });
                 }
+=======
+                api.patch('/donates/' + donation.id + '/', {donated: true}).then(response => {
+                    if(response.status === 200) {
+                        donation.donated = true
+                        const newDonations = donations.map(d => {
+                            if(d.donator.id === donation.donator.id) {
+                                d.donator.totalDonations += 1;
+                            }
+                            return d
+                        });
+                        setDonations(newDonations);
+                        Swal.fire({
+                            title: 'Confirmado!',
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            title: '1Aconteceu um erro. Tente novamente mais tarde!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+>>>>>>> 9b1d060c41a50f7b5c05532729847612c7c50e7f
             }).catch(err => {
                 Swal.fire({
                     title: 'Aconteceu um erro. Tente novamente mais tarde!',
@@ -127,17 +165,17 @@ export default function ListDonation() {
                 <Grid container>
                     { donations.map( donation => (
                         <Grid item xs={12} sm={4} lg={3}  className={classes.gridCardContainer}>
-                            <Card style={{backgroundColor:"#ECE9E9",width: "19rem"}}>
+                            <Card style={{backgroundColor:"#ECE9E9",width: "19rem", height: "100%"}}>
                                 <CardHeader className={classes.cardHeader}>
                                     <label>
                                         <strong>Doador:</strong> {donation.donator.name}
                                     </label>
                                     { donation.donated === true ? (
-                                            <IconButton onClick={() => handleChange(donation.id)}>
-                                                    <FavoriteIcon style={{ color:"#E53935", marginRight: -8 }}/>
+                                            <IconButton>
+                                                <FavoriteIcon style={{ color:"#E53935", marginRight: -8 }}/>
                                             </IconButton>
                                         ) : ( 
-                                            <IconButton onClick={() => handleChange(donation.id)}>
+                                            <IconButton onClick={() => handleChange(donation)}>
                                                 <FavoriteBorderIcon style={{color:"#ffffff", marginRight: -8 }} />
                                             </IconButton>      
                                         ) 
@@ -145,13 +183,7 @@ export default function ListDonation() {
                                    
                                 </CardHeader>
                                 <CardBody>
-                                    <p><strong>Doação: </strong>{donation.needDonates.map((item, index) => (
-                                        index === (donation.needDonates.length - 1) ? (
-                                            item.typeDonate.name
-                                        ) : (
-                                            `${item.typeDonate.name}, `
-                                        )         
-                                    ))}</p>
+                                    <p><strong>Doação: </strong>{donation.items}</p>
                                     <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY')}</p>
                                     <Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
                                         <label> {donation.donator.totalDonations} </label>

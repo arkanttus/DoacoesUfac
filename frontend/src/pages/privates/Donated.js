@@ -9,13 +9,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import WaitLoading from '../../components/WaitLoading';
 import MapViewer from '../../components/Map/MapViewer';
+import Button from '@material-ui/core/Button';
 import { getDonationById } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
         minHeight: '85vh',
         '& div': {
-            height: 'fit-content'
+            
         }
     },
     container: {
@@ -80,7 +81,7 @@ export default function Donated({ props }) {
         loadData();
     }, []);
 
-    const mapUrl = ""//"https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d982.3893816689978!2d-"+institution.lat+"!3d-"+institution.long+"!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e2!4m3!3m2!1d-"+institution.long+"!2d-"+institution.lat+"!4m3!3m2!1d-"+institution.long+"!2d-"+institution.lat+"!5e0!3m2!1spt-BR!2sbr!4v1588062121261!5m2!1spt-BR!2sbr"
+    const mapUrl = `https://www.google.com/maps?q=${donation.institution.latitude},${donation.institution.longitude}`;
 
     return(
         <Grid container className={classes.containerRoot}>
@@ -90,7 +91,7 @@ export default function Donated({ props }) {
                         Confirmação de Doação
                     </Grid>
 
-                    <Grid container>
+                    <Grid container alignItems="center" justify="center">
                         <Grid container item xs={12} alignItems="center" justify="center" direction="column">
                             <div className={classes.mainMessage}>
                                 <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '25px' }} >
@@ -117,7 +118,9 @@ export default function Donated({ props }) {
                                     </Typography>
                                 </CardContent>
                             </Card>
-
+                        </Grid>
+                            
+                        <Grid container item xs={4} alignItems="center" justify="center" direction="column">
                             <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '20px' }} >
                                 <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px">
                                     Por gentileza, entre em contato a partir dos seguintes meios:
@@ -144,20 +147,22 @@ export default function Donated({ props }) {
                                     </Grid>
                                 </CardContent>
                             </Card>
-                            
+
+                            <a href={mapUrl} target="_blank" style={{ textDecoration: "none" }}>
+                                <Button variant="contained" color="primary" >ABRIR NO GOOGLE MAPS</Button>
+                            </a>
+                        </Grid>
+
+                        <Grid container item xs={4} alignItems="center" justify="center" direction="column">
                             <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '15px' }} >
                                 <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px">
-                                    Localização no Google Maps
+                                    Localização no Mapa
                                 </Box>
                             </Typography>
-
-
-                        </Grid>
-                            
-                        <Grid container item xs={12} alignItems="center" justify="center" direction="column">
                             <MapViewer institution={donation.institution}/>
                         </Grid>
                     </Grid>
+
                 </WaitLoading>
             </Grid>
         </Grid>

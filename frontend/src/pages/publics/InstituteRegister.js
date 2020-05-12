@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Material UI
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -12,6 +13,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Container from '@material-ui/core/Container';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
+import Backdrop from '@material-ui/core/Backdrop';
+
+import Cropper from 'react-easy-crop';
 
 //ICONS
 import EmailIcon from '@material-ui/icons/Email';
@@ -24,18 +30,18 @@ import TipoIcon from '@material-ui/icons/HomeWork';
 import DescricaoIcon from '@material-ui/icons/BorderColorOutlined';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import GpsFixedIcon from '@material-ui/icons/GpsFixed';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import PhotoIcon from '@material-ui/icons/Photo';
 
-
+//Components
 import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
+import getCroppedImg from '../../components/cropImage';
 import { Cities } from "../../components/Cities";
-import MapRegister from '../../components/Map/MapRegister'
+import MapRegister from '../../components/Map/MapRegister';
+import ButtonNavigo from '../../components/Button';
 
-import { sendRequest,getInstitutionTypes } from "../../services/api";
+import api, { sendRequest,getInstitutionTypes } from "../../services/api";
 
 
 
@@ -50,63 +56,48 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: '45%'
         }
     },
-  
-    noLinkStyle: {
-        textDecoration: 'none',
-        color: 'white',
-        '&:hover': {
-            color: '#e5e5e5'
-        }
-    },
-
-    mainCard: {
-        backgroundColor: "#FFF"
-    },
-    paper: {
-        marginTop: theme.spacing(8),
+    gridCard: {
         display: 'flex',
-        flexDirection: 'column',
+        justifyContent: 'center',
+        height: 'fit-content'
+    },
+    modal: {
+        display: 'flex',
         alignItems: 'center',
-      },
-      avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-      },
-      form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
-        backgroundColor: "#FFF",
-        padding: "60px 50px 10px 50px"
-      },
-      submit: {
-        margin: theme.spacing(3, 0, 2),
-        color: "#9C27B0",
-      },
-      gridCard: {
-          display: 'flex',
-          justifyContent: 'center',
-          height: 'fit-content'
-      },
-      containerCardBody: {
-          padding: 50
-      },
-
-      text: {
-        paddingTop:"50%",
-        [theme.breakpoints.down('sm')]: {
-            padding: 0
+        justifyContent: 'center',
+    },
+    imgGrid: {
+        border: '1px solid red',
+        '& label': {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '10px 0',
+            '&:hover': {
+                filter: 'drop-shadow(2px 4px 6px gray)',
+                cursor: 'pointer'
+            }
         }
     },
     modal: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-      },
-    paper2: {
+    },
+    containerModal: {
+        position: 'relative',
+        height: '70vh',
+        [theme.breakpoints.down('xs')]: {
+            height: '70vh'
+        }
+    },
+    paper: {
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
+        width: '80vh',
+        height: '80vh'
     },
 }));
 
@@ -151,6 +142,57 @@ export default function CadastroInstituicao({props}) {
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
     
+    
+    //Modal
+    const [open, setOpen] = React.useState(false);
+    const handleOpenModal = () => {
+        setOpen(true);
+    };
+    const handleCloseModal = () => {
+        setOpen(false);
+    };
+    const setCroppedImage = React.useCallback(async() => {
+        try {
+            const croppedImage = await getCroppedImg(
+                avatar,
+                croppedAreaPixels,
+                0
+            );
+            setAvatarBlob(croppedImage);
+            var imageFile = URL.createObjectURL(croppedImage);
+            setAvatar(imageFile);
+            handleCloseModal();
+        } catch(e) {
+            console.log(e);
+        }
+    });
+    
+    //Crop
+    const [crop, setCrop] = React.useState({ x: 0, y: 0 });
+    const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
+    const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
+    const onCropComplete = React.useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    }, []);
+    function getImage(e) {
+        var tgt = e.target || window.e.srcElement, files = tgt.files;
+        if(FileReader && files && files.length) {
+            var fr = new FileReader();
+            fr.onload = function() {
+                setAvatar(fr.result);
+            }
+            fr.readAsDataURL(files[0]);
+        } else {
+            Swal.fire({
+                title: "Aconteceu um problema. Tente novamente mais tarde ou entre em contato conosco!",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        handleOpenModal();
+    }
+    
     const [ screen,setScreen] = React.useState(0);
     const [ screen2,setScreen2] = React.useState(0);
 
@@ -164,18 +206,17 @@ export default function CadastroInstituicao({props}) {
     const [phone, setPhone] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [avatar, setAvatar] = React.useState(null);
+    const [avatarBlob, setAvatarBlob] = React.useState(null);
     const [type,setType] = React.useState("");
     const [typeID, setTypeID] = React.useState("");
     const [types,setTypes] = React.useState(null);
-    const [otherType,setOtherType] = React.useState("");
+    const [otherType,setOtherType] = React.useState(null);
     const [uf, setUF] = React.useState("");
     const [citiesArray, setCitiesArray] = React.useState([]);
     const [city, setCity] = React.useState("");
-    const [linkFacebook, setLinkFacebook] = React.useState(null);
-    const [linkInstagram, setLinkInstagram] = React.useState(null);
-    const [linkTwitter, setLinkTwitter] = React.useState(null);
-    const [longitude, setLongitude] = React.useState(null)
-    const [latitude, setLatitude] = React.useState(null)
+    const [longitude, setLongitude] = React.useState("");
+    const [latitude, setLatitude] = React.useState("");
     
 
     async function loadData() {
@@ -184,7 +225,6 @@ export default function CadastroInstituicao({props}) {
            setTypes(res.results);
            console.log(types);
         }
-        
     }
 
     React.useEffect(() => {
@@ -276,6 +316,15 @@ export default function CadastroInstituicao({props}) {
             });
             return;
         }
+        //Imagem vazia
+        if(avatar === null) {
+            Swal.fire({
+                title: "Você precisa definir uma imagem de perfil!",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
         //Nome da Instituição vazio
         if(name === "") {
             Swal.fire({
@@ -296,7 +345,7 @@ export default function CadastroInstituicao({props}) {
             });
         }
         //Tipo de Instituição vazio
-        if(type === "" || otherType==="") {
+        if(type === "") {
             Swal.fire({
                 title: "Este campo não pode ser vazio!",
                 text: "Tipo de Instituição",
@@ -304,6 +353,18 @@ export default function CadastroInstituicao({props}) {
                 confirmButtonText: "Ok"
             });
             return;
+        }
+        //Tipo de Instituição Outro
+        if(type === "Outro") {
+            if(otherType === "") {
+                Swal.fire({
+                    title: "Este campo não pode ser vazio!",
+                    text: "Tipo de Instituição",
+                    icon: "error",
+                    confirmButtonText: "Ok"
+                });
+                return;
+            }
         }
         //Breve descrição vazio
         if(description === "") {
@@ -335,20 +396,29 @@ export default function CadastroInstituicao({props}) {
             });
             return;
         }
-        
+        //Latitude vazio
+        if(latitude === "") {
+            Swal.fire({
+                title: "Marque uma localização no mapa!",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", avatarBlob, "image.jpg");
 
         const response = await sendRequest('POST', "institutions/", { 
-            owner: { name: nameResponsible, email, password1: password, cpf: CPF, typeUser: "R", phoneNumber: phone},
+            owner: { name: nameResponsible, email, password1: password, cpf: CPF, typeUser: "R", phoneNumber: phone, uf, city},
             name,
             typeInstitution: typeID,
             otherType,
             description,
-            latitude: "Arrumar depois",
-            longitude: "Arrumar depois",
             uf,
             city,
-            linkFacebook, linkInstagram,
-            linkTwitter,
+            latitude,
+            longitude
             }
         );
 
@@ -361,17 +431,24 @@ export default function CadastroInstituicao({props}) {
             }).then(() => {
                 props.history.push('/login');
             });
+            const id = response.data.id;
+            api.patch(`institutions/${id}/`, formData).then(response => {
+            }).then(err => {
+                console.log(err);
+            });
             
         } else {
-            if(response.data.owner.cpf) {
-                Swal.fire({
-                    title: response.data.owner.cpf,
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-                return;
+            if(response.data.owner) {
+                if(response.data.owner.cpf !== null) {
+                    Swal.fire({
+                        title: response.data.owner.cpf,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
+                    return;
+                }
             }
-            if(response.data.name) {
+            if(response.data.name !== null) {
                 Swal.fire({
                     title: response.data.name,
                     text: "Nome Completo*",
@@ -380,7 +457,7 @@ export default function CadastroInstituicao({props}) {
                 })
                 return;
             }
-            if(response.data.email) {
+            if(response.data.email !== null) {
                 Swal.fire({
                     title: response.data.email,
                     text: "Email*",
@@ -389,7 +466,7 @@ export default function CadastroInstituicao({props}) {
                 })
                 return;
             }
-            if(response.data.phoneNumber) {
+            if(response.data.phoneNumber !== null) {
                 Swal.fire({
                     title: response.data.phoneNumber,
                     text: "Telefone*",
@@ -398,7 +475,7 @@ export default function CadastroInstituicao({props}) {
                 })
                 return;
             }
-            if(response.data.password1) {
+            if(response.data.password1 !== null) {
                 Swal.fire({
                     title: response.data.password1,
                     text: "Senha de acesso*",
@@ -424,7 +501,7 @@ export default function CadastroInstituicao({props}) {
                    <Card style={{width: "35rem"}}>
                        <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                        <CardBody style={{ paddingRight:15, paddingLeft:15}}>
-                           <Grid container >                   
+                           <Grid container>                   
                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                    <Grid item>
                                        <FaceIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
@@ -490,6 +567,19 @@ export default function CadastroInstituicao({props}) {
                         <Card style={{width: "35rem"}}>
                             <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                             <CardBody style={{ paddingRight:15, paddingLeft:15}}>
+                                <Grid container>
+                                <input onChange={(e) => getImage(e)} accept="image/*" id="uploadAvatar" type="file" style={{ display: "none" }} />
+                                    <Grid item xs={12} className={classes.imgGrid}>
+                                        {avatar === null ? (
+                                            <label htmlFor="uploadAvatar"> <PhotoIcon /> Clique aqui para adicionar uma foto</label>
+                                        ) : (
+                                            <label htmlFor="uploadAvatar" style={{ padding: 0 }}>
+                                                <img src={avatar} style={{ maxWidth: '45%', display: 'block', margin: 'auto' }} />
+                                            </label>
+                                        )}
+                                        
+                                    </Grid>
+                                </Grid>
                                 <Grid container>
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                         <Grid item>
@@ -591,32 +681,6 @@ export default function CadastroInstituicao({props}) {
                                             </FormControl>
                                         </Grid>
                                     </Grid>
-                                </Grid>         
-                                <label style={{ fontWeight: 'bold', display: 'flex', justifyContent: 'center', fontSize: '1.2rem', paddingTop: 10, marginBottom: "-13px" }}>Redes Sociais</label>
-
-                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
-                                    <Grid item>
-                                        <FacebookIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
-                                    </Grid>
-                                    <Grid item xs={10} sm={11}>
-                                        <TextField  onChange={e => setLinkFacebook(e.target.value)} value={linkFacebook} variant="standard" fullWidth label="Facebook" name="instituicao"/>
-                                    </Grid>
-                                </Grid>
-                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
-                                    <Grid item>
-                                        <InstagramIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
-                                    </Grid>
-                                    <Grid item xs={10} sm={11}>
-                                        <TextField  onChange={e => setLinkInstagram(e.target.value)} value={linkInstagram} variant="standard" fullWidth label="Instagram" />
-                                    </Grid>
-                                </Grid>
-                                <Grid container style={{ padding: 10 }} alignItems="flex-end">
-                                    <Grid item>
-                                        <TwitterIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
-                                    </Grid>
-                                    <Grid item xs={10} sm={11}>
-                                        <TextField  onChange={e => setLinkTwitter(e.target.value)} value={linkTwitter} variant="standard" fullWidth label="Twitter"/>
-                                    </Grid>
                                 </Grid>
                                 
                                 <Grid container spacing={3} style={{paddingTop: 20, paddingBottom: 20}}>
@@ -649,7 +713,38 @@ export default function CadastroInstituicao({props}) {
                     </Grid>        
                  )
                 
-            ) }      
+            ) }
+
+            
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                timeout: 500,
+                }}>
+                <Fade in={open}>
+                <div className={classes.paper}>
+                    <div className={classes.containerModal}>
+                    <Cropper
+                        image={avatar}
+                        crop={crop}
+                        onCropChange={setCrop}
+                        onCropComplete={onCropComplete}
+                        aspect={6 / 4}
+                    />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-around', paddingTop: 6 }}>
+                        <ButtonNavigo onClick={handleCloseModal} style={{ backgroundColor: 'red' }}>Cancelar</ButtonNavigo>
+                        <ButtonNavigo onClick={setCroppedImage} variant="green">Confirmar</ButtonNavigo>
+                    </div>
+                </div>
+                </Fade>
+            </Modal>
+
         </Container>
        
     </Grid>

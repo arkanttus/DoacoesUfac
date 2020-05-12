@@ -13,7 +13,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { setInstitution } from '../../services/auth';
 import WaitLoading from '../../components/WaitLoading';
-import { sendRequest,getInstitutionById } from '../../services/api';
+import { sendRequest, getInstitutionById } from '../../services/api';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '80%'
     },
     cardContainer: {
-        marginLeft: '10%',
-        marginRight: '10%',
+        marginLeft: '2%',
+        marginRight: '2%',
         [theme.breakpoints.down('sm')]: {
             margin: 10
         }
@@ -84,12 +84,14 @@ export default function Home({props}){
     const [citiesArray, setCitiesArray] = React.useState([]);
     const [city, setCity] = React.useState("");
     const [institutions,setInstitutions] = React.useState(null);
+    const [pages, setPages] = React.useState(1)
+    const [page, setPage] = React.useState(0)
     const [loading,setLoading] = React.useState(true)
 
     async function loadData() {
-        let res = await sendRequest("GET", "institutions/", {})
+        let res = await sendRequest("GET", `institutions/?offset=${page}`, {})
         
-        if(res.status == 200) {
+        if(res.status === 200) {
             res.data.results.forEach((institution) => {
                 institution.items = institution.needDonates.map((need, index) => {
                     let msg = need.typeDonate.name
@@ -101,9 +103,8 @@ export default function Home({props}){
                 })
             })
             setInstitutions(res.data.results)
+            setPages(Math.ceil(res.data.count/20))
             setLoading(false)
-            
-
         }
         else
             props.history.push("/dashboard");
@@ -111,12 +112,16 @@ export default function Home({props}){
 
     React.useEffect(() => {
         loadData();
-    }, []);
+    }, [page]);
 
 
     function handleSelectCities(e) {
         setUF(e.target.value);
         setCitiesArray(cities[e.target.value].cidades);
+    }
+
+    async function handleChangePage(event, value) {
+        setPage(value-1);
     }
 
     return (
@@ -144,16 +149,6 @@ export default function Home({props}){
                                 <label >Sem doações</label>
                             </div>
                         </Grid>
-                        {/*
-                        <Grid item xs={6} sm={3} className={classes.subtitle1}>
-                            <LocationOnIcon style={{ color: "#27AE60" }} />
-                            <label >Próximas</label>
-                        </Grid>
-                        <Grid item xs={6} sm={3} style={{ display: 'flex', alignItems: 'center', paddingTop: 23 }}>
-                            <LocationOnIcon style={{ color: "#EB5757" }} />
-                            <label >Sem doações</label>
-                        </Grid>
-                         */}
                         
                         <Grid item xs={12} sm={6}>
                             <Grid container spacing={1}>
@@ -190,39 +185,7 @@ export default function Home({props}){
                         </Grid>
                         
                     </Grid> 
-                </Grid>
-              
-                {
-                    /*
-                    <Grid >
-                    <FormControl >
-                        <InputLabel>Estado </InputLabel>
-                        <Select value={uf} onChange={handleSelectCities} input={<Input/>}>    
-                            {itemsEstados.map((item) => (
-                                <MenuItem key={item} value={item}>
-                                {item}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid  style={{paddingLeft:50}}>
-                    <FormControl >
-                        <InputLabel>Cidade *</InputLabel>
-                        <Select value={city} onChange={(e) => setCity(e.target.value)} input={<Input />}>    
-                        {citiesArray ? (citiesArray.map((item) => (
-                            <MenuItem key={item} value={item}>
-                            {item}
-                            </MenuItem>
-                        ))) : (
-                            <></>
-                        )}
-                        </Select>
-                    </FormControl>
-                </Grid>
-                     */
-                }
-                
+                </Grid>  
 
                 <Grid container>
                     <Grid item xs={12} className={classes.todasTitle}>
@@ -237,12 +200,10 @@ export default function Home({props}){
                                 <InstitutionCard title={institution.name} text={institution.items} photo={institution.image}/>
                             </Link>
                         </Grid>
-
-
                     )): <></>} 
                     </Grid>
                     
-                    <Pagination count={10} color="primary" style={{ display: 'block', margin: '3vh auto 3vh auto' }} />
+                    <Pagination count={pages} color="primary" onChange={handleChangePage} style={{ display: 'block', margin: '3vh auto 3vh auto' }} />
                  </WaitLoading>
             </Grid>
         </Grid>

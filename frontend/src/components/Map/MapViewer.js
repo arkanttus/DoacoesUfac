@@ -15,10 +15,9 @@ L.Icon.Default.mergeOptions({
 
 const myStyles = {
   mapa: {
-    width: "90%",
-    height: "65%",
     zIndex: "100",
-    position: "absolute"
+    width: '600px', 
+    height: '350px',
   }
 };
 
