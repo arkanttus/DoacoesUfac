@@ -80,19 +80,14 @@ export default function ProfileEditDonator() {
     const classes = useStyles();
     const user = getUser();
     const Swal = require('sweetalert2');
-    console.log(user);
 
     const cities = Cities();
-    const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
-                "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
-                "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
-    
 
     const [screen, setScreen] = React.useState(0);
     const [name, setName] = React.useState(user.name);
     const [email, setEmail] = React.useState(user.email);
     const [phone, setPhone] = React.useState(user.phoneNumber);
-    const [uf, setUF] = React.useState(itemsEstados.filter(obj => {return obj === user.uf})[0]);
+    const [uf, setUF] = React.useState(user.uf);
     const [citiesArray, setCitiesArray] = React.useState(cities[user.uf].cidades);
     const [city, setCity] = React.useState(user.city);
     const [password, setPassword] = React.useState('');
@@ -278,9 +273,9 @@ export default function ProfileEditDonator() {
                             <FormControl fullWidth>
                             <InputLabel>Estado *</InputLabel>
                                 <Select value={uf ? uf : ""} onChange={handleSelectCities} input={<Input />}>    
-                                {itemsEstados.map((item) => (
-                                    <MenuItem key={item} value={item}>
-                                    {item}
+                                {Object.keys(cities).map((item) => (
+                                    <MenuItem key={cities[item].sigla} value={cities[item].sigla}>
+                                    {cities[item].nome}
                                     </MenuItem>
                                 ))}
                                 </Select>
