@@ -17,7 +17,7 @@ class NeedDonateSerializer(serializers.ModelSerializer):
     institution = serializers.PrimaryKeyRelatedField(read_only=True)
     description = serializers.CharField(read_only=True)
     typeDonate = TypeDonateSerializer(source='type_donate', read_only=True)
-    setDescriptions = serializers.ListField(child=serializers.CharField(), source='description', 
+    setDescriptions = serializers.ListField(child=serializers.CharField(allow_blank=True), source='description', 
         write_only=True
     )
     setTypeDonates = serializers.PrimaryKeyRelatedField(

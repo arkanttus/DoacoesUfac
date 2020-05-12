@@ -47,13 +47,6 @@ class InstitutionView(viewsets.ModelViewSet):
             return response.Response({'errors': 'Instituição não encontrada'}, status=status.HTTP_404_NOT_FOUND)
         return response.Response(serializer_read.data)
 
-    @action(methods=['get'], detail=True)
-    def need_donates(self, request, pk=None):
-        queryset = NeedDonate.objects.filter(institution_id=pk, is_active=True)
-        serializer = NeedDonateSerializer(queryset, many=True, context={'request': request})
-        return response.Response(serializer.data)
-
-
 class TypeInstitutionView(viewsets.ReadOnlyModelViewSet):
     queryset = TypeInstitution.objects.all()
     serializer_class = TypeInstitutionSerializer
