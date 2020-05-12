@@ -67,14 +67,6 @@ export default function ListDonation() {
 
     console.log(donations);
 
-    /*let donations = []
-    for(let i = 0; i < 10; i++) {
-        donations.push({
-            name: "José Fulano",
-            text: "Cesta Básica",
-            date: "22/07/1999"
-        })
-    }*/
 
     const [state, setState] = React.useState({
         checked: false,
@@ -106,7 +98,7 @@ export default function ListDonation() {
                     });
                 } else {
                     Swal.fire({
-                        title: '1Aconteceu um erro. Tente novamente mais tarde!',
+                        title: 'Aconteceu um erro. Tente novamente mais tarde!',
                         icon: 'error',
                         confirmButtonText: 'Ok'
                     });
@@ -162,7 +154,7 @@ export default function ListDonation() {
                                     ))}</p>
                                     <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY')}</p>
                                     <Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
-                                        <label> 2410 </label>
+                                        <label> {donation.donator.totalDonations} </label>
                                         <FavoriteIcon style={{ color:"#E53935", marginRight: -8, marginLeft: 5 }}/>     
                                     </Grid>
                                 </CardBody>
