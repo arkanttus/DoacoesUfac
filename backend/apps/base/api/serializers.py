@@ -46,7 +46,7 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
     otherType = serializers.CharField(source='other_type', required=False, allow_null=True)
-    image = serializers.ImageField(required=False)
+    image = serializers.ImageField(required=True)
     description = serializers.CharField(required=False, max_length=500)
     latitude = serializers.CharField(required=False, max_length=20)
     longitude = serializers.CharField(required=False, max_length=20)
@@ -75,6 +75,8 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
 
         user = User.objects.create(**user_data)
         user.set_password(password_user)
+        if user.type_user == User.RECEIVER:
+            user.is_active = False
         user.save()
         return Institution.objects.create(owner=user, **validated_data)
 
@@ -94,7 +96,7 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
     otherType = serializers.CharField(source='other_type', required=False, allow_null=True)
-    image = serializers.ImageField(required=False)
+    image = serializers.ImageField(required=True)
     description = serializers.CharField(required=False, max_length=500)
     latitude = serializers.CharField(required=False, max_length=20)
     longitude = serializers.CharField(required=False, max_length=20)

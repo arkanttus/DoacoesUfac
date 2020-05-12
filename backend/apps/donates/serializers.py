@@ -10,6 +10,7 @@ from apps.users.api.serializers import UserReadSerializer
 
 User = get_user_model()
 
+
 class DonateSerializer(serializers.ModelSerializer):
     needDonates = NeedDonateSerializer(source="need_donate", many=True, read_only=True)
     donator = UserReadSerializer(read_only=True)

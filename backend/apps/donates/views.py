@@ -62,3 +62,4 @@ class DonateView(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         donator = self.request.user
         serializer.save(donator=donator)
+
