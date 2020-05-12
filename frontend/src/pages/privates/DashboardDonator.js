@@ -84,12 +84,14 @@ export default function Home({props}){
     const [citiesArray, setCitiesArray] = React.useState([]);
     const [city, setCity] = React.useState("");
     const [institutions,setInstitutions] = React.useState(null);
+    const [pages, setPages] = React.useState(1)
+    const [page, setPage] = React.useState(0)
     const [loading,setLoading] = React.useState(true)
 
     async function loadData() {
-        let res = await sendRequest("GET", "institutions/", {})
+        let res = await sendRequest("GET", `institutions/?offset=${page}`, {})
         
-        if(res.status == 200) {
+        if(res.status === 200) {
             res.data.results.forEach((institution) => {
                 institution.items = institution.needDonates.map((need, index) => {
                     let msg = need.typeDonate.name
@@ -101,9 +103,8 @@ export default function Home({props}){
                 })
             })
             setInstitutions(res.data.results)
+            setPages(Math.ceil(res.data.count/20))
             setLoading(false)
-            
-
         }
         else
             props.history.push("/dashboard");
@@ -111,12 +112,16 @@ export default function Home({props}){
 
     React.useEffect(() => {
         loadData();
-    }, []);
+    }, [page]);
 
 
     function handleSelectCities(e) {
         setUF(e.target.value);
         setCitiesArray(cities[e.target.value].cidades);
+    }
+
+    async function handleChangePage(event, value) {
+        setPage(value-1);
     }
 
     return (
@@ -237,12 +242,10 @@ export default function Home({props}){
                                 <InstitutionCard title={institution.name} text={institution.items} photo={institution.image}/>
                             </Link>
                         </Grid>
-
-
                     )): <></>} 
                     </Grid>
                     
-                    <Pagination count={10} color="primary" style={{ display: 'block', margin: '3vh auto 3vh auto' }} />
+                    <Pagination count={pages} color="primary" onChange={handleChangePage} style={{ display: 'block', margin: '3vh auto 3vh auto' }} />
                  </WaitLoading>
             </Grid>
         </Grid>
