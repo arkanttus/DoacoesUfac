@@ -13,7 +13,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { setInstitution } from '../../services/auth';
 import WaitLoading from '../../components/WaitLoading';
-import { sendRequest,getInstitutionById } from '../../services/api';
+import { sendRequest, getInstitutionById } from '../../services/api';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '80%'
     },
     cardContainer: {
-        marginLeft: '10%',
-        marginRight: '10%',
+        marginLeft: '2%',
+        marginRight: '2%',
         [theme.breakpoints.down('sm')]: {
             margin: 10
         }
@@ -149,16 +149,6 @@ export default function Home({props}){
                                 <label >Sem doações</label>
                             </div>
                         </Grid>
-                        {/*
-                        <Grid item xs={6} sm={3} className={classes.subtitle1}>
-                            <LocationOnIcon style={{ color: "#27AE60" }} />
-                            <label >Próximas</label>
-                        </Grid>
-                        <Grid item xs={6} sm={3} style={{ display: 'flex', alignItems: 'center', paddingTop: 23 }}>
-                            <LocationOnIcon style={{ color: "#EB5757" }} />
-                            <label >Sem doações</label>
-                        </Grid>
-                         */}
                         
                         <Grid item xs={12} sm={6}>
                             <Grid container spacing={1}>
@@ -195,39 +185,7 @@ export default function Home({props}){
                         </Grid>
                         
                     </Grid> 
-                </Grid>
-              
-                {
-                    /*
-                    <Grid >
-                    <FormControl >
-                        <InputLabel>Estado </InputLabel>
-                        <Select value={uf} onChange={handleSelectCities} input={<Input/>}>    
-                            {itemsEstados.map((item) => (
-                                <MenuItem key={item} value={item}>
-                                {item}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid  style={{paddingLeft:50}}>
-                    <FormControl >
-                        <InputLabel>Cidade *</InputLabel>
-                        <Select value={city} onChange={(e) => setCity(e.target.value)} input={<Input />}>    
-                        {citiesArray ? (citiesArray.map((item) => (
-                            <MenuItem key={item} value={item}>
-                            {item}
-                            </MenuItem>
-                        ))) : (
-                            <></>
-                        )}
-                        </Select>
-                    </FormControl>
-                </Grid>
-                     */
-                }
-                
+                </Grid>  
 
                 <Grid container>
                     <Grid item xs={12} className={classes.todasTitle}>
