@@ -2,7 +2,6 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from apps.base.models import Institution, TypeInstitution
 from apps.users.api.serializers import UserCreateSerializer, UserReadSerializer
-from apps.need_donate.models import NeedDonate
 from apps.need_donate.serializers import NeedDonateSerializer
 
 
@@ -50,7 +49,7 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
     otherType = serializers.CharField(source='other_type', required=False, allow_null=True)
-    image = serializers.ImageField(required=True)
+    image = serializers.ImageField(required=False)
     description = serializers.CharField(required=False, max_length=500)
     latitude = serializers.CharField(required=False, max_length=20)
     longitude = serializers.CharField(required=False, max_length=20)
@@ -92,6 +91,18 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(detail='CPF para Instituição é obrigatório')
         return super(InstitutionCreateSerializer, self).validate(attrs)
 
+    def validate_linkFacebook(self):
+        if self.linkFacebook not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
+            raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
+
+    def validate_linkInstagram(self):
+        if self.linkInstagram not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
+            raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
+
+    def validate_linkTwitter(self):
+        if self.linkTwitter not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
+            raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
+
 
 class InstitutionUpdateSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, max_length=200)
@@ -100,7 +111,7 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
         queryset=TypeInstitution.objects.all(), required=True, source='type_institution'
     )
     otherType = serializers.CharField(source='other_type', required=False, allow_null=True)
-    image = serializers.ImageField(required=True)
+    image = serializers.ImageField(required=False)
     description = serializers.CharField(required=False, max_length=500)
     latitude = serializers.CharField(required=False, max_length=20)
     longitude = serializers.CharField(required=False, max_length=20)
@@ -122,4 +133,17 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
             'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude', 'otherType',
             'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
         )
+
+    def validate_linkFacebook(self):
+        if self.linkFacebook not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
+            raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
+
+    def validate_linkInstagram(self):
+        if self.linkInstagram not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
+            raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
+
+    def validate_linkTwitter(self):
+        if self.linkTwitter not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
+            raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
+
 
