@@ -133,7 +133,6 @@ export default function CadastroInstituicao({ props }) {
 
     const classes = useStyles();
     const Swal = require('sweetalert2');
-    const [typesInstitutions, setTypesInstitutions] = React.useState("");
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [phoneNumber, setPhoneNumber] = React.useState('');
@@ -143,17 +142,6 @@ export default function CadastroInstituicao({ props }) {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState("");
 
-    async function loadData() {
-        let res = await getInstitutionTypes()
-        if(res) {
-            setTypesInstitutions(res.results);
-            console.log(typesInstitutions);
-        }
-        
-    }
-    React.useEffect(() => {
-        loadData();
-    },[]);
     function handleSelectCities(e) {
         setUF(e.target.value);
         setCity("");
@@ -208,7 +196,7 @@ export default function CadastroInstituicao({ props }) {
             return;
         }
 
-        const response = await sendRequest('POST', "users/", { name, email, password1: password, phoneNumber, typeUser: "D" });
+        const response = await sendRequest('POST', "users/", { name, email, password1: password, phoneNumber, typeUser: "D", uf, city });
 
         if(response.status === 201) {
             Swal.fire({
@@ -270,7 +258,7 @@ export default function CadastroInstituicao({ props }) {
         <Grid container className={classes.container}>
             <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
                 <CssBaseline />
-                <Grid item xs={12}  justify="center" className={classes.gridCard}>
+                <Grid item xs={12} className={classes.gridCard}>
                     <Card style={{width: "35rem"}}>
                         <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Doador</CardHeader>
                         <CardBody>

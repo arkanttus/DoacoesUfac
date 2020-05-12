@@ -3,26 +3,29 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
 
 //Material UI
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Icons
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
+import CheckIcon from '@material-ui/icons/Check';
 
 //Components
 import Button from '../../components/Button';
+import Card from '../../components/MaterialKit/Card/Card';
+import CardHeader from '../../components/MaterialKit/Card/CardHeader';
+import CardBody from '../../components/MaterialKit/Card/CardBody';
+
+//Services
+import { sendRequest } from '../../services/api';
+
 
 const useStyles = makeStyles((theme) => ({
 
     containerRoot: {
-        height: '100vh',
+        height: '95vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
     },
     container: {
         display: 'flex',
@@ -35,21 +38,25 @@ const useStyles = makeStyles((theme) => ({
             width: '45vh',
         }
     },
-    cardRoot: {
-        width: '100%',
-        height: '100%'
-    },
-    CardContent: {
-        display: 'flex',
-        height: '100%',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        padding: 0
-    },
-    cardTitle: {
+    cardHeader: {
         textAlign: 'center',
-        margin: 0
+        fontSize: 25,
+        padding: '12px 11px',
+        boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)',
+        color: '#FFF'
+    },
+    cardHeaderSuccess: {
+        backgroundColor: '#27AE60',
+    },
+    cardHeaderDanger: {
+        backgroundColor: 'red',
+    },
+    cardText: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        padding: '25px 0px'
     }
 
 }));
@@ -60,6 +67,7 @@ export default function EmailValidation() {
     let { token } = useParams();
 
     const [validation] = React.useState(20);
+
 
     return(
         <div className={classes.containerRoot}>
@@ -73,25 +81,21 @@ export default function EmailValidation() {
                 <div className={classes.container}>
                     
                     <Card className={classes.cardRoot}>
+                        <CardHeader className={validation === 200 ? [classes.cardHeader + ' ' + classes.cardHeaderSuccess] : [classes.cardHeader + ' ' +  classes.cardHeaderDanger]}>VERIFICAÇÃO</CardHeader>
                         {
                             validation === 200 ? (
-                                <CardContent className={classes.CardContent}>
-                                    <Typography className={classes.cardTitle} variant="h3" gutterBottom>
-                                        Email Verificado
+                                <CardBody>
+                                    <Typography className={classes.cardText} variant="h5" gutterBottom>
+                                       <CheckIcon style={{ paddingRight: 5}} /> Email Verificado
                                     </Typography>
-                                    <CheckCircleIcon style={{ color: 'green', width: '10vh', height: "10vh" }} />
-                                    <Button variant="green" style={{ width: "80%", height: "15%", fontSize: '1.2rem' }}>FAZER LOGIN</Button>
-                                </CardContent>
+                                    <Button variant="green" style={{ backgroundColor: '#27AE60', display: 'block', margin: 'auto', width: '25vh' }}>Login</Button>
+                                </CardBody>
                             ) : (
-                                <CardContent className={classes.CardContent} style={{ justifyContent: 'space-evenly' }}>
-                                    <Typography className={classes.cardTitle} variant="h3" gutterBottom>
-                                        Algo deu errado!
+                                <CardBody>
+                                    <Typography className={classes.cardText} style={{ textAlign: 'center' }} variant="h6" gutterBottom>
+                                        Aconteceu um erro com o seu código
                                     </Typography>
-                                    <ErrorIcon style={{ color: 'red', width: '20vh', height: "15vh" }} />
-                                    <Typography className={classes.cardTitle} variant="h3" gutterBottom>
-                                        Tente novamente!
-                                    </Typography>
-                                </CardContent>
+                                </CardBody>
                             )
                         }  
                     </Card>

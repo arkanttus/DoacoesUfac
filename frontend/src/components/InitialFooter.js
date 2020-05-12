@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Logo_Ufac from '../assets/Logo_ufac.svg';
 
 const useStyles = makeStyles((theme) => ({
     footer: {
@@ -44,7 +45,7 @@ export default function InitialFooter() {
             </Grid>
             <Grid item xs={12} sm={4} style={{ paddingBottom: 5 }}>
                 <label style={{ display: 'flex', alignItems: 'center' }}>
-                    <img src="images/Logo_ufac.svg" style={{ paddingRight: 5 }} alt="Logo Ufac" /> Universidade Federal do Acre
+                    <img src={Logo_Ufac} style={{ paddingRight: 5 }} alt="Logo Ufac" /> Universidade Federal do Acre
                 </label>
             </Grid>
             <Grid item xs={12} sm={4} style={{ fontSize: '.85rem' }}>

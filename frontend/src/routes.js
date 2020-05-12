@@ -73,13 +73,12 @@ const Routes = () => (
       <RouteWithLayout path="/equipe" layout={LandingLayout} component={AboutTeam} />
       <RouteWithLayout path="/creditos" layout={LandingLayout} component={Credits} />
       <RouteWithLayout path="/contato" layout={LandingLayout} component={Contact} />
-
+      <RouteWithLayout path="/validar-email/:id/:token" layout={FormLayout} component={EmailValidation} />
 
       <NotAuthenticateRoute path="/login" layout={FormLayout} component={Login} />
       <NotAuthenticateRoute path="/instituicao" layout={FormLayout} component={InstituteRegister} />
       <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
-      <Route path="/validar-email/:id/:token" component={EmailValidation} />
-
+      
       <PrivateRoute path="/dashboard" layout={DashboardLayout} component={Dashboard} />
       <PrivateRoute path="/minhas-doacoes" layout={DashboardLayout} component={MyDonations} />
       <PrivateRoute path="/doado/:donationId" layout={DashboardLayout} component={Donated} />
