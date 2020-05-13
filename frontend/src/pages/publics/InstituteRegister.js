@@ -442,6 +442,7 @@ export default function CadastroInstituicao({props}) {
                 if(response.data.owner.cpf !== null) {
                     Swal.fire({
                         title: response.data.owner.cpf,
+                        text: "CPF",
                         icon: 'error',
                         confirmButtonText: 'Ok'
                     })
