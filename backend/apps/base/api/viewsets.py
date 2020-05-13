@@ -1,4 +1,5 @@
 from rest_framework import viewsets, permissions, response, status
+from rest_framework.decorators import action
 
 from .serializers import (
     InstitutionReadSerializer, TypeInstitutionSerializer, InstitutionCreateSerializer, InstitutionUpdateSerializer
@@ -45,6 +46,17 @@ class InstitutionView(viewsets.ModelViewSet):
             return response.Response({'errors': 'Instituição não encontrada'}, status=status.HTTP_404_NOT_FOUND)
         return response.Response(serializer_read.data)
 
+    @action(methods=['post'], detail=False)
+    def city(self, request):
+        queryset = Institution.objects.filter(city=request.data['city'])
+
+        if queryset.exists():
+            serializer = InstitutionReadSerializer(queryset, many=True)
+            institutions = serializer.data
+
+            return response.Response({'Institutions': institutions}, status=status.HTTP_200_OK)
+
+        return response.Response({'Error': 'Cidade não encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
 class TypeInstitutionView(viewsets.ReadOnlyModelViewSet):
     queryset = TypeInstitution.objects.all()

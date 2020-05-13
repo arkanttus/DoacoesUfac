@@ -28,18 +28,23 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     linkInstagram = serializers.ReadOnlyField(source='link_instagram')
     linkFacebook = serializers.ReadOnlyField(source='link_facebook')
     needDonates = serializers.SerializerMethodField()
+    countDonates = serializers.SerializerMethodField()
     otherType = serializers.ReadOnlyField(source='other_type')
 
     class Meta:
         model = Institution
         fields = (
             'id', 'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude',
-            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates', 'otherType'
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates', 'otherType',
+            'countDonates'
         )
 
     def get_needDonates(self, instance):
         need_donates = instance.need_donates.filter(is_active=True)
         return NeedDonateSerializer(need_donates, many=True).data
+    
+    def get_countDonates(self, instance):
+        return instance.donates.filter(donated=True).count()
 
 
 class InstitutionCreateSerializer(serializers.ModelSerializer):

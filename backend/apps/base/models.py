@@ -54,7 +54,7 @@ class Institution(BaseModel):
 
     # Geo
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
-    longitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
+    longitude = models.CharField(_('Longitude'), max_length=20, null=True, blank=True)
     uf = models.CharField(_('Estado'), max_length=100)
     city = models.CharField(_('Cidade'), max_length=150)
 
