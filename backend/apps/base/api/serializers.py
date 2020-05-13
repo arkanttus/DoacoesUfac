@@ -134,16 +134,16 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
             'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
         )
 
-    def validate_linkFacebook(self):
-        if self.linkFacebook not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
+    def validate_linkFacebook(self, value):
+        if value not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
             raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
 
-    def validate_linkInstagram(self):
-        if self.linkInstagram not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
+    def validate_linkInstagram(self, value):
+        if value not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
             raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
 
-    def validate_linkTwitter(self):
-        if self.linkTwitter not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
+    def validate_linkTwitter(self, value):
+        if value not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
             raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
 
 
