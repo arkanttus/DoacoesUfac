@@ -15,6 +15,8 @@ import { setInstitution } from '../../services/auth';
 import WaitLoading from '../../components/WaitLoading';
 import { sendRequest, getInstitutionById } from '../../services/api';
 import { Link } from 'react-router-dom';
+import {getUser} from '../../services/auth'
+import { LatLng } from '../../components/LatLng'
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -76,19 +78,24 @@ const useStyles = makeStyles((theme) => ({
 export default function Home({props}){
     const classes = useStyles();
     const cities = Cities();
+    const LatsLngs = LatLng()
+    const user = getUser()
     const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
    
-    const [uf, setUF] = React.useState("");
-    const [citiesArray, setCitiesArray] = React.useState([]);
-    const [city, setCity] = React.useState("");
+    const [uf, setUF] = React.useState(user.uf);
+    const [citiesArray, setCitiesArray] = React.useState(cities[uf].cidades);
+    const [city, setCity] = React.useState(user.city);
     const [institutions,setInstitutions] = React.useState(null);
+    const [institutionsCity,setInstitutionsCity] = React.useState(null);
+    const [coordinates, setCoordinates] = React.useState(null)
     const [pages, setPages] = React.useState(1)
     const [page, setPage] = React.useState(0)
     const [loading,setLoading] = React.useState(true)
 
     async function loadData() {
+        console.log(user)
         let res = await sendRequest("GET", `institutions/?offset=${page}`, {})
         
         if(res.status === 200) {
@@ -110,14 +117,42 @@ export default function Home({props}){
             props.history.push("/dashboard");
     }
 
+    async function loadInstitutionByCity(){
+        let res = await sendRequest("POST", 'institutions/city/', {city: city})
+        
+        if(res.status === 200) {
+            setInstitutionsCity(res.data.Institutions) 
+            console.log(res.data.Institutions)       
+        }
+        else if(res.status === 404) {
+            console.log("Cidade não encontrada")
+        }
+    }
+
+    const handleCoordinates = () => {
+        setCoordinates(LatsLngs[uf][city])
+    }
+
     React.useEffect(() => {
         loadData();
+        handleCoordinates()
+        loadInstitutionByCity()
     }, [page]);
 
+    React.useEffect(() => {
+        handleCoordinates()
+        loadInstitutionByCity()
+    }, [city])
 
     function handleSelectCities(e) {
-        setUF(e.target.value);
-        setCitiesArray(cities[e.target.value].cidades);
+        const state = e.target.value
+        setUF(state);
+        setCitiesArray(cities[state].cidades);
+        //loadInstitutionByCity()
+    }
+
+    const handleCity = (e) => {
+        setCity(e.target.value)
     }
 
     async function handleChangePage(event, value) {
@@ -134,7 +169,7 @@ export default function Home({props}){
         
                 
                 <Grid item xs={12}>
-                    <MapNextLocations />
+                    <MapNextLocations institutions={institutionsCity} center={coordinates}/>
                 </Grid>
                 
                 <Grid item xs={12} style={{ maxWidth: '80%', display: 'block', margin: 'auto' }}>
@@ -170,7 +205,7 @@ export default function Home({props}){
                                 <Grid item xs={12} sm={5}>
                                 <FormControl fullWidth>
                                     <InputLabel>Cidade *</InputLabel>
-                                    <Select value={city} onChange={(e) => setCity(e.target.value)} input={<Input />}>    
+                                    <Select value={city} onChange={(e) => handleCity(e)} input={<Input />}>    
                                     {citiesArray ? (citiesArray.map((item) => (
                                         <MenuItem key={item} value={item}>
                                         {item}

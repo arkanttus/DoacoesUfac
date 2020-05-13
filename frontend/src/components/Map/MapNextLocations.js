@@ -30,7 +30,7 @@ class MapComp extends Component {
     super(props);
 
     this.state = {
-      markers: [],
+      markers: this.props.institutions ? this.props.institutions : [],
       myPosition: null,
       circlePosition: null,
       nextInstitutions: [],
@@ -58,37 +58,6 @@ class MapComp extends Component {
 
     map.on("locationfound", function(ev) {
       self.addMyPosition(ev);
-    });
-
-    const markers = [
-      {
-        id: 1,
-        name: "ABC",
-        latlng: {
-          lat: -9.96403208832135,
-          lng: -67.82675743103029
-        }
-      },
-      {
-        id: 2,
-        name: "BBBB",
-        latlng: {
-          lat: -9.9627640448494,
-          lng: -67.8948211669922
-        }
-      },
-      {
-        id: 3,
-        name: "CCC",
-        latlng: {
-          lat: -9.981361521399743,
-          lng: -67.81946182250978
-        }
-      }
-    ];
-
-    markers.forEach(m => {
-      self.addMarker(m);
     });
   }
 
@@ -121,8 +90,8 @@ class MapComp extends Component {
     const radius = this.radius;
     const current_position = L.latLng(lat, lng);
 
-    this.state.markers.forEach(m => {
-      const ponto_atual = [m.latlng.lat, m.latlng.lng];
+    this.props.institutions.forEach(m => {
+      const ponto_atual = [m.latitude, m.longitude];
       const distancia = current_position.distanceTo(ponto_atual);
 
       m.inRadius = distancia <= radius;
@@ -146,11 +115,11 @@ class MapComp extends Component {
     this.setState({ activePopup: mark });
   };
 
-  handleClosePop;
 
   render() {
-    const center = [-9.973879999999951, -67.80755999999997];
-    const markers = this.state.markers;
+    const center = this.props.center ? this.props.center : [-9.973879999999951, -67.80755999999997];
+    console.log(center)
+    const markers = this.props.institutions ? this.props.institutions : []
     const myPosition = this.state.myPosition;
     const activePopup = this.state.activePopup;
     const {classes} = this.props
@@ -169,6 +138,8 @@ class MapComp extends Component {
         className={classes.mapa}
         center={center}
         zoom="11"
+        minZoom="10"
+        maxZoom="19"
         ref={m => {
           this.leafletMap = m;
         }}
@@ -197,7 +168,7 @@ class MapComp extends Component {
 
         {markers.map(m => (
           <Marker
-            position={m.latlng}
+            position={{lat: m.latitude, lng: m.longitude}}
             key={m.id}
             icon={m.inRadius ? RedMarker : BlueMarker}
           >
