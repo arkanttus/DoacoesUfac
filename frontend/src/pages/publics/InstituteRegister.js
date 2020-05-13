@@ -42,8 +42,7 @@ import MapRegister from '../../components/Map/MapRegister';
 import ButtonNavigo from '../../components/Button';
 
 import api, { sendRequest,getInstitutionTypes } from "../../services/api";
-
-
+import { LatLng } from '../../components/LatLng'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -138,19 +137,27 @@ export default function CadastroInstituicao({props}) {
     const classes = useStyles();
     const Swal = require('sweetalert2');
     const cities = Cities();
+    const LatsLngs = LatLng()
     const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
-    
-    
-    //Modal
     const [open, setOpen] = React.useState(false);
+    const [crop, setCrop] = React.useState({ x: 0, y: 0 });
+    const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
+    const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
+    const onCropComplete = React.useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    }, []);
+    const [centerMap, setCenterMap] = React.useState(null)
+    
     const handleOpenModal = () => {
         setOpen(true);
     };
+    
     const handleCloseModal = () => {
         setOpen(false);
     };
+    
     const setCroppedImage = React.useCallback(async() => {
         try {
             const croppedImage = await getCroppedImg(
@@ -167,13 +174,6 @@ export default function CadastroInstituicao({props}) {
         }
     });
     
-    //Crop
-    const [crop, setCrop] = React.useState({ x: 0, y: 0 });
-    const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
-    const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
-    const onCropComplete = React.useCallback((croppedArea, croppedAreaPixels) => {
-        setCroppedAreaPixels(croppedAreaPixels);
-    }, []);
     function getImage(e) {
         var tgt = e.target || window.e.srcElement, files = tgt.files;
         if(FileReader && files && files.length) {
@@ -230,6 +230,10 @@ export default function CadastroInstituicao({props}) {
     React.useEffect(() => {
         loadData();
     },[]);
+    
+    React.useEffect(() => {
+        setCenterMap(LatsLngs[uf][city])
+    }, [city])
 
     const handleCoordinates = (lat, lng) => {
         setLatitude(lat)
