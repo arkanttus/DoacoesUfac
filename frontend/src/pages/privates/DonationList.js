@@ -72,14 +72,9 @@ export default function ListDonation() {
         }
     }
 
-<<<<<<< HEAD
-    console.log(donations);
-
-=======
     React.useEffect(() => {
         loadData()
     }, []);
->>>>>>> 9b1d060c41a50f7b5c05532729847612c7c50e7f
 
     const [state, setState] = React.useState({
         checked: false,
@@ -97,28 +92,6 @@ export default function ListDonation() {
             cancelButtonText: 'Não',
           }).then((result) => {
             if (result.value) {
-<<<<<<< HEAD
-            api.patch('/donates/' + id + '/', {donated: true}).then(response => {
-                if(response.status === 200) {
-                    const newDonations = donations.map(donation => {
-                        if(donation.id === id) {
-                            donation.donated = !donation.donated;
-                        }
-                        return donation;
-                    });
-                    setDonations(newDonations);
-                    Swal.fire({
-                        title: 'Confirmado!',
-                        icon: 'success'
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Aconteceu um erro. Tente novamente mais tarde!',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                }
-=======
                 api.patch('/donates/' + donation.id + '/', {donated: true}).then(response => {
                     if(response.status === 200) {
                         donation.donated = true
@@ -140,7 +113,6 @@ export default function ListDonation() {
                             confirmButtonText: 'Ok'
                         });
                     }
->>>>>>> 9b1d060c41a50f7b5c05532729847612c7c50e7f
             }).catch(err => {
                 Swal.fire({
                     title: 'Aconteceu um erro. Tente novamente mais tarde!',
