@@ -3,7 +3,7 @@ import L from "leaflet";
 import * as ELG from "esri-leaflet-geocoder";
 import { Map, TileLayer, Marker, Popup, CircleMarker } from "react-leaflet";
 import LocateControl from "./Locate";
-import { RedMarker, BlueMarker, GreenMarker } from "./MarkersColors";
+import { RedMarker, BlueMarker, GreenMarker, GoldMarker } from "./MarkersColors";
 import { withStyles } from "@material-ui/core";
 
 // import marker icons
@@ -170,7 +170,8 @@ class MapComp extends Component {
           <Marker
             position={{lat: m.latitude, lng: m.longitude}}
             key={m.id}
-            icon={m.inRadius ? GreenMarker : BlueMarker}
+            icon={m.inRadius ? (m.countDonates == 0 ? RedMarker : GreenMarker) 
+                   : (m.countDonates == 0 ? GoldMarker : BlueMarker)}
           >
             <Popup>{m.name}</Popup>
           </Marker>
