@@ -177,11 +177,15 @@ export default function Home({props}){
                         <Grid item xs={12} sm={6} style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', paddingTop: 23 }}>
                             <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                                 <LocationOnIcon style={{ color: "#27AE60" }} />
-                                <label >Próximas</label>
+                                <label>Próximas</label>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                                <LocationOnIcon style={{ color: "#EB5757" }} />
-                                <label >Sem doações</label>
+                                <LocationOnIcon style={{ color: "#e9c841" }} />
+                                <label>Sem doações</label>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                                <LocationOnIcon style={{ color: "#4493cc" }} />
+                                <label>Outros</label>
                             </div>
                         </Grid>
                         
