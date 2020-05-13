@@ -28,6 +28,7 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     linkInstagram = serializers.ReadOnlyField(source='link_instagram')
     linkFacebook = serializers.ReadOnlyField(source='link_facebook')
     needDonates = serializers.SerializerMethodField()
+    countDonates = serializers.SerializerMethodField()
     otherType = serializers.ReadOnlyField(source='other_type')
 
     class Meta:
@@ -40,6 +41,9 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     def get_needDonates(self, instance):
         need_donates = instance.need_donates.filter(is_active=True)
         return NeedDonateSerializer(need_donates, many=True).data
+    
+    def get_countDonates(self, instance):
+        return instance.donates.filter(donated=True).count()
 
 
 class InstitutionCreateSerializer(serializers.ModelSerializer):
