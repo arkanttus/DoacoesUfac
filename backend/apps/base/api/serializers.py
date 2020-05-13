@@ -7,9 +7,7 @@ import re
 
 User = get_user_model()
 
-
-pattern=r'(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s' \
-        r'()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))'
+pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
 
 class TypeInstitutionSerializer(serializers.ModelSerializer):
@@ -100,17 +98,35 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(detail='CPF para Instituição é obrigatório')
         return super(InstitutionCreateSerializer, self).validate(attrs)
 
-    def validate_linkFacebook(self):
-        if self.linkFacebook not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
-            raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
+    def validate_linkFacebook(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'facebook.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkFacebook': "Digite um link válido ex: https://www.facebook.com/MinhaInstituicao/"
+                })
+        return value
 
-    def validate_linkInstagram(self):
-        if self.linkInstagram not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
-            raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
+    def validate_linkInstagram(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'instagram.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkInstagram': "Digite um link válido ex: https://www.instagram.com/MinhaInstituicao/"
+                })
+        return value
 
-    def validate_linkTwitter(self):
-        if self.linkTwitter not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
-            raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
+    def validate_linkTwitter(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'twitter.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkTwitter': "Digite um link válido ex: https://twitter.com/MinhaInstituicao/"
+                })
+        return value
 
 
 class InstitutionUpdateSerializer(serializers.ModelSerializer):
@@ -144,21 +160,31 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
         )
 
     def validate_linkFacebook(self, value):
-        link = re.findall(pattern, value or "")
-        if link not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
-            raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'facebook.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkFacebook': "Digite um link válido ex: https://www.facebook.com/MinhaInstituicao/"
+                })
         return value
 
     def validate_linkInstagram(self, value):
-        link = re.findall(pattern, value or "")
-        if link not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
-            raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'instagram.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkInstagram': "Digite um link válido ex: https://www.instagram.com/MinhaInstituicao/"
+                })
         return value
 
     def validate_linkTwitter(self, value):
-        link = re.findall(pattern, value or "")
-        if link not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
-            raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'twitter.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkTwitter': "Digite um link válido ex: https://twitter.com/MinhaInstituicao/"
+                })
         return value
-
-
