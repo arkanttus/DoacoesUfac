@@ -58,6 +58,7 @@ class InstitutionView(viewsets.ModelViewSet):
 
         return response.Response({'Error': 'Cidade não encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
+
 class TypeInstitutionView(viewsets.ReadOnlyModelViewSet):
     queryset = TypeInstitution.objects.all()
     serializer_class = TypeInstitutionSerializer

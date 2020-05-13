@@ -3,9 +3,13 @@ from django.contrib.auth import get_user_model
 from apps.base.models import Institution, TypeInstitution
 from apps.users.api.serializers import UserCreateSerializer, UserReadSerializer
 from apps.need_donate.serializers import NeedDonateSerializer
-
+import re
 
 User = get_user_model()
+
+
+pattern=r'(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s' \
+        r'()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))'
 
 
 class TypeInstitutionSerializer(serializers.ModelSerializer):
@@ -42,7 +46,7 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     def get_needDonates(self, instance):
         need_donates = instance.need_donates.filter(is_active=True)
         return NeedDonateSerializer(need_donates, many=True).data
-    
+
     def get_countDonates(self, instance):
         return instance.donates.filter(donated=True).count()
 
@@ -140,15 +144,21 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
         )
 
     def validate_linkFacebook(self, value):
-        if value not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
+        link = re.findall(pattern, value)
+        if link not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
             raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
+        return value
 
     def validate_linkInstagram(self, value):
-        if value not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
+        link = re.findall(pattern, value)
+        if link not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
             raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
+        return value
 
     def validate_linkTwitter(self, value):
-        if value not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
+        link = re.findall(pattern, value)
+        if link not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
             raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
+        return value
 
 
