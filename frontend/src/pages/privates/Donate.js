@@ -13,6 +13,11 @@ import { getInstitutionById, getDonationsByInstitutionId, sendRequest } from '..
 import Modal from '@material-ui/core/Modal';
 import ReCAPTCHA from "react-google-recaptcha";
 
+//ICONS
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import TwitterIcon from '@material-ui/icons/Twitter';
+
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
         minHeight: '85vh',
@@ -43,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
     institutionPhoto: {
         boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 10px rgba(0, 0, 0, 0.56)',
-        maxWidth: "50%",
+        maxWidth: "30%",
         [theme.breakpoints.down('sm')]: {
             maxWidth: "70%",
         }
@@ -62,6 +67,31 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    facebookIcon: {
+        width: '2rem',
+        height: '2rem',
+        '&:hover': {
+            color: '#4267B2',
+            cursor: 'pointer'
+        }
+    },
+    instagramIcon: {
+        width: '2rem',
+        height: '2rem',
+        '&:hover': {
+            color: '#F56040',
+            cursor: 'pointer'
+        }
+    },
+    twitterIcon: {
+        width: '2rem',
+        height: '2rem',
+        '&:hover': {
+            color: '#1DA1F2',
+            cursor: 'pointer'
+        }
+    }
+
 }));
 
 export default function Donate({ props }) {
@@ -72,6 +102,7 @@ export default function Donate({ props }) {
     const [open, setOpen] = React.useState(false)
     const institutionId = props.match.params.institutionId;
     const Swal = require('sweetalert2');
+    console.log(institution);
 
     async function loadData() {
         let res = await getInstitutionById(institutionId)
@@ -109,6 +140,14 @@ export default function Donate({ props }) {
 
     async function handleSubmit(captcha) {
         let actives = items.filter(obj => obj.checked === true)
+        if(actives.length === 0) {
+            Swal.fire({
+                title: "Selecione uma doação!",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
         const response = await sendRequest("POST", `donates/`, { setNeedDonates: actives.map(obj => { return obj.id }), setInstitution: institutionId, "g-recaptcha-response": captcha })
         
         if(response.status === 201) {
@@ -116,7 +155,7 @@ export default function Donate({ props }) {
         }
         else {
             Swal.fire({
-                title: "Não foi possível efetuar a doação :(",
+                title: "Não foi possível efetuar a doação!",
                 text: "Falha",
                 icon: "error",
                 confirmButtonText: "Ok"
@@ -140,6 +179,29 @@ export default function Donate({ props }) {
                             <Typography variant="body2" component="p" className={classes.descriptionText} >
                                 <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="22px">
                                     “{institution.description}“
+                                </Box>
+                                <Box fontWeight="fontWeightLight" style={{ display: 'flex', justifyContent: 'center' }} m={1}>
+                                    {institution.linkFacebook ? (
+                                        <a href={institution.linkFacebook} target="_blank" style={{ textDecoration: 'none', marginRight: 10, color: '#000' }}>
+                                            <FacebookIcon className={classes.facebookIcon} />
+                                        </a>
+                                    ) : (
+                                        <div></div>
+                                    )}
+                                    {institution.linkInstagram ? (
+                                        <a href={institution.linkInstagram} target="_blank" style={{ textDecoration: 'none', color: '#000' }}>
+                                            <InstagramIcon className={classes.instagramIcon} />
+                                        </a>
+                                    ) : (
+                                        <div></div>
+                                    )}
+                                    {institution.linkTwitter ? (
+                                        <a href={institution.linkTwitter} target="_blank" style={{ textDecoration: 'none', marginLeft: 10, color: '#000' }}>
+                                            <TwitterIcon className={classes.twitterIcon} />
+                                        </a>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                 </Box>
                             </Typography>
                             { institution && items.length > 0 ? (

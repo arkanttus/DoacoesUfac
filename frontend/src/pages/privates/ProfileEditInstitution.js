@@ -18,6 +18,9 @@ import Fade from '@material-ui/core/Fade';
 import Tooltip from '@material-ui/core/Tooltip';
 import getCroppedImg from '../../components/cropImage';
 
+//Components
+
+//Services
 import { setUser, setInstitution, getUser, getInstitution } from '../../services/auth';
 import { Cities } from "../../components/Cities";
 import api, { sendRequest, getInstitutionTypes } from "../../services/api";
@@ -260,6 +263,7 @@ export default function ProfileEditInstitution() {
     }
     //Atualizar perfil
     async function handleUpdateProfile() {
+
         //Descrição vazia
         if(description === "") {
             Swal.fire({
@@ -348,13 +352,47 @@ export default function ProfileEditInstitution() {
             setInstitution(responseInst.data);
             return;
         } else {
-            if(responseUser.data.phoneNumber) {
-                Swal.fire({
-                    title: "Número de telefone inválido!",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-                return;
+            if(responseUser.status !== 200) {
+                if(responseUser.data.phoneNumber) {
+                    Swal.fire({
+                        title: "Número de telefone inválido!",
+                        icon: "error",
+                        confirmButtonText: "Ok"
+                    });
+                    return;
+                }
+            }
+            if(responseInst.status != 200) {
+                //Facebook link
+                if(responseInst.data.linkFacebook) {
+                    Swal.fire({
+                        title: "Link Facebook Inválido!",
+                        text: responseInst.data.linkFacebook.linkFacebook,
+                        icon: "error",
+                        confirmButtonText: "Ok"
+                    });
+                    return;
+                }
+                //Instagram link
+                if(responseInst.data.linkInstagram) {
+                    Swal.fire({
+                        title: "Link Instagram Inválido!",
+                        text: responseInst.data.linkInstagram.linkInstagram,
+                        icon: "error",
+                        confirmButtonText: "Ok"
+                    });
+                    return;
+                }
+                //Twitter link
+                if(responseInst.data.linkTwitter) {
+                    Swal.fire({
+                        title: "Link Twitter Inválido!",
+                        text: responseInst.data.linkTwitter.linkTwitter,
+                        icon: "error",
+                        confirmButtonText: "Ok"
+                    });
+                    return;
+                }
             }
             Swal.fire({
                 title: "Algo deu errado. Tente novamente mais tarde!",
