@@ -144,19 +144,19 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
         )
 
     def validate_linkFacebook(self, value):
-        link = re.findall(pattern, value)
+        link = re.findall(pattern, value or "")
         if link not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
             raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
         return value
 
     def validate_linkInstagram(self, value):
-        link = re.findall(pattern, value)
+        link = re.findall(pattern, value or "")
         if link not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
             raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
         return value
 
     def validate_linkTwitter(self, value):
-        link = re.findall(pattern, value)
+        link = re.findall(pattern, value or "")
         if link not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
             raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
         return value
