@@ -142,7 +142,11 @@ export default function ProfileEditInstitution() {
     const institution = getInstitution();
 
     const cities = Cities();
-    console.log(institution)
+    const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
+                "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
+                "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
+    
+    console.log(institution);
 
     const [screen, setScreen] = React.useState(0);
     const [newAvatar, setNewAvatar] = React.useState();
@@ -154,7 +158,7 @@ export default function ProfileEditInstitution() {
     const [typeInstitutionID, setTypeInstitutionID] = React.useState("");
     const [otherType, setOtherType] = React.useState(institution.otherType);
     const [nameResponsible, setNameResponsible] = React.useState(user.name);
-    const [uf, setUF] = React.useState(institution.uf);
+    const [uf, setUF] = React.useState(itemsEstados.filter(obj => {return obj === institution.uf})[0]);
     const [citiesArray, setCitiesArray] = React.useState(cities[institution.uf].cidades);
     const [city, setCity] = React.useState(institution.city);
     const [linkFacebook, setLinkFacebook] = React.useState(institution.linkFacebook);
@@ -531,9 +535,9 @@ export default function ProfileEditInstitution() {
                     <FormControl fullWidth>
                         <InputLabel>Estado *</InputLabel>
                             <Select value={uf} onChange={handleSelectCities} input={<Input />}>    
-                            {Object.keys(cities).map((item) => (
-                                <MenuItem key={cities[item].sigla} value={cities[item].sigla}>
-                                {cities[item].nome}
+                            {itemsEstados.map((item) => (
+                                <MenuItem key={item} value={item}>
+                                {item}
                                 </MenuItem>
                             ))}
                             </Select>
