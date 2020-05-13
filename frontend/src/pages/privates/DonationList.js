@@ -158,7 +158,7 @@ export default function ListDonation() {
                                     <p><strong>Doação: </strong>{donation.items}</p>
                                     <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY')}</p>
                                     <Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
-                                        <label>{donation.donator.totalDonations}</label>
+                                        <label> {donation.donator.totalDonations} </label>
                                         <FavoriteIcon style={{ color:"#E53935", marginRight: -8, marginLeft: 5 }}/>     
                                     </Grid>
                                 </CardBody>

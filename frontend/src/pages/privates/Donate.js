@@ -43,8 +43,9 @@ const useStyles = makeStyles((theme) => ({
     },
     institutionPhoto: {
         boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 10px rgba(0, 0, 0, 0.56)',
+        maxWidth: "50%",
         [theme.breakpoints.down('sm')]: {
-            width: "90%"
+            maxWidth: "70%",
         }
     },
     donationFrame: {
