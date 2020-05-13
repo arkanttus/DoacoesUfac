@@ -35,7 +35,8 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
         model = Institution
         fields = (
             'id', 'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude',
-            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates', 'otherType'
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates', 'otherType',
+            'countDonates'
         )
 
     def get_needDonates(self, instance):
