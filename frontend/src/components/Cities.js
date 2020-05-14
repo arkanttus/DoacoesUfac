@@ -843,17 +843,7 @@ export const Cities = () => {
             "sigla": "DF",
             "nome": "Distrito Federal",
             "cidades": [
-                "Águas Claras",
-                "Brasília",
-                "Ceilândia",
-                "Gama",
-                "Guará",
-                "Planaltina",
-                "Plano Piloto",
-                "Recanto das Emas",
-                "Samambaia",
-                "Santa Maria",
-                "Taguatinga"
+                "Brasília"
             ]
         },
         "Espírito Santo": {
