@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import L from "leaflet";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import { withStyles } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
 
 // import marker icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,13 +14,16 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png"
 });
 
-const myStyles = {
+const myStyles = ((theme) => ({
   mapa: {
     zIndex: "100",
     width: '600px', 
     height: '350px',
+    [theme.breakpoints.down('sm')]: {
+        width: '97%', 
+    }
   }
-};
+}))
 
 class MapViewer extends Component {
   constructor(props) {

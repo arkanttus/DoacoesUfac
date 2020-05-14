@@ -120,7 +120,7 @@ export default function Donated({ props }) {
                             </Card>
                         </Grid>
                             
-                        <Grid container item xs={4} alignItems="center" justify="center" direction="column">
+                        <Grid container item md={4} sm={12} alignItems="center" justify="center" direction="column">
                             <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '20px' }} >
                                 <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px">
                                     Por gentileza, entre em contato a partir dos seguintes meios:
@@ -153,8 +153,8 @@ export default function Donated({ props }) {
                             </a>
                         </Grid>
 
-                        <Grid container item xs={4} alignItems="center" justify="center" direction="column">
-                            <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '15px' }} >
+                        <Grid container item md={4} sm={12} alignItems="center" justify="center" direction="column">
+                            <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '15px', marginTop: '20px' }} >
                                 <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px">
                                     Localização no Mapa
                                 </Box>
