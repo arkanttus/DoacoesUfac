@@ -121,8 +121,7 @@ export default function Home({props}){
         let res = await sendRequest("POST", 'institutions/city/', {city: city})
         
         if(res.status === 200) {
-            setInstitutionsCity(res.data.Institutions) 
-            console.log(res.data.Institutions)       
+            setInstitutionsCity(res.data.Institutions)       
         }
         else if(res.status === 404) {
             console.log("Cidade não encontrada")
@@ -132,11 +131,6 @@ export default function Home({props}){
     const handleCoordinates = () => {
         setCoordinates(LatsLngs[uf][city])
     }
-
-    React.useEffect(() => {
-        handleCoordinates()
-        loadInstitutionByCity()
-    }, [])
 
     React.useEffect(() => {
         loadData();
