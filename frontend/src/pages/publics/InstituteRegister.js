@@ -212,9 +212,9 @@ export default function CadastroInstituicao({props}) {
     const [typeID, setTypeID] = React.useState("");
     const [types,setTypes] = React.useState(null);
     const [otherType,setOtherType] = React.useState(null);
-    const [uf, setUF] = React.useState("Acre");
+    const [uf, setUF] = React.useState(null);
     const [citiesArray, setCitiesArray] = React.useState([]);
-    const [city, setCity] = React.useState("Rio Branco");
+    const [city, setCity] = React.useState(null);
     const [longitude, setLongitude] = React.useState("");
     const [latitude, setLatitude] = React.useState("");
     
@@ -232,7 +232,9 @@ export default function CadastroInstituicao({props}) {
     },[]);
     
     React.useEffect(() => {
-        setCenterMap(LatsLngs[uf][city])
+        if (uf && city) {
+            setCenterMap(LatsLngs[uf][city])
+        }
     }, [city])
 
     const handleCoordinates = (lat, lng) => {
@@ -429,7 +431,7 @@ export default function CadastroInstituicao({props}) {
         if(response.status === 201) {
             Swal.fire({
                 title: "Seu cadastro foi realizado com sucesso!",
-                text: "Você será redirecionado para a página de Login!",
+                text: "Em breve seu registro será avaliado!",
                 icon: 'success',
                 confirmButtonText: 'Obrigado'
             }).then(() => {
