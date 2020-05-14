@@ -75,10 +75,12 @@ class MapComp extends Component {
 
   render() {
     const {handleCoordinates} = this.props
-    const center = [-9.973879999999951, -67.80755999999997];
-    const marker = this.state.marker;
+    const center = this.props.center ? this.props.center : [-9.973879999999951, -67.80755999999997];
+    const institution = this.props.institution ? this.props.institution : null
+    const marker = this.state.marker ? this.state.marker : institution;
     const showCurrent = this.state.showCurrent;
     const {classes} = this.props
+    const {styles} = this.props
     const locateOptions = {
       showPopup: false,
       position: "topleft",
@@ -90,7 +92,7 @@ class MapComp extends Component {
     console.log(marker)
     return (
       <Map
-        className={classes.mapa}
+        className={styles ? styles : classes.mapa}
         center={center}
         zoom="12"
         minZoom="4"

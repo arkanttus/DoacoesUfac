@@ -16,26 +16,21 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Tooltip from '@material-ui/core/Tooltip';
+
 import getCroppedImg from '../../components/cropImage';
-
-//Components
-
-//Services
 import { setUser, setInstitution, getUser, getInstitution } from '../../services/auth';
 import { Cities } from "../../components/Cities";
 import api, { sendRequest, getInstitutionTypes } from "../../services/api";
+import {LatLng} from '../../components/LatLng'
 
-//ICONS
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import MapRegister from '../../components/Map/MapRegister';
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
         minHeight: '85vh',
-        '& div': {
-            height: 'fit-content'
-        }
     },
     container: {
         height: 'fit-content',
@@ -102,8 +97,12 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             filter: 'brightness(0.5)',
         }
+    },
+    mapa: {
+        width: '100%',
+        height: 'inherit',
+        position: 'absolute'
     }
-
 }));
 
 function PhoneMask(props) {
@@ -141,16 +140,13 @@ function CPFMask(props) {
 export default function ProfileEditInstitution() {
     const classes = useStyles();
     const user = getUser();
+    const LatsLngs = LatLng()
     const Swal = require('sweetalert2');
     const institution = getInstitution();
-
     const cities = Cities();
     const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
-    
-    console.log(institution);
-
     const [screen, setScreen] = React.useState(0);
     const [newAvatar, setNewAvatar] = React.useState();
     const [institutionAvatar, setInstitutionAvatar] = React.useState(institution.image);
@@ -167,17 +163,33 @@ export default function ProfileEditInstitution() {
     const [linkFacebook, setLinkFacebook] = React.useState(institution.linkFacebook);
     const [linkInstagram, setLinkInstagram] = React.useState(institution.linkInstagram);
     const [linkTwitter, setLinkTwitter] = React.useState(institution.linkTwitter);
+    const [latitude, setLatitude] = React.useState(institution.latitude)
+    const [longitude, setLongitude] = React.useState(institution.longitude)
     const [CPF, setCPF] = React.useState(user.cpf);
     const [email, setEmail] = React.useState(user.email);
     const [phone, setPhone] = React.useState(user.phoneNumber);
     const [password, setPassword] = React.useState('');
     const [newPassword1, setNewPassword1] = React.useState('');
     const [newPassword2, setNewPassword2] = React.useState('');
-
-    //Cropper
     const [crop, setCrop] = React.useState({ x: 0, y: 0 });
     const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
     const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
+    const [coordinates, setCoordinates] = React.useState(null)
+
+    React.useEffect(() => {
+        loadData();
+        setCoordinates(LatsLngs[uf][city])
+    }, []);
+
+    React.useEffect(() => {
+        setCoordinates(LatsLngs[uf][city])
+    }, [city])
+
+    const handleCoordinates = (lat, lng) => {
+        setLatitude(lat)
+        setLongitude(lng)
+    }
+
     const onCropComplete = React.useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     }, []);
@@ -231,11 +243,12 @@ export default function ProfileEditInstitution() {
         }
     });
 
-    //Modal
     const [open, setOpen] = React.useState(false);
+
     const handleOpenModal = () => {
         setOpen(true);
     };
+
     const handleCloseModal = () => {
         setOpen(false);
     };
@@ -254,9 +267,7 @@ export default function ProfileEditInstitution() {
             setTypeInstitutionID(res.results.filter(obj => {return obj.name === institution.typeInstitution})[0].id);
         }
     }
-    React.useEffect(() => {
-        loadData();
-    }, []);
+    
     function handleSelectInstitutionType (e){
         setTypeInstitutionName(e.target.value);
         setTypeInstitutionID(typesInstitutions.filter(obj => { return obj.name === e.target.value })[0].id);
@@ -333,8 +344,8 @@ export default function ProfileEditInstitution() {
             typeInstitution: typeInstitutionID,
             otherType,
             description,
-            latitude: "Arrumar depois",
-            longitude: "Arrumar depois",
+            latitude,
+            longitude,
             uf,
             city,
             linkFacebook,
@@ -524,9 +535,7 @@ export default function ProfileEditInstitution() {
                             </label>
                         </Grid>
                     </Tooltip>
-                    <Grid item xs={12} sm={8} style={{ border: '1px solid' }}>
-                        Google Maps Frame
-                    </Grid>
+                    
                     <Grid item xs={12}>
                         <TextField fullWidth required value={description} onChange={(e) => setDescription(e.target.value)} label="Breve descrição das atividades" />
                     </Grid>
@@ -631,6 +640,10 @@ export default function ProfileEditInstitution() {
                     <Grid item xs={12} sm={4} style={{ display: 'flex', alignItems: 'flex-end' }}>
                         <TwitterIcon className={classes.socialMediaIcon} />
                         <TextField value={linkTwitter} onChange={(e) => setLinkTwitter(e.target.value)} fullWidth label="Twitter" />
+                    </Grid>
+
+                    <Grid item xs={12} style={{ padding: 0, marginTop: 15, position: 'relative', height: '40vh'}}>
+                        <MapRegister styles={classes.mapa} center={coordinates} institution={{lat: latitude, lng: longitude}} handleCoordinates={handleCoordinates}/>
                     </Grid>
 
                     <Grid item className={classes.buttonLeft} xs={12} sm={6}>

@@ -705,7 +705,7 @@ export default function CadastroInstituicao({props}) {
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                         <h3 style={{ color: "#555",textAlign: 'center'}}>Digite o endereço da Instituição ou selecione no mapa</h3>
                                         <Grid item xs={12} >   
-                                            <MapRegister handleCoordinates={handleCoordinates}/>       
+                                            <MapRegister center={centerMap} handleCoordinates={handleCoordinates}/>       
                                         </Grid>
                                     </Grid>
                                 </Grid>

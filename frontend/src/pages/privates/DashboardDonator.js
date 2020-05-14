@@ -134,9 +134,12 @@ export default function Home({props}){
     }
 
     React.useEffect(() => {
-        loadData();
         handleCoordinates()
         loadInstitutionByCity()
+    }, [])
+
+    React.useEffect(() => {
+        loadData();
     }, [page]);
 
     React.useEffect(() => {
