@@ -137,7 +137,7 @@ class MapComp extends Component {
       <Map
         className={classes.mapa}
         center={center}
-        zoom="11"
+        zoom="12"
         minZoom="10"
         maxZoom="19"
         ref={m => {
