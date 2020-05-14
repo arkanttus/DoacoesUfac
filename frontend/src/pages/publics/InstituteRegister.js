@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     imgGrid: {
-        border: '1px solid red',
+        border: '1px solid #10668B',
         '& label': {
             display: 'flex',
             justifyContent: 'center',
@@ -212,9 +212,9 @@ export default function CadastroInstituicao({props}) {
     const [typeID, setTypeID] = React.useState("");
     const [types,setTypes] = React.useState(null);
     const [otherType,setOtherType] = React.useState(null);
-    const [uf, setUF] = React.useState("");
+    const [uf, setUF] = React.useState("Acre");
     const [citiesArray, setCitiesArray] = React.useState([]);
-    const [city, setCity] = React.useState("");
+    const [city, setCity] = React.useState("Rio Branco");
     const [longitude, setLongitude] = React.useState("");
     const [latitude, setLatitude] = React.useState("");
     
