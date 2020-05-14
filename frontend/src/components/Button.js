@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import ReactLoading from 'react-loading';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -48,7 +49,12 @@ export default function Button(props) {
     }
 
     return(
-        <button disabled={props.disabled} className={classes.buttonBase + ' ' + theme} onClick={props.onClick} style={props.style} >{props.children}</button>
+        <button disabled={props.disabled} className={classes.buttonBase + ' ' + theme} onClick={props.onClick} style={props.style}>
+            {props.loading || props.loading === true ? (
+                <ReactLoading type={props.type} color="#247BA0"/>
+            ) : (
+            props.children)}
+        </button>
     );
 
 }

@@ -234,7 +234,7 @@ export default function Home({props}){
                         Todas as Instituições
                     </Grid>
                 </Grid>
-                <WaitLoading isLoading={loading} type="spin">
+                <WaitLoading isLoading={loading} type="spin" useGrid>
                     <Grid container spacing={4} className={classes.cardContainer}>
                     { institutions ? institutions.map( institution => (
                         <Grid item xs={12} sm={6} md={3} className={classes.cardItem}>

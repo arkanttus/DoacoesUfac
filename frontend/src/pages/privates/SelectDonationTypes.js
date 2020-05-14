@@ -128,7 +128,7 @@ export default function SelectDOnationTypes({ props }) {
     return(
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
-                <WaitLoading isLoading={loading} type="spin">
+                <WaitLoading isLoading={loading} type="spin" useGrid>
                     <Container maxWidth="md">
                         <Grid container item xs={12} alignItems="center" justify="center" direction="column" className={classes.donationFrame}>
                             <Typography variant="body2" component="p" style={{ color: "#000" }} >

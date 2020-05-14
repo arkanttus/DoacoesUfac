@@ -18,6 +18,7 @@ import Fade from '@material-ui/core/Fade';
 import Backdrop from '@material-ui/core/Backdrop';
 
 import Cropper from 'react-easy-crop';
+import WaitLoading from '../../components/WaitLoading';
 
 //ICONS
 import EmailIcon from '@material-ui/icons/Email';
@@ -142,6 +143,7 @@ export default function CadastroInstituicao({props}) {
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
     const [open, setOpen] = React.useState(false);
+    const [waiting, setWaiting] = React.useState(false);
     const [crop, setCrop] = React.useState({ x: 0, y: 0 });
     const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
     const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
@@ -414,7 +416,7 @@ export default function CadastroInstituicao({props}) {
 
         const formData = new FormData();
         formData.append("image", avatarBlob, "image.jpg");
-
+        setWaiting(true)
         const response = await sendRequest('POST', "institutions/", { 
             owner: { name: nameResponsible, email, password1: password, cpf: CPF, typeUser: "R", phoneNumber: phone, uf, city},
             name,
@@ -427,6 +429,7 @@ export default function CadastroInstituicao({props}) {
             longitude
             }
         );
+        setWaiting(false)
 
         if(response.status === 201) {
             Swal.fire({
@@ -713,8 +716,10 @@ export default function CadastroInstituicao({props}) {
                                 </Grid>
                             </CardBody>
                             <Grid container spacing={3} style={{paddingTop: 25, paddingBottom: 10}}>
-                                    <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
+                                <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
+                                <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
                                     <Button onClick={confirmRegister} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15, zIndex:1 }} color="primary">FINALIZAR</Button>
+                                </WaitLoading>
                             </Grid> 
                         </Card>
                     </Grid>        

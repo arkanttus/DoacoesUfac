@@ -108,7 +108,7 @@ export default function Institutions({ props }) {
             
             <Grid container className={classes.fatherContainer}>
                 <Grid container spacing={4} className={classes.cardContainer}>
-                    <WaitLoading isLoading={loading} type="spin">
+                    <WaitLoading isLoading={loading} type="spin" useGrid>
                         { institutions ? institutions.map( institution => (
                             <Grid item xs={12} sm={6} lg={3} className={classes.cardItem}>
                                 <Link to={`doar/${institution.id}`} style={{ textDecoration: "none" }}>

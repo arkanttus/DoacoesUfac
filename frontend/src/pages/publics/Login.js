@@ -12,7 +12,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
-
+import WaitLoading from '../../components/WaitLoading';
 import { sendRequest } from "../../services/api";
 import { login } from "../../services/auth";
 
@@ -115,12 +115,14 @@ export default function Login({ props }) {
     const [ email, setEmail ] = React.useState("");
     const [ password, setPassword ] = React.useState("");
     const [ open, setOpen ] = React.useState(false);
+    const [ waiting, setWaiting ] = React.useState(false);
     const [ error, setError ] = React.useState("");
   
     async function validateForm(e) {
         e.preventDefault()
+        setWaiting(true)
         const response = await sendRequest("POST", "login/", { username: email, password })
-        
+        setWaiting(false)
         if(response.status === 200) {
             await login(response.data)
             props.history.push("/dashboard")
@@ -168,7 +170,9 @@ export default function Login({ props }) {
                                  
                                     </Grid>
                                 </Grid>
-                                <Button type="submit" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">ENTRAR</Button>
+                                <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
+                                    <Button type="submit" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">ENTRAR</Button>
+                                </WaitLoading>
                             </form>
                         </CardBody>
                     </Card>

@@ -28,6 +28,7 @@ import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 import { Cities } from "../../components/Cities";
 
 import { sendRequest, getInstitutionTypes } from "../../services/api";
+import WaitLoading from '../../components/WaitLoading';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -141,6 +142,7 @@ export default function CadastroInstituicao({ props }) {
     const [city, setCity] = React.useState("");
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [waiting, setWaiting] = React.useState(false);
 
     function handleSelectCities(e) {
         setUF(e.target.value);
@@ -196,7 +198,9 @@ export default function CadastroInstituicao({ props }) {
             return;
         }
 
+        setWaiting(true)
         const response = await sendRequest('POST', "users/", { name, email, password1: password, phoneNumber, typeUser: "D", uf, city });
+        setWaiting(false)
 
         if(response.status === 201) {
             Swal.fire({
@@ -356,7 +360,9 @@ export default function CadastroInstituicao({ props }) {
                                 </Grid>
 
                             </Grid>
-                            <Button onClick={(e) => confirmRegister(e)} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
+                            <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
+                                <Button onClick={(e) => confirmRegister(e)} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
+                            </WaitLoading>
                         </CardBody>
                     </Card>
                 </Grid>

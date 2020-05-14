@@ -86,7 +86,7 @@ export default function Donated({ props }) {
     return(
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
-                <WaitLoading isLoading={loading} type="spin">
+                <WaitLoading isLoading={loading} type="spin" useGrid>
                     <Grid item xs={12} className={classes.pageTitle}>
                         Confirmação de Doação
                     </Grid>

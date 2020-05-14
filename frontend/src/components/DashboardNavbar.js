@@ -12,7 +12,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Dropdown from '@material-ui/core/Menu';
-
 import Logo from '../assets/Logo.svg';
 
 import { logout, getUser } from '../services/auth';
@@ -226,12 +225,14 @@ const useStyles = makeStyles((theme) => ({
 const MenuLeft = (props) => {
     const classes = useStyles();
     return (
+            <Link to={"/dashboard"} style={{ textDecoration: "none", color: "white" }}>
         <div className={classes.leftSide}>
-            <img src={Logo} alt="logo" className={classes.logo} />
-            <Typography variant="h6" className={classes.title}>
-                    Doações
-            </Typography>
+                <img src={Logo} alt="logo" className={classes.logo} />
+                <Typography variant="h6" className={classes.title}>
+                        Doações
+                </Typography>
         </div>
+            </Link>
     )
 }
 

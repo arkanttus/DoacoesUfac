@@ -222,12 +222,14 @@ const MenuRight = (props) => {
 const MenuLeft = (props) => {
     const classes = useStyles()
     return (
-        <div className={classes.logo}>
-            <img src={Logo} alt="logo" className={classes.img} />
-            <Typography variant="h6" className={classes.title}>
-                    Doações
-            </Typography>
-        </div>
+        <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
+          <div className={classes.logo}>
+              <img src={Logo} alt="logo" className={classes.img} />
+              <Typography variant="h6" className={classes.title}>
+                Doações
+              </Typography>
+          </div>
+        </Link>
     )
 }
 
