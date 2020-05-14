@@ -16,6 +16,7 @@ import Menu from "@material-ui/icons/Menu";
 export default function Header(props) {
   const classes = props.styles
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
   React.useEffect(() => {
     if (props.changeColorOnScroll) {
       window.addEventListener("scroll", headerColorChange);
@@ -26,9 +27,11 @@ export default function Header(props) {
       }
     };
   });
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
   const headerColorChange = () => {
     const { color, changeColorOnScroll } = props;
     const windowsScrollTop = window.pageYOffset;
@@ -48,6 +51,7 @@ export default function Header(props) {
         .classList.remove(classes[changeColorOnScroll.color]);
     }
   };
+
   const { color, rightLinks, leftLinks, brand, fixed, absolute } = props;
   const appBarClasses = classNames({
     [classes.appBar]: true,
@@ -56,6 +60,7 @@ export default function Header(props) {
     [classes.fixed]: fixed,
   });
   const brandComponent = <Button className={classes.title}>{brand}</Button>;
+  
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
@@ -93,7 +98,7 @@ export default function Header(props) {
           }}
           onClose={handleDrawerToggle}
         >
-          <div className={classes.appResponsive}>
+          <div className={classes.appResponsive} onClick={() => setMobileOpen(false)}>
             {leftLinks}
             {rightLinks}
           </div>
