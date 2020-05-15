@@ -5,7 +5,7 @@ const baseURL = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development'
                     ? 'http://localhost:8000/api/v1/' : 'https://doacao.ufac.br/api/v1/'
 
 const api = axios.create({
-    baseURL: base_url
+    baseURL: baseURL
 });
 
 api.interceptors.request.use(async config => {
