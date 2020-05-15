@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 GOOGLE_RECAPTCHA_SECRET_KEY = "6LfNRPUUAAAAAA_l4IEPhjqFexMqIbx_hKhAEvGX"
 
 if PRODUCTION:
-    ALLOWED_HOSTS = ['200.129.173.207', 'localhost']
+    ALLOWED_HOSTS = ['200.129.173.207', 'doacao.ufac.br', 'localhost']
 else:
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
