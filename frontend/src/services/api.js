@@ -1,9 +1,8 @@
 import axios from "axios";
 import { getToken } from "./auth";
 
-const ip = "localhost"//process.env.REACT_APP_HOST
-
-const base_url = "http://" + ip + ":8000/api/v1/"
+const baseURL = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
+                    ? 'http://localhost:8000/api/v1/' : 'https://doacao.ufac.br/api/v1/'
 
 const api = axios.create({
     baseURL: base_url
