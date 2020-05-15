@@ -99,7 +99,6 @@ export default function MyProfile() {
     const classes = useStyles();
     const Swal = require('sweetalert2');
     const user = JSON.parse(localStorage.getItem('USER'));
-    console.log(user);
 
     //Base
     const [screen, setScreen] = React.useState(0);

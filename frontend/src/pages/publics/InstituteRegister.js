@@ -220,7 +220,6 @@ export default function CadastroInstituicao({props}) {
         let res = await getInstitutionTypes()
         if(res) {
            setTypes(res.results);
-           console.log(types);
         }
     }
 

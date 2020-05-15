@@ -49,7 +49,6 @@ export default function SelectDOnationTypes({ props }) {
 
     async function loadData() {
         let res = await sendRequest("GET", "type_donates/", {})
-        console.log(res)
     
         if(res.status === 200) {
             res.data.results.forEach(function(name) {

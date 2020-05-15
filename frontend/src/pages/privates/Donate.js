@@ -102,7 +102,6 @@ export default function Donate({ props }) {
     const [open, setOpen] = React.useState(false)
     const institutionId = props.match.params.institutionId;
     const Swal = require('sweetalert2');
-    console.log(institution);
 
     async function loadData() {
         let res = await getInstitutionById(institutionId)

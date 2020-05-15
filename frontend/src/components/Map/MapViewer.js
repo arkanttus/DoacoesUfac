@@ -49,8 +49,7 @@ class MapViewer extends Component {
   render() {
     const { marker, popup } = this.state;
     const { classes } = this.props;
-
-    console.log(marker);
+    
     return (
       <Map
         className={classes.mapa}

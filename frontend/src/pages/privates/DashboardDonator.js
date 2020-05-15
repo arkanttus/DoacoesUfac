@@ -111,7 +111,7 @@ export default function Home({props}){
     const [loading,setLoading] = React.useState(true)
 
     async function loadData() {
-        console.log(user)
+
         let res = await sendRequest("GET", `institutions/?offset=${page}`, {})
         
         if(res.status === 200) {

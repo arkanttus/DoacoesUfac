@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import IconButton from '@material-ui/core/IconButton';
+import WaitLoading from '../../components/WaitLoading';
 //Material Kit
 import Card from '../../components/MaterialKit/Card/Card';
 import CardBody from "../../components/MaterialKit/Card/CardBody";
@@ -53,11 +54,12 @@ export default function ListDonation() {
     const classes = useStyles();
     const Swal = require('sweetalert2');
     const [donations, setDonations] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
 
     async function loadData() {
         let response = await getDonations();
         if(response) {
-            console.log(response)
+
             response.results.forEach((donation) => {
                 donation.items = donation.needDonates.map((need, index) => {
                     let msg = need.typeDonate.name
@@ -69,6 +71,7 @@ export default function ListDonation() {
                 })
             })
             setDonations(response.results);
+            setLoading(false)
         }
     }
 
@@ -127,46 +130,47 @@ export default function ListDonation() {
     return(
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
-                <Grid item xs={12} className={classes.titulo1}>
-                    Lista de doações
-                </Grid>
-                <Grid item xs={12} className={classes.titulo2}>
-                    Confirme se a doação foi efetuada
-                </Grid>
+                <WaitLoading isLoading={loading} type="spin" useGrid>
+                    <Grid item xs={12} className={classes.titulo1}>
+                        Lista de doações
+                    </Grid>
+                    <Grid item xs={12} className={classes.titulo2}>
+                        Confirme se a doação foi efetuada
+                    </Grid>
 
-                <Grid container>
-                    { donations.map( donation => (
-                        <Grid item xs={12} sm={4} lg={3}  className={classes.gridCardContainer}>
-                            <Card style={{backgroundColor:"#ECE9E9",width: "19rem", height: "100%"}}>
-                                <CardHeader className={classes.cardHeader}>
-                                    <label>
-                                        <strong>Doador:</strong> {donation.donator.name}
-                                    </label>
-                                    { donation.donated === true ? (
-                                            <IconButton>
-                                                <FavoriteIcon style={{ color:"#E53935", marginRight: -8 }}/>
-                                            </IconButton>
-                                        ) : ( 
-                                            <IconButton onClick={() => handleChange(donation)}>
-                                                <FavoriteBorderIcon style={{color:"#ffffff", marginRight: -8 }} />
-                                            </IconButton>      
-                                        ) 
-                                    }
-                                   
-                                </CardHeader>
-                                <CardBody>
-                                    <p><strong>Doação: </strong>{donation.items}</p>
-                                    <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY')}</p>
-                                    <Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
-                                        <label> {donation.donator.totalDonations} </label>
-                                        <FavoriteIcon style={{ color:"#E53935", marginRight: -8, marginLeft: 5 }}/>     
-                                    </Grid>
-                                </CardBody>
-                            </Card>
-                        </Grid>
-                    ) )}
-                </Grid>
-
+                    <Grid container>
+                        { donations.map( donation => (
+                            <Grid item xs={12} sm={4} lg={3}  className={classes.gridCardContainer}>
+                                <Card style={{backgroundColor:"#ECE9E9",width: "19rem", height: "100%"}}>
+                                    <CardHeader className={classes.cardHeader}>
+                                        <label>
+                                            <strong>Doador:</strong> {donation.donator.name}
+                                        </label>
+                                        { donation.donated === true ? (
+                                                <IconButton>
+                                                    <FavoriteIcon style={{ color:"#E53935", marginRight: -8 }}/>
+                                                </IconButton>
+                                            ) : ( 
+                                                <IconButton onClick={() => handleChange(donation)}>
+                                                    <FavoriteBorderIcon style={{color:"#ffffff", marginRight: -8 }} />
+                                                </IconButton>      
+                                            ) 
+                                        }
+                                    
+                                    </CardHeader>
+                                    <CardBody>
+                                        <p><strong>Doação: </strong>{donation.items}</p>
+                                        <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY')}</p>
+                                        <Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
+                                            <label> {donation.donator.totalDonations} </label>
+                                            <FavoriteIcon style={{ color:"#E53935", marginRight: -8, marginLeft: 5 }}/>     
+                                        </Grid>
+                                    </CardBody>
+                                </Card>
+                            </Grid>
+                        ) )}
+                    </Grid>
+                </WaitLoading>
             </Grid>
         </Grid>
     );

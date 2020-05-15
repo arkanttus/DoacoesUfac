@@ -200,7 +200,6 @@ export default function ProfileEditInstitution() {
                 croppedAreaPixels,
                 0
             );
-            console.log(croppedImage);
             var formData = new FormData();
             formData.append('image', croppedImage, institution.id + ".jpg");
 
@@ -410,8 +409,6 @@ export default function ProfileEditInstitution() {
                 icon: "error",
                 confirmButtonText: "Ok"
             });
-            console.log(responseInst);
-            console.log(responseUser);
         }
     }//Atualizar perfil
 
@@ -512,7 +509,6 @@ export default function ProfileEditInstitution() {
         }
         handleOpenModal();
     }
-    console.log(institutionAvatar);
     
     return(
         <Grid container className={classes.containerRoot}>

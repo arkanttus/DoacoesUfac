@@ -80,7 +80,6 @@ export default function ProfileEditDonator() {
     const classes = useStyles();
     const user = getUser();
     const Swal = require('sweetalert2');
-    console.log(user);
 
     const cities = Cities();
     const itemsEstados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão",
