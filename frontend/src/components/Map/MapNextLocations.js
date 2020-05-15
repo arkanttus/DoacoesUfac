@@ -121,7 +121,7 @@ class MapComp extends Component {
     console.log(center)
     const markers = this.props.institutions ? this.props.institutions : []
     const myPosition = this.state.myPosition;
-    const activePopup = this.state.activePopup;
+    //const activePopup = this.state.activePopup;
     const {classes} = this.props
     const locateOptions = {
       showPopup: false,
@@ -170,8 +170,8 @@ class MapComp extends Component {
           <Marker
             position={{lat: m.latitude, lng: m.longitude}}
             key={m.id}
-            icon={m.inRadius ? (m.countDonates == 0 ? RedMarker : GreenMarker) 
-                   : (m.countDonates == 0 ? GoldMarker : BlueMarker)}
+            icon={m.inRadius ? (m.countDonates === 0 ? RedMarker : GreenMarker) 
+                   : (m.countDonates === 0 ? GoldMarker : BlueMarker)}
           >
             <Popup>{m.name}</Popup>
           </Marker>

@@ -25,6 +25,7 @@ import Contact from './pages/publics/Contact'
 
 
 import Dashboard from './pages/privates/Dashboard';
+import Logout from './pages/privates/Logout';
 import Donated from './pages/privates/Donated';
 import Donate from './pages/privates/Donate';
 import DonationList from './pages/privates/DonationList';
@@ -80,6 +81,7 @@ const Routes = () => (
       <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
       
       <PrivateRoute path="/dashboard" layout={DashboardLayout} component={Dashboard} />
+      <PrivateRoute path="/sair" layout={DashboardLayout} component={Logout} />
       <PrivateRoute path="/minhas-doacoes" layout={DashboardLayout} component={MyDonations} />
       <PrivateRoute path="/doado/:donationId" layout={DashboardLayout} component={Donated} />
       <PrivateRoute path="/doar/:institutionId" layout={DashboardLayout} component={Donate} />

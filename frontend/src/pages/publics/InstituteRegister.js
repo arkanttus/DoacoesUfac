@@ -79,11 +79,6 @@ const useStyles = makeStyles((theme) => ({
             }
         }
     },
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     containerModal: {
         position: 'relative',
         height: '70vh',

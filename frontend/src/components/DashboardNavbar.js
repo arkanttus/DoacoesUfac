@@ -225,14 +225,14 @@ const useStyles = makeStyles((theme) => ({
 const MenuLeft = (props) => {
     const classes = useStyles();
     return (
-            <Link to={"/dashboard"} style={{ textDecoration: "none", color: "white" }}>
-        <div className={classes.leftSide}>
-                <img src={Logo} alt="logo" className={classes.logo} />
-                <Typography variant="h6" className={classes.title}>
-                        Doações
-                </Typography>
-        </div>
-            </Link>
+        <Link to={"/dashboard"} style={{ textDecoration: "none", color: "white" }}>
+            <div className={classes.leftSide}>
+                    <img src={Logo} alt="logo" className={classes.logo} />
+                    <Typography variant="h6" className={classes.title}>
+                            Doações
+                    </Typography>
+            </div>
+        </Link>
     )
 }
 
@@ -248,11 +248,6 @@ const Menu = withRouter((props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    const handleLogout = () => {
-        logout()
-        props.history.push("/login")
-    }
 
     const user = getUser();
 
@@ -290,10 +285,16 @@ const Menu = withRouter((props) => {
                 <Link to="/conta" style={{ color: '#000' }} className={classes.noLinkStyle}>
                     <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
                 </Link>
-                <MenuItem onClick={handleLogout} style={{ color: 'red' }}>Sair</MenuItem>
+                <Link to="/sair" className={classes.noLinkStyle}>
+                    <MenuItem style={{ color: 'red' }}>Sair</MenuItem>
+                </Link>
               </Dropdown>
-            <Link to="/conta" className={classes.noLinkStyle}><Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button></Link>
-            <Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }} onClick={handleLogout}><ExitToAppIcon  />Sair</Button>
+            <Link to="/conta" className={classes.noLinkStyle}>
+                <Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button>
+            </Link>
+            <Link to="/sair" className={classes.noLinkStyle}>
+                <Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button>
+            </Link>
         </>
     )
 })

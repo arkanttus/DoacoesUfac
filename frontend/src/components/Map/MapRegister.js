@@ -74,7 +74,7 @@ class MapComp extends Component {
   };
 
   render() {
-    const {handleCoordinates} = this.props
+    //const {handleCoordinates} = this.props
     const center = this.props.center ? this.props.center : [-9.973879999999951, -67.80755999999997];
     const institution = this.props.institution ? this.props.institution : null
     const marker = this.state.marker ? this.state.marker : institution;
