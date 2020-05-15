@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
     },
     gridCardContainer: {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        height: 'auto!important'
     },
     cardHeader: {
         display: 'flex',
@@ -64,6 +65,7 @@ export default function MyDonations({ props  }) {
     const user = getUser();
     const [donations, setDonations] = React.useState(null)
     const [loading, setLoading] = React.useState(true)
+    
 
     async function loadData() {
         let res = await getDonationsByUserId(user.id)
@@ -87,6 +89,10 @@ export default function MyDonations({ props  }) {
         loadData();
     }, []);
 
+    function openDonation(id) {
+        props.history.push(`doado/${id}`);
+    }
+
     return(
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
@@ -98,8 +104,7 @@ export default function MyDonations({ props  }) {
                     <Grid container>
                         { donations ? donations.map( donation => (
                             <Grid item xs={12} sm={4} md={3} className={classes.gridCardContainer}>
-                                <Link to={`doado/${donation.id}`} style={{ textDecoration: "none" }}>
-                                    <Card style={{ width: '19rem'}}>
+                                    <Card style={{ width: '19rem', height: 'auto', cursor: 'pointer'}} onClick={() => openDonation(donation.id)}>
                                         <CardHeader className={classes.cardHeader}>
                                             <label>
                                                 <strong>Instituição:</strong> {donation.institution.name}
@@ -110,7 +115,6 @@ export default function MyDonations({ props  }) {
                                             <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY HH:mm')}</p>
                                         </CardBody>
                                     </Card>
-                                </Link>
                             </Grid>
                         ) ) : (
                             <Grid item xs={12} className={classes.noneDonation}>

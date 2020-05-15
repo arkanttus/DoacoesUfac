@@ -122,8 +122,8 @@ export default function Donated({ props }) {
                             
                         <Grid container item md={4} sm={12} alignItems="center" justify="center" direction="column">
                             <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '20px' }} >
-                                <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px">
-                                    Por gentileza, entre em contato a partir dos seguintes meios:
+                                <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px" color="red">
+                                    Por favor, entre em contato com a instituição, para combinar uma data e horário, a partir dos meios:
                                 </Box>
                             </Typography>
 

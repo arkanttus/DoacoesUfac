@@ -643,10 +643,10 @@ export default function ProfileEditInstitution() {
                     </Grid>
 
                     <Grid item className={classes.buttonLeft} xs={12} sm={6}>
-                        <Button onClick={() => setScreen(1)} style={{ fontSize: '1.1rem', borderRadius: 10, backgroundColor: '#247BA0' }}>ALTERAR SENHA</Button>
+                        <Button onClick={() => setScreen(1)} style={{ fontSize: '1.1rem', borderRadius: 3, backgroundColor: '#247BA0' }}>ALTERAR SENHA</Button>
                     </Grid>
                     <Grid item className={classes.buttonRight} xs={12} sm={6}>
-                        <Button onClick={handleUpdateProfile} style={{ display: 'block', fontSize: '1.2rem', borderRadius: 10, backgroundColor: '#008B00' }}>CONFIRMAR</Button>
+                        <Button onClick={handleUpdateProfile} style={{ display: 'block', fontSize: '1.2rem', borderRadius: 3, backgroundColor: '#008B00' }}>CONFIRMAR</Button>
                     </Grid>
                 </Grid>
 
@@ -663,10 +663,10 @@ export default function ProfileEditInstitution() {
                         </Grid>
 
                         <Grid item className={classes.buttonLeft} xs={12} sm={6}>
-                            <Button onClick={() => setScreen(0)} style={{ fontSize: '1.1rem', borderRadius: 10, backgroundColor: '#247BA0' }}>EDITAR PERFIL</Button>
+                            <Button onClick={() => setScreen(0)} style={{ fontSize: '1.1rem', borderRadius: 3, backgroundColor: '#247BA0' }}>EDITAR PERFIL</Button>
                         </Grid>
                         <Grid item className={classes.buttonRight} xs={12} sm={6}>
-                            <Button onClick={handleChangePassword} style={{ display: 'block', fontSize: '1.2rem', borderRadius: 10, backgroundColor: '#008B00' }}>CONFIRMAR</Button>
+                            <Button onClick={handleChangePassword} style={{ display: 'block', fontSize: '1.2rem', borderRadius: 3, backgroundColor: '#008B00' }}>CONFIRMAR</Button>
                         </Grid>
                     </Grid>
                 )}
