@@ -140,14 +140,17 @@ REST_FRAMEWORK = {
 OLD_PASSWORD_FIELD_ENABLED = True
 
 # CORS
-
-CORS_ORIGIN_ALLOW_ALL = True
-#CORS_ORIGIN_WHITELIST = [
-#    'https://localhost:3000',
-#]
-#CORS_ORIGIN_REGEX_WHITELIST = [
-#    'localhost:3000',
-#]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'https://doacao.ufac.br'
+] if PRODUCTION else [
+    'https://localhost:3000'
+]
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'doacao.ufac.br'
+] if PRODUCTION else [
+    'localhost:3000'
+]
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
