@@ -37,7 +37,7 @@ export default function InstitutionCard(props) {
                     </Typography>
 
                     { props.text ? (
-                        <Typography variant="body2" color="textSecondary" component="p" style={{ padding: 10 }}>{props.text}</Typography>
+                        <Typography variant="body2" color="textSecondary" component="p" align="center" style={{ padding: 10 }}>{props.text}</Typography>
                     ) : (
                         <></>
                     )}
