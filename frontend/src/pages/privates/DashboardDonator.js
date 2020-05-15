@@ -71,6 +71,23 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'center',
             paddingRight: 0
         }
+    },
+    subtitleGrid: {
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingTop: 23,
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: 5
+        }
+    },
+    subtitleDiv: {
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+        }
     }
 
 }));
@@ -171,18 +188,18 @@ export default function Home({props}){
                 
                 <Grid item xs={12} style={{ maxWidth: '80%', display: 'block', margin: 'auto' }}>
                     <Grid container className={classes.containerMapSubtitle}>
-                        <Grid item xs={12} sm={6} style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', paddingTop: 23 }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                        <Grid item className={classes.subtitleGrid} xs={12} sm={6}>
+                            <div className={classes.subtitleDiv}>
                                 <LocationOnIcon style={{ color: "#27AE60" }} />
                                 <label>Próximas</label>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                            <div className={classes.subtitleDiv}>
                                 <LocationOnIcon style={{ color: "#e9c841" }} />
                                 <label>Sem doações</label>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                                <LocationOnIcon style={{ color: "#4493cc" }} />
-                                <label>Outros</label>
+                            <div className={classes.subtitleDiv}>
+                                <LocationOnIcon style={{ color: "#C9233B" }} />
+                                <label>Próximas sem doação</label>
                             </div>
                         </Grid>
                         
