@@ -144,7 +144,8 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
     'https://doacao.ufac.br'
 ] if PRODUCTION else [
-    'https://localhost:3000'
+    'https://localhost:3000',
+    'http://localhost:3000'
 ]
 CORS_ORIGIN_REGEX_WHITELIST = [
     'doacao.ufac.br'
