@@ -220,8 +220,11 @@ export default function Donate({ props }) {
                                                         <Card>
                                                             <CardContent className={classes.content}>
                                                                 <Grid container direction="row" alignItems="center">
-                                                                    <Grid item>
+                                                                    <Grid item xs={12}>
                                                                         <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.typeDonate.name} style={{ color: "#247BA0" }}/>
+                                                                    </Grid>
+                                                                    <Grid item style={{ fontSize: "14px" }}>
+                                                                        {item.description}
                                                                     </Grid>
                                                                 </Grid>
                                                             </CardContent>

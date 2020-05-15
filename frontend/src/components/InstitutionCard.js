@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function InstitutionCard(props) {
     const classes = useStyles();
     return(
-        <Card>
+        <Card style={{ height: "100%" }}>
             <CardActionArea>
                 <CardMedia component="img" height="190" image={props.photo}/>
                 <CardContent className={classes.content}>
@@ -37,7 +37,7 @@ export default function InstitutionCard(props) {
                     </Typography>
 
                     { props.text ? (
-                        <Typography variant="body2" color="textSecondary" component="p">{props.text}</Typography>
+                        <Typography variant="body2" color="textSecondary" component="p" style={{ padding: 10 }}>{props.text}</Typography>
                     ) : (
                         <></>
                     )}
