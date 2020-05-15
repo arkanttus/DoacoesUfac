@@ -172,7 +172,7 @@ export default function ProfileEditInstitution() {
     const [newPassword1, setNewPassword1] = React.useState('');
     const [newPassword2, setNewPassword2] = React.useState('');
     const [crop, setCrop] = React.useState({ x: 0, y: 0 });
-    const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
+    //const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
     const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
     const [coordinates, setCoordinates] = React.useState(null)
 
@@ -206,7 +206,7 @@ export default function ProfileEditInstitution() {
 
             api.patch(`institutions/${institution.id}/`, formData)
             .then(response => {
-                const data = response.data
+                //const data = response.data
                 if(response.status === 200) {
                     Swal.fire({
                         title: "Sua foto foi atualizada!",
@@ -373,7 +373,7 @@ export default function ProfileEditInstitution() {
                     return;
                 }
             }
-            if(responseInst.status != 200) {
+            if(responseInst.status !== 200) {
                 //Facebook link
                 if(responseInst.data.linkFacebook) {
                     Swal.fire({

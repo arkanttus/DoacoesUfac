@@ -148,7 +148,7 @@ export default function Donated({ props }) {
                                 </CardContent>
                             </Card>
 
-                            <a href={mapUrl} target="_blank" style={{ textDecoration: "none" }}>
+                            <a href={mapUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
                                 <Button variant="contained" color="primary" >ABRIR NO GOOGLE MAPS</Button>
                             </a>
                         </Grid>

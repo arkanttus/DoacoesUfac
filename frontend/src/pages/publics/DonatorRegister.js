@@ -27,7 +27,7 @@ import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 import { Cities } from "../../components/Cities";
 
-import { sendRequest, getInstitutionTypes } from "../../services/api";
+import { sendRequest } from "../../services/api";
 import WaitLoading from '../../components/WaitLoading';
 
 

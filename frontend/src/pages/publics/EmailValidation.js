@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 
 //Material UI
 import Typography from '@material-ui/core/Typography';
@@ -14,10 +14,6 @@ import Button from '../../components/Button';
 import Card from '../../components/MaterialKit/Card/Card';
 import CardHeader from '../../components/MaterialKit/Card/CardHeader';
 import CardBody from '../../components/MaterialKit/Card/CardBody';
-
-//Services
-import { sendRequest } from '../../services/api';
-
 
 const useStyles = makeStyles((theme) => ({
 
@@ -63,8 +59,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EmailValidation() {
     const classes = useStyles();
-    let { id } = useParams();
-    let { token } = useParams();
+    //let { id } = useParams();
+    //let { token } = useParams();
 
     const [validation] = React.useState(20);
 

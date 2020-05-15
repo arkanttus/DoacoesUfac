@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '../../components/Button';
 import WaitLoading from '../../components/WaitLoading';
-import { getInstitutionById, getDonationsByInstitutionId, sendRequest } from '../../services/api';
+import { getInstitutionById, sendRequest } from '../../services/api';
 import Modal from '@material-ui/core/Modal';
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -182,21 +182,21 @@ export default function Donate({ props }) {
                                 </Box>
                                 <Box fontWeight="fontWeightLight" style={{ display: 'flex', justifyContent: 'center' }} m={1}>
                                     {institution.linkFacebook ? (
-                                        <a href={institution.linkFacebook} target="_blank" style={{ textDecoration: 'none', marginRight: 10, color: '#000' }}>
+                                        <a href={institution.linkFacebook} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', marginRight: 10, color: '#000' }}>
                                             <FacebookIcon className={classes.facebookIcon} />
                                         </a>
                                     ) : (
                                         <div></div>
                                     )}
                                     {institution.linkInstagram ? (
-                                        <a href={institution.linkInstagram} target="_blank" style={{ textDecoration: 'none', color: '#000' }}>
+                                        <a href={institution.linkInstagram} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#000' }}>
                                             <InstagramIcon className={classes.instagramIcon} />
                                         </a>
                                     ) : (
                                         <div></div>
                                     )}
                                     {institution.linkTwitter ? (
-                                        <a href={institution.linkTwitter} target="_blank" style={{ textDecoration: 'none', marginLeft: 10, color: '#000' }}>
+                                        <a href={institution.linkTwitter} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', marginLeft: 10, color: '#000' }}>
                                             <TwitterIcon className={classes.twitterIcon} />
                                         </a>
                                     ) : (

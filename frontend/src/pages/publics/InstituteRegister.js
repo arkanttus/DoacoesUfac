@@ -140,7 +140,7 @@ export default function CadastroInstituicao({props}) {
     const [open, setOpen] = React.useState(false);
     const [waiting, setWaiting] = React.useState(false);
     const [crop, setCrop] = React.useState({ x: 0, y: 0 });
-    const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
+    //const [cropSize, setCropSize] = React.useState({ width: 439, height: 322 });
     const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
     const onCropComplete = React.useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
@@ -579,7 +579,7 @@ export default function CadastroInstituicao({props}) {
                                             <label htmlFor="uploadAvatar"> <PhotoIcon /> Clique aqui para adicionar uma foto</label>
                                         ) : (
                                             <label htmlFor="uploadAvatar" style={{ padding: 0 }}>
-                                                <img src={avatar} style={{ maxWidth: '45%', display: 'block', margin: 'auto' }} />
+                                                <img src={avatar} alt="avatar" style={{ maxWidth: '45%', display: 'block', margin: 'auto' }} />
                                             </label>
                                         )}
                                         

@@ -14,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Dropdown from '@material-ui/core/Menu';
 import Logo from '../assets/Logo.svg';
 
-import { logout, getUser } from '../services/auth';
+import { getUser } from '../services/auth';
 
 import {
     defaultFont,

@@ -11,9 +11,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { setInstitution } from '../../services/auth';
 import WaitLoading from '../../components/WaitLoading';
-import { sendRequest, getInstitutionById } from '../../services/api';
+import { sendRequest } from '../../services/api';
 import { Link } from 'react-router-dom';
 import {getUser} from '../../services/auth'
 import { LatLng } from '../../components/LatLng'
@@ -121,7 +120,7 @@ export default function Home({props}){
                     let msg = need.typeDonate.name
                     if(index > 0)
                         msg = msg.toLowerCase()
-                    if(index != institution.needDonates.length-1)
+                    if(index !== institution.needDonates.length-1)
                         return `${msg}, `;
                     return `${msg}.`;
                 })

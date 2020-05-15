@@ -11,7 +11,7 @@ import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 import moment from 'moment';
 
 //api
-import api,  { sendRequest, getDonations } from "../../services/api";
+import api,  { getDonations } from "../../services/api";
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -76,11 +76,11 @@ export default function ListDonation() {
         loadData()
     }, []);
 
-    const [state, setState] = React.useState({
+    /*const [state, setState] = React.useState({
         checked: false,
-      });
+      });*/
     
-      const handleChange = (donation) => {
+    const handleChange = (donation) => {
         Swal.fire({
             title: 'Deseja confirmar esta doação?',
             text: "Não será possível cancelar, futuramente.",
