@@ -105,7 +105,7 @@ class PasswordChangeSerializer(serializers.Serializer):
 
     def validate_old_password(self, value):
         if not self.user.check_password(value):
-            raise serializers.ValidationError('Senha invalida')
+            raise serializers.ValidationError({'old_password': 'Senha invalida'})
         return value
 
     def validate(self, attrs):
