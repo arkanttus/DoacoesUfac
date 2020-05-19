@@ -86,6 +86,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
+            margin: 1,
+            flex: 1,
+            '& label': {
+                textAlign: 'center'
+            }
         }
     }
 

@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
         }   
     },
     textos2: {
-        fontSize: 30,
         padding: '15px',
         paddingTop: 35,
         textAlign: 'center',
@@ -60,8 +59,10 @@ const useStyles = makeStyles((theme) => ({
     },
     carouselText: {
         padding: '15px 20%',
+        fontSize: 30,
         [theme.breakpoints.down('sm')]: {
-            padding: 0
+            padding: 0,
+            fontSize: '1.4rem'
         }
     }
 
@@ -76,7 +77,7 @@ export default function Home() {
                 <Grid item xs={12}>
                     <Carousel interval={5000}>
                         <Grid container className={classes.containerCarousel}>
-                            <Grid item  xs={12} style={{ fontSize: 30, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                            <Grid item  xs={12} className={classes.textos2}>
                                 <label className={classes.carouselText}>
                                     Gostaria de contribuir para a sustentação de alguma instituição?
                                     Diversas instituições carecem de recursos básicos e que você pode doar.
@@ -126,10 +127,6 @@ export default function Home() {
                     </Link>
                 </Grid>
             </Grid>
-            
-            
-            
-            
         </Grid>
     );
 }
