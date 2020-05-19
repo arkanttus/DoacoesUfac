@@ -1,5 +1,6 @@
 import os
 import uuid
+import unicodedata
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -36,7 +37,10 @@ class TypeInstitution(BaseModel):
 
 def path_image_institution(instance, filename):
     extension = os.path.splitext(filename)[-1]
-    return f'institution/{instance.id}_{instance.name}{extension}'
+    name_format = ''.join(
+        ch for ch in unicodedata.normalize('NFKD', instance.name) if not unicodedata.combining(ch)
+    )
+    return f'institution/{instance.id}_{name_format}{extension}'
 
 
 class Institution(BaseModel):
