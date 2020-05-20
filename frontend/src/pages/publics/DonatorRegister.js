@@ -12,6 +12,9 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
+import Backdrop from '@material-ui/core/Backdrop';
 
 //Icons Material UI
 import EmailIcon from '@material-ui/icons/Email';
@@ -20,14 +23,19 @@ import FaceIcon from '@material-ui/icons/Face';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import GpsFixedIcon from '@material-ui/icons/GpsFixed';
+import PhotoIcon from '@material-ui/icons/Photo';
 
 //Components
 import Card from "../../components/MaterialKit/Card/Card";
 import CardBody from "../../components/MaterialKit/Card/CardBody";
 import CardHeader from "../../components/MaterialKit/Card/CardHeader";
 import { Cities } from "../../components/Cities";
+import Cropper from 'react-easy-crop';
+import getCroppedImg from '../../components/cropImage';
+import ButtonNavigo from '../../components/Button';
 
-import { sendRequest } from "../../services/api";
+//Services
+import api, { sendRequest } from "../../services/api";
 import WaitLoading from '../../components/WaitLoading';
 
 
@@ -42,71 +50,53 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: '45%'
         }
     },
-    buttonFix: {
-        '& a button': {
-            whiteSpace: 'nowrap',
-            [theme.breakpoints.down('sm')]: {
-                width: '100%',
-                whiteSpace: 'initial',
-                height: '100%'
-            }
-        }   
-    },
-    textos2: {
-        fontSize: 30,
-        padding: 15,
-        paddingTop: 35,
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    noLinkStyle: {
-        textDecoration: 'none',
-        color: 'white',
-        '&:hover': {
-            color: '#e5e5e5'
-        }
-    },
-
-    containerCarousel: {
-        padding: '0 20%',
+    cardBody: {
         [theme.breakpoints.down('xs')]: {
-            padding: 0
+            padding: "0.9375rem 1rem",
         }
     },
-    mainCard: {
-        backgroundColor: "#FFF"
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      },
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        width: '80vh',
+        height: '80vh'
+    },
+    containerModal: {
+        position: 'relative',
+        height: '70vh',
+        [theme.breakpoints.down('xs')]: {
+            height: '70vh'
+        }
+    },
       avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
-      },
-      form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
-        backgroundColor: "#FFF",
-        padding: "60px 50px 10px 50px"
-      },
-      submit: {
-        margin: theme.spacing(3, 0, 2),
-        color: "#9C27B0",
       },
       gridCard: {
           display: 'flex',
           justifyContent: 'center',
           height: 'fit-content'
       },
-      containerCardBody: {
-          padding: 0
-      }
+      imgGrid: {
+        border: '1px solid #10668B',
+        '& label': {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '10px 0',
+            '&:hover': {
+                filter: 'drop-shadow(2px 4px 6px gray)',
+                cursor: 'pointer'
+            }
+        }
+    },
 
 }));
 
@@ -134,6 +124,8 @@ export default function CadastroInstituicao({ props }) {
 
     const classes = useStyles();
     const Swal = require('sweetalert2');
+    const [avatar, setAvatar] = React.useState(null);
+    const [avatarBlob, setAvatarBlob] = React.useState(null);
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [phoneNumber, setPhoneNumber] = React.useState('');
@@ -149,6 +141,55 @@ export default function CadastroInstituicao({ props }) {
         setCity("");
         setCitiesArray(cities[e.target.value].cidades);
     }
+    //Pegar imagem do input
+    function getImage(e) {
+        var tgt = e.target || window.e.srcElement, files = tgt.files;
+        if(FileReader && files && files.length) {
+            var fr = new FileReader();
+            fr.onload = function() {
+                setAvatar(fr.result);
+            }
+            fr.readAsDataURL(files[0]);
+        } else {
+            Swal.fire({
+                title: "Aconteceu um problema. Tente novamente mais tarde ou entre em contato conosco!",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        handleOpenModal();
+    }
+    //Modal
+    const [open, setOpen] = React.useState(false);
+    const handleOpenModal = () => {
+        setOpen(true);
+    };
+    const handleCloseModal = () => {
+        setOpen(false);
+    };
+    //Crop
+    const [crop, setCrop] = React.useState({ x: 0, y: 0 });
+    const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
+    const [croppedAvatar, setCroppedAvatar] = React.useState(null);
+    const onCropComplete = React.useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    }, []);
+    const setCroppedImage = React.useCallback(async() => {
+        try {
+            const croppedImage = await getCroppedImg(
+                avatar,
+                croppedAreaPixels,
+                0
+            );
+            setAvatarBlob(croppedImage);
+            var imageFile = URL.createObjectURL(croppedImage);
+            setCroppedAvatar(imageFile);
+            handleCloseModal();
+        } catch(e) {
+            console.log(e);
+        }
+    });
 
     async function confirmRegister(e) {
         e.preventDefault();
@@ -198,64 +239,82 @@ export default function CadastroInstituicao({ props }) {
             return;
         }
 
-        setWaiting(true)
-        const response = await sendRequest('POST', "users/", { name, email, password1: password, phoneNumber, typeUser: "D", uf, city });
-        setWaiting(false)
+        setWaiting(true);
+        const formData = new FormData();
+        if(avatarBlob !== null) {
+            formData.append("image", avatarBlob, "image.jpg");
+        }
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("password1", password);
+        formData.append("phoneNumber", phoneNumber);
+        formData.append("uf", uf);
+        formData.append("city", city);
+        formData.append("typeUser", "D");
 
-        if(response.status === 201) {
-            Swal.fire({
-                title: "Seu cadastro foi realizado com sucesso!",
-                text: "Você será redirecionado para a página de Login!",
-                icon: 'success',
-                confirmButtonText: 'Obrigado'
-            }).then(() => {
-                props.history.push('/login');
-            });
-            
-        } else {
-            if(response.data.name) {
+        api.post("users/", formData, { headers: { 'content-type': 'multipart/form-data' } }).then(res => {
+            if(res.status === 201) {
+                setWaiting(false);
                 Swal.fire({
-                    title: response.data.name,
-                    text: "Nome Completo*",
+                    title: "Seu cadastro foi realizado com sucesso!",
+                    text: "Você será redirecionado para a página de Login!",
+                    icon: 'success',
+                    confirmButtonText: 'Obrigado'
+                }).then(() => {
+                    props.history.push('/login');
+                });
+                
+            } else {
+                if(res.data.name) {
+                    Swal.fire({
+                        title: res.data.name,
+                        text: "Nome Completo*",
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
+                    return;
+                }
+                if(res.data.email) {
+                    Swal.fire({
+                        title: res.data.email,
+                        text: "Email*",
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
+                    return;
+                }
+                if(res.data.phoneNumber) {
+                    Swal.fire({
+                        title: res.data.phoneNumber,
+                        text: "Telefone*",
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
+                    return;
+                }
+                if(res.data.password1) {
+                    Swal.fire({
+                        title: res.data.password1,
+                        text: "Senha de acesso*",
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
+                    return;
+                }
+                Swal.fire({
+                    title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
                     icon: 'error',
                     confirmButtonText: 'Ok'
-                })
-                return;
+                });
             }
-            if(response.data.email) {
-                Swal.fire({
-                    title: response.data.email,
-                    text: "Email*",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-                return;
-            }
-            if(response.data.phoneNumber) {
-                Swal.fire({
-                    title: response.data.phoneNumber,
-                    text: "Telefone*",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-                return;
-            }
-            if(response.data.password1) {
-                Swal.fire({
-                    title: response.data.password1,
-                    text: "Senha de acesso*",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-                return;
-            }
+        }).catch(err => {
+            setWaiting(false);
             Swal.fire({
                 title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
                 icon: 'error',
                 confirmButtonText: 'Ok'
-            })
-        }
-
+            });
+        });
     }
 
     return(
@@ -265,8 +324,20 @@ export default function CadastroInstituicao({ props }) {
                 <Grid item xs={12} className={classes.gridCard}>
                     <Card style={{width: "35rem"}}>
                         <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Doador</CardHeader>
-                        <CardBody>
+                        <CardBody className={classes.cardBody}>
                             <Grid container>
+                            <Grid container>
+                                <input onChange={(e) => getImage(e)} accept="image/*" id="uploadAvatar" type="file" style={{ display: "none" }} />
+                                    <Grid item xs={12} className={classes.imgGrid}>
+                                        {croppedAvatar === null ? (
+                                            <label htmlFor="uploadAvatar"> <PhotoIcon /> Clique aqui para adicionar uma foto</label>
+                                        ) : (
+                                            <label htmlFor="uploadAvatar" style={{ padding: 0 }}>
+                                                <img src={croppedAvatar} alt="avatar" style={{ maxWidth: '45%', display: 'block', margin: 'auto' }} />
+                                            </label>
+                                        )}
+                                    </Grid>
+                                </Grid>
                                 
                                 <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                     <Grid item>
@@ -366,6 +437,35 @@ export default function CadastroInstituicao({ props }) {
                         </CardBody>
                     </Card>
                 </Grid>
+
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={open}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                    timeout: 500,
+                    }}>
+                    <Fade in={open}>
+                    <div className={classes.paper}>
+                        <div className={classes.containerModal}>
+                        <Cropper
+                            image={avatar}
+                            crop={crop}
+                            onCropChange={setCrop}
+                            onCropComplete={onCropComplete}
+                            aspect={6 / 4}
+                        />
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-around', paddingTop: 6 }}>
+                            <ButtonNavigo onClick={handleCloseModal} style={{ backgroundColor: 'red' }}>Cancelar</ButtonNavigo>
+                            <ButtonNavigo onClick={setCroppedImage} variant="green">Confirmar</ButtonNavigo>
+                        </div>
+                    </div>
+                    </Fade>
+                </Modal>
                 
             </Container>
         </Grid>

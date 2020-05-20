@@ -12,13 +12,21 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Container from '@material-ui/core/Container';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Tooltip from '@material-ui/core/Tooltip';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import Cropper from 'react-easy-crop';
 
 //Services
 import { setUser, getUser } from '../../services/auth';
-import { sendRequest } from "../../services/api";
+import api, { sendRequest } from "../../services/api";
 
 //Components
 import { Cities } from "../../components/Cities";
+import getCroppedImg from '../../components/cropImage';
+import PhotoExample from '../../assets/PhotoExample.svg';
+import WaitLoading from '../../components/WaitLoading';
 
 function PhoneMask(props) {
     const { inputRef, ...other } = props;
@@ -54,6 +62,22 @@ const useStyles = makeStyles((theme) => ({
         margin: '10% auto 5% auto',
         textAlign: 'center'
     },
+    divAvatar: {
+        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'center',
+        '& label': {
+            cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'center',
+            '& img': {
+                maxWidth: '50%'
+            }
+        },
+        '&:hover': {
+            filter: 'brightness(0.5)',
+        }
+    },
     containerForm: {
         [theme.breakpoints.up('md')]: {
             marginTop: '4vh'
@@ -72,7 +96,27 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'flex-start',
         }
-    }
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    containerModal: {
+        position: 'relative',
+        height: '70vh',
+        [theme.breakpoints.down('xs')]: {
+            height: '70vh'
+        }
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        width: '80vh',
+        height: '80vh'
+    },
 
 }));
 
@@ -86,8 +130,9 @@ export default function ProfileEditDonator() {
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
     
-
     const [screen, setScreen] = React.useState(0);
+    const [newAvatar, setNewAvatar] = React.useState(null);
+    const [userAvatar, setUserAvatar] = React.useState(user.image);
     const [name, setName] = React.useState(user.name);
     const [email, setEmail] = React.useState(user.email);
     const [phone, setPhone] = React.useState(user.phoneNumber);
@@ -97,12 +142,98 @@ export default function ProfileEditDonator() {
     const [password, setPassword] = React.useState('');
     const [newPassword1, setNewPassword1] = React.useState('');
     const [newPassword2, setNewPassword2] = React.useState('');
+    const [waiting, setWaiting] = React.useState(false);
 
     function handleSelectCities(e) {
         setUF(e.target.value);
         setCity("");
         setCitiesArray(cities[e.target.value].cidades);
     }
+
+    //Modal
+    const [open, setOpen] = React.useState(false);
+    const handleOpenModal = () => {
+        setOpen(true);
+    };
+    const handleCloseModal = () => {
+        setOpen(false);
+    };
+    //Crop
+    const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
+    const [coordinates, setCoordinates] = React.useState(null);
+    const [crop, setCrop] = React.useState({ x: 0, y: 0 });
+    function getImage(e) {
+        var tgt = e.target || window.e.srcElement, files = tgt.files;
+        if(FileReader && files && files.length) {
+            var fr = new FileReader();
+            fr.onload = function() {
+                setNewAvatar(fr.result);
+            }
+            fr.readAsDataURL(files[0]);
+        } else {
+            Swal.fire({
+                title: "Aconteceu um problema. Tente novamente mais tarde ou entre em contato conosco!",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+        handleOpenModal();
+    }
+    const onCropComplete = React.useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    }, []);
+    const setCroppedImage = React.useCallback(async() => {
+        setWaiting(true);
+        try {
+            const croppedImage = await getCroppedImg(
+                newAvatar,
+                croppedAreaPixels,
+                0
+            );
+            var formData = new FormData();
+            formData.append('image', croppedImage, user.id + ".jpg");
+
+            api.patch(`users/${user.id}/`, formData)
+            .then(response => {
+                //const data = response.data
+                if(response.status === 200) {
+                    Swal.fire({
+                        title: "Sua foto foi atualizada!",
+                        icon: "success",
+                        confirmButtonText: "Ok"
+                    });
+                    setUser(response.data);
+                    setUserAvatar(response.data.image);
+                    setNewAvatar(null);
+                    handleCloseModal();
+                } else {
+                    handleCloseModal();
+                    setNewAvatar(null);
+                    Swal.fire({
+                        title: "Não foi possível atualizar sua foto!",
+                        icon: "error",
+                        confirmButtonText: "Ok"
+                    });
+                }
+            })
+            .catch( err => {
+                if(err.response.status === 400) {
+                    handleCloseModal();
+                    setNewAvatar(null);
+                    Swal.fire({
+                        title: "Não foi possível atualizar sua foto!",
+                        icon: "error",
+                        confirmButtonText: "Ok"
+                    });
+                }
+            })
+            setWaiting(false);
+        } catch(e) {
+            console.log(e);
+            setWaiting(false);
+        }
+    });
 
     //Atualizar perfil
     async function handleUpdateProfile() {
@@ -251,7 +382,7 @@ export default function ProfileEditDonator() {
         }
         
     }//Atualizar senha
-
+    
     return(
         <Grid container className={classes.containerRoot}>
             <Grid container className={classes.container}>
@@ -260,6 +391,19 @@ export default function ProfileEditDonator() {
                     {screen===0 ? (
                     <Grid container spacing={4} className={classes.containerForm}>
                         <label className={classes.titulo1}>Edição de Conta</label>
+                        <input onChange={(e) => getImage(e)} accept="image/*" id="uploadAvatar" type="file" style={{ display: "none" }} />
+                        <Tooltip title="Clique para alterar a foto" arrow>
+                            <Grid item xs={12} className={classes.divAvatar}>
+                                <label htmlFor="uploadAvatar">
+                                    {userAvatar !== null ? (
+                                        <img src={userAvatar} alt="profile" />
+                                        
+                                    ) : (
+                                        <img src={PhotoExample} alt="profile" />
+                                    )}
+                                </label>
+                            </Grid>
+                        </Tooltip>
                         <Grid item xs={12}>
                             <TextField fullWidth required value={name} onChange={(e) => setName(e.target.value)} label="Nome Completo" />
                         </Grid>
@@ -333,6 +477,37 @@ export default function ProfileEditDonator() {
                     )}
                     
                 </Container>
+                
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={open}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                    timeout: 500,
+                    }}>
+                    <Fade in={open}>
+                    <div className={classes.paper}>
+                        <div className={classes.containerModal}>
+                        <Cropper
+                            image={newAvatar}
+                            crop={crop}
+                            onCropChange={setCrop}
+                            onCropComplete={onCropComplete}
+                            aspect={6 / 4}
+                        />
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-around', paddingTop: 10 }}>
+                            <Button onClick={handleCloseModal} style={{ backgroundColor: 'red' }}>Cancelar</Button>
+                            <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%" }}>
+                                <Button onClick={setCroppedImage} variant="green">Confirmar</Button>
+                            </WaitLoading>
+                        </div>
+                    </div>
+                    </Fade>
+                </Modal>
 
             </Grid>
         </Grid>
