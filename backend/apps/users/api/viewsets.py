@@ -126,7 +126,7 @@ class Login(ObtainAuthToken):
         except AttributeError:
             pass
         token, created = Token.objects.get_or_create(user=user)
-        serializer_user = UserReadSerializer(user)
+        serializer_user = UserReadSerializer(user, context={'request': request})
         try:
             institution = Institution.objects.get(owner_id=user.id)
             serializer_institution = InstitutionReadSerializer(institution, context={'request': request})
