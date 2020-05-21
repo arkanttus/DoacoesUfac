@@ -30,6 +30,12 @@ class DonateSerializer(serializers.ModelSerializer):
             'id', 'needDonates', 'donator', 'institution', 'setNeedDonates',
             'setInstitution', 'donated', 'createdAt'
         )
+        
+    def create(self, validated_data):
+        donate = Donate.objects.create(**validated_data)
+        donate.email_notification()
+        donate.save()
+        return donate
 
 
 class DonateUpdateSerializer(serializers.ModelSerializer):
