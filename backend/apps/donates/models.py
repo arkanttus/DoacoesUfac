@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+from django.core.mail import send_mail
 
 from apps.base.models import Institution
 from apps.base.models import BaseModel
@@ -23,4 +24,11 @@ class Donate(BaseModel):
 
     def __str__(self):
         return f'{self.institution.name} {self.donator.name}'
+    
+    def email_notification(self, **kwargs):
+        subject = 'Navigo - Nova doação recebida'
+        message = ' Olá ' + self.institution.owner.name + ', sua instituição ' + self.institution.name + ' acabou de receber uma doação. \n Acesse o Navigo para visualizá-la: \n https://doacao.ufac.br/dashboard/ \n'
+        send_mail(subject, message, 'doacoesufac@gmail.com', [self.institution.owner.email], **kwargs)
+        
+
 
