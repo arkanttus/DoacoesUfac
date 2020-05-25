@@ -21,6 +21,7 @@ import HowToDonate from './pages/publics/HowToDonate'
 import Home from './pages/publics/Home'
 import AboutTeam from './pages/publics/AboutTeam'
 import Credits from './pages/publics/Credits'
+import Tutorial from './pages/publics/Tutorial';
 import Contact from './pages/publics/Contact'
 
 
@@ -73,6 +74,7 @@ const Routes = () => (
       <RouteWithLayout path="/como-doar" layout={LandingLayout} component={HowToDonate} />
       <RouteWithLayout path="/equipe" layout={LandingLayout} component={AboutTeam} />
       <RouteWithLayout path="/creditos" layout={LandingLayout} component={Credits} />
+      <RouteWithLayout path="/quem-somos" layout={LandingLayout} component={Tutorial} />
       <RouteWithLayout path="/contato" layout={LandingLayout} component={Contact} />
       <RouteWithLayout path="/validar-email/:id/:token" layout={FormLayout} component={EmailValidation} />
 
