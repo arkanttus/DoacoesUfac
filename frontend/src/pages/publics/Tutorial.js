@@ -51,15 +51,18 @@ export default function Tutorial() {
     const classes = useStyles();
     return(
         <Grid container className={classes.container}>
-            <h2>Kamikaze no GTA</h2>
-            <div className={classes.videoContainer}>
+            <h2 style={{ textAlign: 'center' }}>Como cadastrar uma instituição?</h2>
+            <h2 style={{ textAlign: 'center' }}>Como me cadastrar como doador?</h2>
+            <h2 style={{ textAlign: 'center' }}>Por que usar para fazer doação?</h2>
+            <h2 style={{ textAlign: 'center' }}>Quem somos nós?</h2>
+            {/*<div className={classes.videoContainer}>
                 <iframe src='https://www.youtube.com/embed/iMRsKw7s_cY'
                     frameBorder='0'
                     allow='autoplay; encrypted-media'
                     allowFullScreen
                     title='video'
                 />
-            </div>
+            </div>*/}
         </Grid>
     );
 
