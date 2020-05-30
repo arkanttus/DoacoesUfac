@@ -27,13 +27,14 @@ class DonateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Donate
         fields = (
-            'id', 'needDonates', 'donator', 'institution', 'setNeedDonates',
-            'setInstitution', 'donated', 'createdAt'
+            'id', 'needDonates', 'donator', 'institution', 'setNeedDonates', 'setInstitution', 'donated', 'createdAt'
         )
-        
+
     def create(self, validated_data):
+        need_donates_data = validated_data.pop('need_donate', None)
         donate = Donate.objects.create(**validated_data)
         donate.email_notification()
+        donate.need_donate.set(need_donates_data)
         donate.save()
         return donate
 
