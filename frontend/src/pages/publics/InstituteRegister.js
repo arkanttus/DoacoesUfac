@@ -153,6 +153,7 @@ export default function CadastroInstituicao({props}) {
     
     const handleCloseModal = () => {
         setOpen(false);
+        setAvatar(null);
     };
     
     const setCroppedImage = React.useCallback(async() => {
@@ -165,7 +166,8 @@ export default function CadastroInstituicao({props}) {
             setAvatarBlob(croppedImage);
             var imageFile = URL.createObjectURL(croppedImage);
             setAvatar(imageFile);
-            handleCloseModal();
+            //Fechar Modal
+            setOpen(false);
         } catch(e) {
             console.log(e);
         }
