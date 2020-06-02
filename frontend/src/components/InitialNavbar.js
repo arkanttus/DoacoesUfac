@@ -218,12 +218,12 @@ const MenuRight = (props) => {
             <Link to={`/contato`} className={classes.noLinkStyle}>
                 <Button className={classes.button}>CONTATO</Button>
             </Link>
-            <Link to={`/doador`} className={classes.noLinkStyle}>
+            {/*<Link to={`/doador`} className={classes.noLinkStyle}>
                 <Button className={classes.button} style={{ color: "#BF9A1E" }}>QUERO DOAR</Button>
             </Link>
             <Link to={`/instituicao`} className={classes.noLinkStyle}>
                 <Button className={classes.button} style={{ color: "#247BA0" }}>QUERO RECEBER</Button>
-            </Link>
+             </Link>*/}
         </div>
     )
 }
