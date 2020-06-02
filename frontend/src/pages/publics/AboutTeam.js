@@ -84,58 +84,58 @@ export default function HowToDonate() {
                         <h5 style={{ fontSize: 18, textAlign: 'center' }}>Professor Dr. Daricélio Moreira Soares</h5>
                     </a>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <a href="https://www.instagram.com/aldirfi/?igshid=tszcqdq74t60" target="_blank" className={classes.noLinkStyle}>
-                        <img src={AldirImg} className={classes.imgMember} />
-                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Aldir Filho</h5>
-                    </a>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <a href="https://instagram.com/babiolivv?igshid=85nxdi50a6fm" target="_blank" className={classes.noLinkStyle}>
-                        <img src={BarbaraImg} className={classes.imgMember} />
-                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Bárbara Oliveira</h5>
-                    </a>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <a href="https://www.instagram.com/leonardmes/?igshid=1ut8f6914afvv" target="_blank" className={classes.noLinkStyle}>
-                        <img src={LeoImg} className={classes.imgMember} />
-                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Leonard Medeiros</h5>
-                    </a>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <a href="https://www.instagram.com/llucas_r_a/?igshid=4lmdgza2hyfp" target="_blank" className={classes.noLinkStyle}>
-                        <img src={LucasImg} className={classes.imgMember} />
-                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Lucas R. A.</h5>
-                    </a>
-                </Grid>
                 <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <a href="https://github.com/andriellelima" target="_blank" className={classes.noLinkStyle}>
                         <img src={AndrielleImg} className={classes.imgMember} />
                         <h5 style={{ fontSize: 18, textAlign: 'center' }}>Andrielle Lima</h5>
                     </a>
                 </Grid>
+                <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <a href="https://www.instagram.com/aldirfi/?igshid=tszcqdq74t60" target="_blank" className={classes.noLinkStyle}>
+                        <img src={AldirImg} className={classes.imgMember} />
+                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Aldir Filho</h5>
+                    </a>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <a href="https://instagram.com/babiolivv?igshid=85nxdi50a6fm" target="_blank" className={classes.noLinkStyle}>
+                        <img src={BarbaraImg} className={classes.imgMember} />
+                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Bárbara Oliveira</h5>
+                    </a>
+                </Grid>
                 <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <a href="https://github.com/bruunotrindade" target="_blank" className={classes.noLinkStyle}>
                         <img src={BrunoImg} className={classes.imgMember} />
-                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Bruno Ricardo Silva Trindade</h5>
+                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Bruno Trindade</h5>
+                    </a>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <a href="https://github.com/arkanttus" target="_blank" className={classes.noLinkStyle}>
+                        <img src={ItaloImg} className={classes.imgMember} />
+                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Ítalo Oliveira</h5>
                     </a>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <a href="https://github.com/JhonatanPatrocinio" target="_blank" className={classes.noLinkStyle}>
                         <img src={JhonatanImg} className={classes.imgMember} />
-                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Jhonatan Santos do Patrocínio</h5>
+                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Jhonatan Patrocínio</h5>
                     </a>
                 </Grid>
-                <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <a href="https://github.com/arkanttus" target="_blank" className={classes.noLinkStyle}>
-                        <img src={ItaloImg} className={classes.imgMember} />
-                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Ítalo Ney Moreira de Oliveira</h5>
+                <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <a href="https://www.instagram.com/leonardmes/?igshid=1ut8f6914afvv" target="_blank" className={classes.noLinkStyle}>
+                        <img src={LeoImg} className={classes.imgMember} />
+                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Leonard Medeiros</h5>
                     </a>
                 </Grid>
-                <Grid item xs={12} md={6} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <a href="https://www.instagram.com/llucas_r_a/?igshid=4lmdgza2hyfp" target="_blank" className={classes.noLinkStyle}>
+                        <img src={LucasImg} className={classes.imgMember} />
+                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Lucas Angat</h5>
+                    </a>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <a href="https://github.com/Tony-Starkus" target="_blank" className={classes.noLinkStyle}>
                         <img src={ThalissonImg} className={classes.imgMember} />
-                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Thalisson Bandeira Araújo</h5>
+                        <h5 style={{ fontSize: 18, textAlign: 'center' }}>Thalisson Bandeira</h5>
                     </a>
                 </Grid>
             </Grid>

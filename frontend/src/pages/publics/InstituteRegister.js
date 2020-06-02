@@ -153,7 +153,6 @@ export default function CadastroInstituicao({props}) {
     
     const handleCloseModal = () => {
         setOpen(false);
-        setAvatar(null);
     };
     
     const setCroppedImage = React.useCallback(async() => {
