@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from apps.base.models import Institution, TypeInstitution
 from apps.users.api.serializers import UserCreateSerializer, UserReadSerializer
 from apps.need_donate.serializers import NeedDonateSerializer
+from apps.need_donate.models import TypeDonate, NeedDonate
 import re
 
 User = get_user_model()
@@ -71,24 +72,43 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
     linkFacebook = serializers.CharField(
         source='link_facebook', required=False, max_length=200, allow_null=True, allow_blank=True
     )
+    setDescriptions = serializers.ListField(child=serializers.CharField(allow_blank=True), source='description', 
+        write_only=True
+    )
+    setTypeDonates = serializers.PrimaryKeyRelatedField(
+        source='type_donate', write_only=True, queryset=TypeDonate.objects.all(), 
+        required=True, many=True
+    )
 
     class Meta:
         model = Institution
         fields = (
             'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude', 'otherType',
-            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'setTypeDonates', 'setDescriptions'
         )
 
     def create(self, validated_data):
         user_data = validated_data.pop('owner')
         password_user = user_data.pop('password', None)
 
-        user = User.objects.create(**user_data)
+
+        user = User(**user_data)
         user.set_password(password_user)
         if user.type_user == User.RECEIVER:
             user.is_active = False
         user.save()
-        return Institution.objects.create(owner=user, **validated_data)
+        
+        type_donates = validated_data.pop('type_donate')
+        descriptions = validated_data.pop('description')
+
+        institution = Institution.objects.create(owner=user, **validated_data)
+        
+        need_donates = [NeedDonate(description=desc, type_donate=t_d, owner=user, institution=institution) 
+            for desc, t_d in zip(descriptions, type_donates, )
+        ]
+        NeedDonate.objects.bulk_create(need_donates)
+
+        return institution
 
     def validate(self, attrs):
         user = attrs.get('owner', None)
