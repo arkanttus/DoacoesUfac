@@ -147,7 +147,7 @@ export default function SelectDOnationTypes({ props }) {
                                                             {
                                                                 item.checked===true ?
                                                                  (  
-                                                                    <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Observações:(opcional)" />
+                                                                    <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação de itens:(opcional)" />
                                                                      
                                                                  )
 
