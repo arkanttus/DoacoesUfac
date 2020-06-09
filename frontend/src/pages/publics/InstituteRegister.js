@@ -45,6 +45,14 @@ import ButtonNavigo from '../../components/Button';
 import api, { sendRequest,getInstitutionTypes } from "../../services/api";
 import { LatLng } from '../../components/LatLng'
 
+//Items
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CardContent from '@material-ui/core/CardContent';
+import Checkbox from '@material-ui/core/Checkbox';
+
+
+
+
 const useStyles = makeStyles((theme) => ({
     container: {
         minHeight: '95vh',
@@ -54,6 +62,12 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             minHeight: '90vh',
             paddingTop: '45%'
+        }
+    },
+    item: {
+        [theme.breakpoints.down('xs')]: {
+            minHeight: '90vh',
+            width: "35rem"
         }
     },
     gridCard: {
@@ -194,6 +208,7 @@ export default function CadastroInstituicao({props}) {
     
     const [ screen,setScreen] = React.useState(0);
     const [ screen2,setScreen2] = React.useState(0);
+    const [ screen3,setScreen3] = React.useState(0);
 
     const [other,setOther] = React.useState(0);
 
@@ -216,13 +231,27 @@ export default function CadastroInstituicao({props}) {
     const [city, setCity] = React.useState(null);
     const [longitude, setLongitude] = React.useState("");
     const [latitude, setLatitude] = React.useState("");
+
+    //items
+    const [items, setItems] = React.useState(null)
+    
     
 
     async function loadData() {
         let res = await getInstitutionTypes()
+        let resItems = await sendRequest("GET", "type_donates/", {})
         if(res) {
            setTypes(res.results);
         }
+        //items
+        if(resItems.status === 200) {
+            resItems.data.results.forEach(function(name) {
+                name.checked = false
+                name.description= ""
+            });
+            setItems(resItems.data.results)
+        }
+        
     }
 
     React.useEffect(() => {
@@ -251,7 +280,30 @@ export default function CadastroInstituicao({props}) {
         }
 
     }
+    //Items
+    const handleChangeDonate = (itemId) => {
+        const newItems = items.map(item => {
+            if(itemId === item.id) {
+                item.checked = !item.checked
+                
+            }
+            return item
+        });
+        setItems(newItems)
+    };
 
+    const handleChangeDescription = (itemId, description) => {
+        const newItems = items.map(item => {
+            if(itemId === item.id) {
+                item.description = description
+                
+            }
+            return item
+        });
+        setItems(newItems)
+    };
+
+    
     function handleSelectCities(e) {
         setUF(e.target.value);
         setCitiesArray(cities[e.target.value].cidades);
@@ -413,6 +465,7 @@ export default function CadastroInstituicao({props}) {
         const formData = new FormData();
         formData.append("image", avatarBlob, "image.jpg");
         setWaiting(true)
+        const filter = items.filter(item => item.checked === true)
         const response = await sendRequest('POST', "institutions/", { 
             owner: { name: nameResponsible, email, password1: password, cpf: CPF, typeUser: "R", phoneNumber: phone, uf, city},
             name,
@@ -422,7 +475,9 @@ export default function CadastroInstituicao({props}) {
             uf,
             city,
             latitude,
-            longitude
+            longitude,
+            setTypeDonates: filter.map(obj => { return obj.id }), 
+            setDescriptions: filter.map(obj => { return obj.description }) 
             }
         );
         setWaiting(false)
@@ -513,7 +568,7 @@ export default function CadastroInstituicao({props}) {
                                        <FaceIcon style={{  color: "#555", marginLeft: -8, marginRight: 20 }} />
                                    </Grid>
                                    <Grid container  item xs={10} sm={11}>
-                                       <TextField   onChange={e => setNameResponsible(e.target.value)}
+                                       <TextField onChange={e => setNameResponsible(e.target.value)}
                                           variant="standard" required fullWidth  name="nome" value={nameResponsible} label="Nome completo do responsável" autoComplete="nome"/>
                                    </Grid>
                                </Grid>
@@ -698,8 +753,9 @@ export default function CadastroInstituicao({props}) {
                     </Grid>   
 
                 ):(
-                    <Grid item xs={12} className={classes.gridCard}>
-                        <Card style={{width: "35rem", height:"30rem"}}>
+                    screen3 ===0 ? (
+                        <Grid item xs={12} className={classes.gridCard}>
+                        <Card style={{width: "35rem", height:"35rem"}}>
                             <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                             <CardBody style={{ paddingRight:15, paddingLeft:15}}>
                                 <Grid container>
@@ -711,14 +767,59 @@ export default function CadastroInstituicao({props}) {
                                     </Grid>
                                 </Grid>
                             </CardBody>
-                            <Grid container spacing={3} style={{paddingTop: 25, paddingBottom: 10}}>
+                            <Grid container spacing={3} style={{paddingTop: 0, marginBottom: 10}}>
                                 <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
+                                <Button onClick={() => setScreen3(screen3 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">CONTINUAR</Button>
+                            </Grid> 
+                        </Card>
+                    </Grid>        
+                    ):( <Grid item xs={12} className={classes.gridCard}>
+                        <Card className={classes.item}>
+                            <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
+                            <CardBody style={{ paddingRight:15, paddingLeft:15}}>
+                                <Grid container>
+                                    <Grid container style={{ padding: 10 }} alignItems="flex-end">
+                                    <h3 style={{ color: "#555",textAlign: 'center'}}>Selecione as necessidades de doação:</h3>
+
+                                        <Grid container style={{ padding: 0}}>
+                                        <Grid container spacing={2} >
+                                            {items ? items.map( item => (
+                                                <Grid item xs={12} sm={4} md={6}  style={{height:110}} >
+                                                    <Card >
+                                                        <CardContent className={classes.content} style={{height:50}} >
+                                                            <Grid container direction="row" alignItems="center" > 
+                                                                    <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChangeDonate(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0", marginTop:-10}}  />                                       
+                                                                    {
+                                                                        item.checked===true ?
+                                                                        (  
+                                                                            <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação do Item (opcional)" />
+                                                                            
+                                                                        )
+
+                                                                        : (<></>)
+                                                                    }   
+                                                            </Grid>
+                                                        </CardContent>
+                                                    </Card>
+                                                </Grid>
+                                            )) : <></>}
+                                            
+                                        </Grid>
+                                    </Grid>
+                                    </Grid>
+                                </Grid>
+                            </CardBody>
+                            <Grid container spacing={3} style={{paddingTop: 0, paddingBottom: 20}}>
+                                <Button onClick={() => setScreen3(screen3 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
                                 <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
                                     <Button onClick={confirmRegister} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15, zIndex:1 }} color="primary">FINALIZAR</Button>
                                 </WaitLoading>
                             </Grid> 
                         </Card>
                     </Grid>        
+                    ) 
+                    
+                   
                  )
                 
             ) }
