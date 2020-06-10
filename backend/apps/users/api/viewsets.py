@@ -110,17 +110,16 @@ class Login(ObtainAuthToken):
         serializer = self.serializer_class(
             data=request.data, context={'request': request}
         )
+        try:
+            user_model = User.objects.get(email__exact=request.data.get('username', ''))
+            if user_model.type_user == User.RECEIVER and not user_model.is_active:
+                return response.Response(
+                    {'error': _("Verificação da conta está em andamento")}, status=status.HTTP_401_UNAUTHORIZED
+                )
+        except User.DoesNotExist:
+            pass
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        if user.type_user == User.RECEIVER and not user.is_active:
-            return response.Response(
-                {'error': _("Verificação da conta está em andamento")}, status=status.HTTP_401_UNAUTHORIZED
-            )
-        # if not user.email_confirm:
-        #     return response.Response(data={
-        #         'detail': "Usuário não confirmou e-mail"
-        #     }, status=status.HTTP_406_NOT_ACCEPTABLE
-        #     )
         try:
             user.auth_token.delete()
         except AttributeError:
