@@ -55,6 +55,9 @@ class Institution(BaseModel):
     other_type = models.CharField(_('Outro tipo'), max_length=100, null=True, blank=True)
     description = models.TextField(_('Descrição da Instituição'), max_length=500)
     image = models.ImageField(_('Foto da instituição'), upload_to=path_image_institution)
+    is_active = models.BooleanField(
+        _('Ativo'), default=False, help_text=_('Desative para que essa Instituição não seja retornada.')
+    )
 
     # Geo
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
