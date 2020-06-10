@@ -8,7 +8,7 @@ from apps.base.models import Institution, TypeInstitution
 
 
 class InstitutionView(viewsets.ModelViewSet):
-    queryset = Institution.objects.all()
+    queryset = Institution.objects.filter(is_active=True)
     permission_classes = (permissions.AllowAny,)
 
     def get_serializer_class(self):
