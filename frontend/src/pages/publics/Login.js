@@ -116,7 +116,6 @@ export default function Login({ props }) {
     const [ password, setPassword ] = React.useState("");
     const [ open, setOpen ] = React.useState(false);
     const [ waiting, setWaiting ] = React.useState(false);
-    const [ error, setError ] = React.useState("");
   
     async function validateForm(e) {
         e.preventDefault()
@@ -136,8 +135,16 @@ export default function Login({ props }) {
             });
             return;
         }
+        else if(response.status === 401){
+            Swal.fire({
+                title: "Desculpe",
+                text: "Sua conta ainda não foi ativada. Por favor, aguarde.",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
         else {
-            setError(`Erro ${response.status} - ${response.data.errors}`)
             setOpen(true)
         }
     }
@@ -178,10 +185,6 @@ export default function Login({ props }) {
                     </Card>
                 </Grid>
             </Container>
-
-            <Modal open={open} aria-labelledby="server-modal-title" aria-describedby="server-modal-description" onClose={() => setOpen(false)} className={classes.modal}>
-                <div className={classes.paper2}>{error}</div>
-            </Modal>
         </Grid>
     );
 }

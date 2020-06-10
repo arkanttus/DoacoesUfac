@@ -108,6 +108,9 @@ const useStyles = makeStyles((theme) => ({
         width: '80vh',
         height: '80vh'
     },
+    resize: {
+        fontSize: '10px'
+    }
 }));
 
 function PhoneMask(props) {
@@ -781,8 +784,8 @@ export default function CadastroInstituicao({props}) {
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                     <h3 style={{ color: "#555",textAlign: 'center'}}>Selecione as necessidades de doação:</h3>
 
-                                        <Grid container style={{ padding: 0}}>
-                                        <Grid container spacing={2} >
+                                        <Grid container style={{ padding: 0, marginBottom: 15}}>
+                                        <Grid container spacing={2}>
                                             {items ? items.map( item => (
                                                 <Grid item xs={12} sm={4} md={6}  style={{height:110}} >
                                                     <Card >
@@ -792,7 +795,7 @@ export default function CadastroInstituicao({props}) {
                                                                     {
                                                                         item.checked===true ?
                                                                         (  
-                                                                            <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação do Item (opcional)" />
+                                                                            <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação do Item (opcional)" InputLabelProps={{style: {fontSize: '0.8rem'}}}/>
                                                                             
                                                                         )
 
