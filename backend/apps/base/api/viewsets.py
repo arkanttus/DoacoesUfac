@@ -9,7 +9,7 @@ from apps.base.models import Institution, TypeInstitution
 
 
 class InstitutionView(viewsets.ModelViewSet):
-    queryset = Institution.objects.all()
+    queryset = Institution.objects.filter(is_active=True)
     permission_classes = (permissions.AllowAny,)
 
     def get_serializer_class(self):
@@ -49,7 +49,7 @@ class InstitutionView(viewsets.ModelViewSet):
 
     @action(methods=['post'], detail=False)
     def city(self, request):
-        queryset = Institution.objects.filter(city=request.data['city'])
+        queryset = Institution.objects.filter(city=request.data['city'], is_active=True)
 
         if queryset.exists():
             serializer = InstitutionReadSerializer(queryset, many=True)
