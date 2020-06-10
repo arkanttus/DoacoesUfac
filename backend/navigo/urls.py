@@ -4,7 +4,7 @@ from django.urls import path, include
 from rest_framework import routers, urls
 from apps.users.api.viewsets import UserView, Login, LogoutView, ValidateView
 from apps.need_donate.views import NeedDonateView, TypeDonateView
-from apps.base.api.viewsets import InstitutionView, TypeInstitutionView
+from apps.base.api.viewsets import InstitutionView, TypeInstitutionView, ContactView
 from apps.donates.views import DonateView
 from django.conf.urls.static import static, settings
 
@@ -16,6 +16,7 @@ router.register(r'need_donates', NeedDonateView, basename='NeedDonateApp')
 router.register(r'type_donates', TypeDonateView, basename='TypeDonateApp')
 router.register(r'institutions', InstitutionView, basename='InstitutionApp')
 router.register(r'type_institutions', TypeInstitutionView, basename='TypeInstitutionApp')
+router.register(r'contact', ContactView, basename='ContactApp')
 
 
 urlpatterns = [

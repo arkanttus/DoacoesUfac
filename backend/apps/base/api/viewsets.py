@@ -1,8 +1,9 @@
-from rest_framework import viewsets, permissions, response, status
+from rest_framework import viewsets, permissions, response, status, mixins
 from rest_framework.decorators import action
 
 from .serializers import (
-    InstitutionReadSerializer, TypeInstitutionSerializer, InstitutionCreateSerializer, InstitutionUpdateSerializer
+    InstitutionReadSerializer, TypeInstitutionSerializer, InstitutionCreateSerializer, InstitutionUpdateSerializer,
+    ContactSerializer
 )
 from apps.base.models import Institution, TypeInstitution
 
@@ -62,5 +63,18 @@ class InstitutionView(viewsets.ModelViewSet):
 class TypeInstitutionView(viewsets.ReadOnlyModelViewSet):
     queryset = TypeInstitution.objects.all()
     serializer_class = TypeInstitutionSerializer
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny, )
+
+
+class ContactView(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    serializer_class = ContactSerializer
+    permission_classes = (permissions.AllowAny, )
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return response.Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 

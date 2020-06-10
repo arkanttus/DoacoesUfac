@@ -95,3 +95,17 @@ class Institution(BaseModel):
             return self.type_institution.name if self.type_institution else ''
 
 
+class Contact(models.Model):
+    name = models.CharField(_('Nome'), max_length=150)
+    email = models.EmailField(_('Email'))
+    subject = models.CharField(_('Titulo'), max_length=200)
+    message = models.TextField(_('Mensagem'), max_length=700)
+
+    class Meta:
+        verbose_name_plural = _('Contatos')
+        verbose_name = _('Contato')
+
+    def __str__(self):
+        return f'{self.name}'
+
+
