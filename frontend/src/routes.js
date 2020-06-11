@@ -16,12 +16,8 @@ import DonatorRegister from './pages/publics/DonatorRegister'
 import InstituteRegister from './pages/publics/InstituteRegister'
 import EmailValidation from './pages/publics/EmailValidation';
 
-import Institutions from './pages/publics/Institutions'
-import HowToDonate from './pages/publics/HowToDonate'
 import Home from './pages/publics/Home'
-import AboutTeam from './pages/publics/AboutTeam'
 import Credits from './pages/publics/Credits'
-import Tutorial from './pages/publics/Tutorial';
 import Contact from './pages/publics/Contact'
 
 
@@ -69,12 +65,8 @@ const NotAuthenticateRoute = ({ component: Component, ...rest }) => (
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <RouteWithLayout exact path="/" layout={LandingLayout} component={Home} />
-      <RouteWithLayout path="/instituicoes" layout={LandingLayout} component={Institutions} />
-      <RouteWithLayout path="/como-doar" layout={LandingLayout} component={HowToDonate} />
-      <RouteWithLayout path="/equipe" layout={LandingLayout} component={AboutTeam} />
+      <Route exact path="/" component={Home} />
       <RouteWithLayout path="/creditos" layout={LandingLayout} component={Credits} />
-      <RouteWithLayout path="/quem-somos" layout={LandingLayout} component={Tutorial} />
       <RouteWithLayout path="/contato" layout={LandingLayout} component={Contact} />
       <RouteWithLayout path="/validar-email/:id/:token" layout={FormLayout} component={EmailValidation} />
 

@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function InitialFooter() {
+export default function InitialFooter(props) {
     const classes = useStyles();
 
     return(
-        <Grid container className={classes.footer}>
+        <Grid container style={props.style} className={classes.footer}>
             <Grid item xs={12} sm={2} style={{ fontSize: '.85rem' }}>
                 <Link to="/equipe" className={classes.noLinkStyle}>
                     SOBRE A EQUIPE

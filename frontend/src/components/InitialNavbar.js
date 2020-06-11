@@ -20,13 +20,17 @@ import Logo from '../assets/Logo.svg';
 
 const useStyles = makeStyles((theme) => ({
     noLinkStyle: {
+        fontSize: "1.2rem",
         textDecoration: 'none',
         color: 'white',
+        padding: '0px 10px',
+        fontWeight: '300',
         '&:hover': {
-            color: '#e5e5e5'
+            color: '#03A9F4'
         },
         [theme.breakpoints.down('sm')]: {
-            display: 'block'
+            display: 'block',
+            padding: '15px 0px'
         }
     },
     menuButton: {
@@ -51,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         border: "0",
         borderRadius: "3px",
-        padding: "0.625rem 0",
         marginBottom: "20px",
         color: "#555",
         width: "100%",
@@ -64,8 +67,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "flex-start",
         position: "relative",
         zIndex: "unset",
+        height: '10vh',
         [theme.breakpoints.down('sm')]: {
-          padding: 0
+          padding: 0,
+          height: '8vh',
         }
       },
       absolute: {
@@ -199,31 +204,34 @@ const useStyles = makeStyles((theme) => ({
       }
 }));
 
+function scrollToDiv(id) {
+  var element = document.getElementById(id);
+  console.log(element);
+  window.scrollTo(0, element.offsetTop - 95);
+}
+
 const MenuRight = (props) => {
     const classes = useStyles()
     return (
         <div className={classes.menuRightCollapse}>
-            <Link to={`/`} className={classes.noLinkStyle}>
-                <Button className={classes.button}>INÍCIO</Button>
+            <Link onClick={() => scrollToDiv("inicio")} className={classes.noLinkStyle}>
+                Início
             </Link>
-            <Link to={`/como-doar`} className={classes.noLinkStyle}>
-                <Button className={classes.button}>COMO DOAR?</Button>
+            <Link onClick={() => scrollToDiv("como-doar")} className={classes.noLinkStyle}>
+                Como Doar?
             </Link>
-            <Link to={`/instituicoes`} className={classes.noLinkStyle}>
-                <Button className={classes.button}>INSTITUIÇÕES</Button>
+            <Link onClick={() => scrollToDiv("instituicoes")} className={classes.noLinkStyle}>
+                Instituições
             </Link>
-            <Link to={`/quem-somos`} className={classes.noLinkStyle}>
-                <Button className={classes.button}>QUEM SOMOS</Button>
+            <Link onClick={() => scrollToDiv("sobre")} className={classes.noLinkStyle}>
+                Sobre
             </Link>
             <Link to={`/contato`} className={classes.noLinkStyle}>
-                <Button className={classes.button}>CONTATO</Button>
+                Contato
             </Link>
-            {/*<Link to={`/doador`} className={classes.noLinkStyle}>
-                <Button className={classes.button} style={{ color: "#BF9A1E" }}>QUERO DOAR</Button>
+            <Link to={`/contato`} className={classes.noLinkStyle}>
+                Entrar
             </Link>
-            <Link to={`/instituicao`} className={classes.noLinkStyle}>
-                <Button className={classes.button} style={{ color: "#247BA0" }}>QUERO RECEBER</Button>
-             </Link>*/}
         </div>
     )
 }
@@ -235,7 +243,7 @@ const MenuLeft = (props) => {
           <div className={classes.logo}>
               <img src={Logo} alt="logo" className={classes.img} />
               <Typography variant="h6" className={classes.title}>
-                Doações
+                DoAção
               </Typography>
           </div>
         </Link>
@@ -248,19 +256,13 @@ export default function InitialNavBar() {
     return (
             <NavBar
                 styles={classes}
-                color="transparent"
                 fixed={true}
+                color="primary"
                 brand={
                     <MenuLeft />
                 }
                 rightLinks={
                     <MenuRight />
-                } 
-                changeColorOnScroll={
-                    {
-                        height: 10,
-                        color: 'dark'
-                    }
                 }
             />
     )

@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     
     buttonBlue: {
         backgroundColor: '#2D9CDB',
-        
     },
     buttonYellow: {
         backgroundColor: '#BF9A1E',
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#247BA0',
     },
     buttonGreen: {
-        backgroundColor: '#428149',
+        backgroundColor: '#44A647',
     }
     
 }));
@@ -49,7 +48,7 @@ export default function Button(props) {
     }
 
     return(
-        <button disabled={props.disabled} className={classes.buttonBase + ' ' + theme} onClick={props.onClick} style={props.style}>
+        <button disabled={props.disabled} className={classes.buttonBase + ' ' + theme + ' ' + props.className} onClick={props.onClick} style={props.style}>
             {props.loading || props.loading === true ? (
                 <ReactLoading type={props.type} color="#247BA0"/>
             ) : (
