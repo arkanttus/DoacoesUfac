@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     main: {
         color: '#FFF',
-        backgroundImage: `url(${"/images/BG1.svg"})`,
+        backgroundImage: `url(${"/images/BG2.png"})`,
         background: 'no-repeat center center',
         backgroundSize: 'cover'
     }

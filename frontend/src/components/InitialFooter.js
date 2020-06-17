@@ -7,6 +7,7 @@ import Logo_Ufac from '../assets/Logo_ufac.svg';
 const useStyles = makeStyles((theme) => ({
     footer: {
         minHeight: '5vh',
+        justifyContent: 'flex-end',
         [theme.breakpoints.down('sm')]: {
             '& div': {
                 padding: '5px'
@@ -15,17 +16,9 @@ const useStyles = makeStyles((theme) => ({
         '& div': {
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'flex-end',
-            paddingBottom: 13,
+            alignItems: 'center'
         }
-    },  
-    noLinkStyle: {
-        textDecoration: 'none',
-        color: 'white',
-        '&:hover': {
-            color: '#e5e5e5'
-        }
-    },
+    }
 }));
 
 export default function InitialFooter(props) {
@@ -33,16 +26,6 @@ export default function InitialFooter(props) {
 
     return(
         <Grid container style={props.style} className={classes.footer}>
-            <Grid item xs={12} sm={2} style={{ fontSize: '.85rem' }}>
-                <Link to="/equipe" className={classes.noLinkStyle}>
-                    SOBRE A EQUIPE
-                </Link>
-            </Grid>
-            <Grid item xs={12} sm={2} style={{ fontSize: '.85rem' }}>
-                <Link to="/creditos" className={classes.noLinkStyle}>
-                    CRÉDITOS
-                </Link>
-            </Grid>
             <Grid item xs={12} sm={4} style={{ paddingBottom: 5 }}>
                 <label style={{ display: 'flex', alignItems: 'center' }}>
                     <img src={Logo_Ufac} style={{ paddingRight: 5 }} alt="Logo Ufac" /> Universidade Federal do Acre

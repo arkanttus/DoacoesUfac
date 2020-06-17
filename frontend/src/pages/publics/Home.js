@@ -114,7 +114,6 @@ const useStyles = makeStyles((theme) => ({
         },
         [theme.breakpoints.up('lg')]: {
             fontSize: '2.5rem',
-            fontSize: '1.9rem',
             margin: "2rem 2rem 4rem 2rem"
         },
         [theme.breakpoints.up('xl')]: {
@@ -195,7 +194,7 @@ export default function Home(props) {
                     </Grid>
                     <Grid item xs={12} md={6} lg={5} style={{ width: '100%', height: '100%' }}>
                         <div className={classes.videoContainer}>
-                        <iframe src='https://www.youtube.com/embed/bCkCWnmAD-o'
+                        <iframe src='https://youtube.com/embed/toxC0kbiK2w'
                             frameBorder='0'
                             allow='autoplay; encrypted-media'
                             allowFullScreen
@@ -209,7 +208,7 @@ export default function Home(props) {
                 {/*Conheça as instituições*/}
                 <Grid container id="instituicoes" className={classes.containerBlue}>
                     <Grid item xs={12} md={5} lg={6}>
-                        <img style={{ width: '100%' }} src="/images/mapa_bg.png" />
+                        <img alt="imagem" style={{ width: '100%' }} src="/images/mapa_bg.png" />
                     </Grid>
                     <Grid item xs={12} md={7} lg={6} style={{ color: 'white' }}>
                         <p className={classes.titulo} style={{ fontWeight: "bold" , marginTop: '3.5rem'}}>Conheça as instituições</p>
@@ -225,18 +224,27 @@ export default function Home(props) {
                         <Button variant="green" className={classes.button} onClick={() => props.history.push('/dashboard')} style={{ width: 'fit-content', display: 'block', margin: '0 auto 1em auto' }}>Junte-se a nós!</Button>
                     </Grid>
                     <Grid item xs={12} md={5}>
-                        <img style={{ maxWidth: '100%' }} src="/images/Image1.png" />
+                        <img alt="imagem" style={{ maxWidth: '100%' }} src="/images/Image1.png" />
                     </Grid>
                 </Grid>
                 {/*Sobre o projeto*/}
                 <Grid container id="sobre" className={classes.containerBlue} style={{ color: 'white' }}>
                     <Grid item xs={12}>
                         <p className={classes.titulo}>Sobre o projeto</p>
-                        <p className={classes.paragrafo3}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+                        <p className={classes.paragrafo3}>
+                        O doAÇÃO é um projeto que nasceu na associação entre acadêmicos do Curso de Medicina e 
+                        Sistemas de Informação da Universidade Federal do Acre - UFAC. Diante da situação mundial 
+                        em que vivemos, têm-se a necessidade de demonstrar que ainda há esperança no mundo, que juntos 
+                        podemos fazer a diferença. Dessa forma, doAÇÃO visa facilitar o encontro de quem deseja fazer o 
+                        bem e de quem precisa de ajuda. Tanto instituições que necessitem de doações como potenciais 
+                        doadores poderão se cadastrar na plataforma e, assim, se conectarem. O mesmo irá funcionar a 
+                        nível nacional, então se você ai do outro lado da tela conhece alguma instituição que necessite 
+                        de auxílio, sendo ele alimentos, produtos de higiene ou financeiro, compartilhe o link do site.
+                        </p>
                         <p style={{ textAlign: 'center', fontSize: '1.5rem', margin: '1.5rem 1rem', fontStyle: 'italic' }}>“Seja a mudança que você quer ver no mundo.”<br/>Mahatma Gandhi</p>
                         <Grid item xs={6} md={2} style={{ display: 'flex', margin: '1.5rem auto' }}>
-                            <a href="https://www.instagram.com/doacao.ufac/" target="_blank" className={classes.noLinkStyle} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: 0 }}>
-                                <img src={InstagramLogo} className={classes.instagramLogo} />
+                            <a href="https://www.instagram.com/doacao.ufac/" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: 0 }}>
+                                <img alt="" src={InstagramLogo} className={classes.instagramLogo} />
                                 <label style={{ fontStyle: 'italic', fontSize: '130%', paddingLeft: 10, cursor: 'pointer' }}>doAção</label>
                             </a>
                         </Grid>
@@ -247,65 +255,65 @@ export default function Home(props) {
                     <p className={classes.titulo} style={{ display: 'block', margin: 'auto' }}>Equipe</p>
                     <p className={classes.paragrafo3}>Este é um projeto de causa social desenvolvido por discentes e docentes da Universidade Federal do Acre dos cursos de Medicina e Sistemas de Informação.</p>
                     <Grid item xs={6} md={2} style={{ display: 'block', margin: 'auto'}}>
-                        <a href="https://daricelio.github.io/" target="_blank" className={classes.noLinkStyle}>
-                            <img src={DaricelioImg} className={classes.imgMember} />
+                        <a href="https://daricelio.github.io/" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                            <img src={DaricelioImg} alt="" className={classes.imgMember} />
                             <h5 className={classes.nameMember}>Daricélio Soares</h5>
                         </a>
                     </Grid>
                     <Grid container style={{ display: 'flex', justifyContent: 'center', margin: '3rem 0' }}>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://www.instagram.com/aldirfi/?igshid=tszcqdq74t60" target="_blank" className={classes.noLinkStyle}>
-                                <img src={AldirImg} className={classes.imgMember} />
+                            <a href="https://www.instagram.com/aldirfi/?igshid=tszcqdq74t60" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={AldirImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Aldir Filho</h5>
                             </a>
                         </Grid>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://instagram.com/babiolivv?igshid=85nxdi50a6fm" target="_blank" className={classes.noLinkStyle}>
-                                <img src={BarbaraImg} className={classes.imgMember} />
+                            <a href="https://instagram.com/babiolivv?igshid=85nxdi50a6fm" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={BarbaraImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Bárbara Oliveira</h5>
                             </a>
                         </Grid>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://www.instagram.com/leonardmes/?igshid=1ut8f6914afvv" target="_blank" className={classes.noLinkStyle}>
-                                <img src={LeoImg} className={classes.imgMember} />
+                            <a href="https://www.instagram.com/leonardmes/?igshid=1ut8f6914afvv" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={LeoImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Leonard Medeiros</h5>
                             </a>
                         </Grid>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://www.instagram.com/llucas_r_a/?igshid=4lmdgza2hyfp" target="_blank" className={classes.noLinkStyle}>
-                                <img src={LucasImg} className={classes.imgMember} />
+                            <a href="https://www.instagram.com/llucas_r_a/?igshid=4lmdgza2hyfp" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={LucasImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Lucas Angat</h5>
                             </a>
                         </Grid>
                     </Grid>
                     <Grid container style={{ display: 'flex', justifyContent: 'center' }}>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://github.com/andriellelima" target="_blank" className={classes.noLinkStyle}>
-                                <img src={AndrielleImg} className={classes.imgMember} />
+                            <a href="https://github.com/andriellelima" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={AndrielleImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Andrielle Lima</h5>
                             </a>
                         </Grid>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://github.com/bruunotrindade" target="_blank" className={classes.noLinkStyle}>
-                                <img src={BrunoImg} className={classes.imgMember} />
+                            <a href="https://github.com/bruunotrindade" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={BrunoImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Bruno Trindade</h5>
                             </a>
                         </Grid>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://github.com/arkanttus" target="_blank" className={classes.noLinkStyle}>
-                                <img src={ItaloImg} className={classes.imgMember} />
+                            <a href="https://github.com/arkanttus" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={ItaloImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Ítalo Oliveira</h5>
                             </a>
                         </Grid>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://github.com/JhonatanPatrocinio" target="_blank" className={classes.noLinkStyle}>
-                                <img src={JhonatanImg} className={classes.imgMember} />
+                            <a href="https://github.com/JhonatanPatrocinio" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={JhonatanImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Jhonatan Patrocínio</h5>
                             </a>
                         </Grid>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
-                            <a href="https://github.com/Tony-Starkus" target="_blank" className={classes.noLinkStyle}>
-                                <img src={ThalissonImg} className={classes.imgMember} />
+                            <a href="https://github.com/Tony-Starkus" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
+                                <img src={ThalissonImg} alt="" className={classes.imgMember} />
                                 <h5 className={classes.nameMember}>Thalisson Bandeira</h5>
                             </a>
                         </Grid>

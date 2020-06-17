@@ -16,9 +16,9 @@ import DonatorRegister from './pages/publics/DonatorRegister'
 import InstituteRegister from './pages/publics/InstituteRegister'
 import EmailValidation from './pages/publics/EmailValidation';
 
-import Home from './pages/publics/Home'
-import Credits from './pages/publics/Credits'
-import Contact from './pages/publics/Contact'
+import Home from './pages/publics/Home';
+import Contact from './pages/publics/Contact';
+import Help from './pages/publics/Help';
 
 
 import Dashboard from './pages/privates/Dashboard';
@@ -66,8 +66,8 @@ const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Home} />
-      <RouteWithLayout path="/creditos" layout={LandingLayout} component={Credits} />
       <RouteWithLayout path="/contato" layout={LandingLayout} component={Contact} />
+      <RouteWithLayout path="/ajuda" layout={FormLayout} component={Help} />
       <RouteWithLayout path="/validar-email/:id/:token" layout={FormLayout} component={EmailValidation} />
 
       <NotAuthenticateRoute path="/login" layout={FormLayout} component={Login} />
