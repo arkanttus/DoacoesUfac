@@ -2,6 +2,7 @@ import React from 'react'
 import NavBar from './MaterialKit/NavBarHeader/Header';
 import { Typography, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import {
     container,
     defaultFont,
@@ -54,13 +55,10 @@ const useStyles = makeStyles((theme) => ({
     appBar: {
         display: "flex",
         border: "0",
-        borderRadius: "3px",
         marginBottom: "20px",
         color: "#555",
         width: "100%",
         backgroundColor: "#fff",
-        boxShadow:
-          "0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)",
         transition: "all 150ms ease 0s",
         alignItems: "center",
         flexFlow: "row nowrap",
@@ -117,9 +115,7 @@ const useStyles = makeStyles((theme) => ({
       },
       primary: {
         backgroundColor: primaryColor,
-        color: "#FFFFFF",
-        boxShadow:
-          "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(156, 39, 176, 0.46)"
+        color: "#FFFFFF"
       },
       info: {
         backgroundColor: infoColor,
@@ -204,9 +200,11 @@ const useStyles = makeStyles((theme) => ({
       }
 }));
 
-function scrollToDiv(id) {
+async function scrollToDiv(id, history) {
+  if(history.location.pathname !== "/") {
+    await history.push("/")
+  }
   var element = document.getElementById(id);
-  console.log(element);
   window.scrollTo(0, element.offsetTop - 95);
 }
 
@@ -214,22 +212,22 @@ const MenuRight = (props) => {
     const classes = useStyles()
     return (
         <div className={classes.menuRightCollapse}>
-            <Link onClick={() => scrollToDiv("inicio")} className={classes.noLinkStyle}>
+            <Link onClick={() => scrollToDiv("inicio", props.history)} className={classes.noLinkStyle}>
                 Início
             </Link>
-            <Link onClick={() => scrollToDiv("como-doar")} className={classes.noLinkStyle}>
+            <Link onClick={() => scrollToDiv("como-doar", props.history)} className={classes.noLinkStyle}>
                 Como Doar?
             </Link>
-            <Link onClick={() => scrollToDiv("instituicoes")} className={classes.noLinkStyle}>
+            <Link onClick={() => scrollToDiv("instituicoes", props.history)} className={classes.noLinkStyle}>
                 Instituições
             </Link>
-            <Link onClick={() => scrollToDiv("sobre")} className={classes.noLinkStyle}>
+            <Link onClick={() => scrollToDiv("sobre", props.history)} className={classes.noLinkStyle}>
                 Sobre
             </Link>
             <Link to={`/contato`} className={classes.noLinkStyle}>
                 Contato
             </Link>
-            <Link to={`/contato`} className={classes.noLinkStyle}>
+            <Link to={`/login`} className={classes.noLinkStyle}>
                 Entrar
             </Link>
         </div>
@@ -252,7 +250,7 @@ const MenuLeft = (props) => {
 
 export default function InitialNavBar() {
     const classes = useStyles()
-
+    const history = useHistory();
     return (
             <NavBar
                 styles={classes}
@@ -262,7 +260,7 @@ export default function InitialNavBar() {
                     <MenuLeft />
                 }
                 rightLinks={
-                    <MenuRight />
+                    <MenuRight history={history} />
                 }
             />
     )

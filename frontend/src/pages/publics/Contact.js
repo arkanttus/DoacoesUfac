@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         height: 50,
-        width: '-webkit-fill-available',
+        width: '-webkit-fill-available; width: -moz-available',
         margin: '10px 0px',
         borderRadius: 25,
         fontSize: 18,
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: 20,
         paddingLeft: 20,
         borderRadius: 25,
-        width: '-webkit-fill-available',
+        width: '-webkit-fill-available; width: -moz-available',
         fontSize: 18,
         border: 'none',
         outline: 'none',
@@ -104,7 +104,8 @@ const Input = (props) => (
     />
 )
 
-export default function Contact() {
+export default function Contact({props}) {
+    console.log(props.history.location.pathname);
     const classes = useStyles();
     const Swal = require('sweetalert2');
     const [name, setName] = React.useState("");
@@ -161,6 +162,8 @@ export default function Contact() {
                 text: "Mensagem",
                 icon: 'success',
                 confirmButtonText: 'Ok'
+            }).then(() => {
+                props.history.push('/');
             });
         } else {
             if(response.data.name) {

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     containerWhite: {
-        margin: '1rem 3rem',
+        margin: '1.5rem 3rem',
         [theme.breakpoints.down('xs')]: {
             margin: '0 .5rem'
         }
@@ -146,9 +146,6 @@ const useStyles = makeStyles((theme) => ({
         height: 100,
         display: 'block',
         margin: 'auto',
-        [theme.breakpoints.up('lg')]: {
-
-        }
     },
     nameMember: {
         fontSize: 18,
@@ -167,6 +164,17 @@ const useStyles = makeStyles((theme) => ({
     },
     instagramLogo: {
         maxWidth: '20%'
+    },
+    image1: {
+        width: '100%',
+        height: '100%',
+        borderRadius: '45px 150px 150px 45px',
+        [theme.breakpoints.down('xs')]: {
+            borderRadius: 0,
+            width: '97%',
+            display: 'block',
+            margin: '1rem auto 0 auto'
+        }
     }
 
 }));
@@ -192,7 +200,7 @@ export default function Home(props) {
                             <p>O cadastro é importante para recomendarmos de maneira justa as instituições que receberam poucas doações.</p>
                         </p>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={5} style={{ width: '100%', height: '100%' }}>
+                    <Grid item xs={12} md={6} lg={5} style={{ width: '100%', height: '100%', paddingTop: 10 }}>
                         <div className={classes.videoContainer}>
                         <iframe src='https://youtube.com/embed/toxC0kbiK2w'
                             frameBorder='0'
@@ -208,7 +216,7 @@ export default function Home(props) {
                 {/*Conheça as instituições*/}
                 <Grid container id="instituicoes" className={classes.containerBlue}>
                     <Grid item xs={12} md={5} lg={6}>
-                        <img alt="imagem" style={{ width: '100%' }} src="/images/mapa_bg.png" />
+                        <img alt="imagem" className={classes.image1} src="/images/mapa_bg.png" />
                     </Grid>
                     <Grid item xs={12} md={7} lg={6} style={{ color: 'white' }}>
                         <p className={classes.titulo} style={{ fontWeight: "bold" , marginTop: '3.5rem'}}>Conheça as instituições</p>
