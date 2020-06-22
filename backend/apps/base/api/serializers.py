@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+
 from apps.base.models import Institution, TypeInstitution, Contact
 from apps.users.api.serializers import UserCreateSerializer, UserReadSerializer
 from apps.need_donate.serializers import NeedDonateSerializer
@@ -215,3 +217,10 @@ class ContactSerializer(serializers.ModelSerializer):
         fields = (
             'name', 'email', 'subject', 'message'
         )
+
+    def save(self, **kwargs):
+        instance = super(ContactSerializer, self).save(**kwargs)
+        subject = f'{instance.name} entrou em contato'
+        message = f'Assunto: {instance.subject}\nMensagem: {instance.message}'
+        send_mail(subject, message, 'doacoesufac@gmail.com', ['doacoesufac@gmail.com'], **kwargs)
+
