@@ -232,7 +232,16 @@ export default function Home(props) {
                         <Button variant="green" className={classes.button} onClick={() => props.history.push('/dashboard')} style={{ width: 'fit-content', display: 'block', margin: '0 auto 1em auto' }}>Junte-se a nós!</Button>
                     </Grid>
                     <Grid item xs={12} md={5}>
-                        <img alt="imagem" style={{ maxWidth: '100%' }} src="/images/Image1.png" />
+                        <div className={classes.videoContainer}>
+                            <iframe src='https://www.youtube.com/embed/Nq6VYOTRX8M'
+                                frameBorder='0'
+                                allow='autoplay; encrypted-media'
+                                allowFullScreen
+                                title='video'
+                                width="560"
+                                height="349"
+                            />
+                        </div>
                     </Grid>
                 </Grid>
                 {/*Sobre o projeto*/}
