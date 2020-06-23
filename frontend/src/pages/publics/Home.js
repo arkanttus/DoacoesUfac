@@ -81,11 +81,11 @@ const useStyles = makeStyles((theme) => ({
             textAlign: 'center'
         },
         [theme.breakpoints.up('lg')]: {
-            fontSize: '2rem',
+            fontSize: '1.7rem',
             margin: '2rem 2rem'
         },
         [theme.breakpoints.up('xl')]: {
-            fontSize: '2.3rem',
+            fontSize: '2rem',
             margin: '5rem 3rem'
         }
     },
@@ -97,11 +97,11 @@ const useStyles = makeStyles((theme) => ({
             margin: '1rem 1rem'
         },
         [theme.breakpoints.up('lg')]: {
-            fontSize: '2rem',
+            fontSize: '1.7rem',
             margin: '2rem 10rem'
         },
         [theme.breakpoints.up('xl')]: {
-            fontSize: '2.3rem',
+            fontSize: '2rem',
             margin: '2rem 25rem',
         }
     },
@@ -113,11 +113,11 @@ const useStyles = makeStyles((theme) => ({
             fontSize: '1.2rem',
         },
         [theme.breakpoints.up('lg')]: {
-            fontSize: '2.5rem',
+            fontSize: '1.7rem',
             margin: "2rem 2rem 4rem 2rem"
         },
         [theme.breakpoints.up('xl')]: {
-            fontSize: '2.5rem',
+            fontSize: '2rem',
             margin: "4rem 2rem 4rem 2rem",
         }
     },
@@ -174,6 +174,9 @@ const useStyles = makeStyles((theme) => ({
             width: '97%',
             display: 'block',
             margin: '1rem auto 0 auto'
+        },
+        [theme.breakpoints.up('xl')]: {
+            width: '70%',
         }
     }
 
@@ -293,13 +296,13 @@ export default function Home(props) {
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
                             <a href="https://www.instagram.com/leonardmes/?igshid=1ut8f6914afvv" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
                                 <img src={LeoImg} alt="" className={classes.imgMember} />
-                                <h5 className={classes.nameMember}>Leonard Medeiros</h5>
+                                <h5 className={classes.nameMember}>Leonardo Medeiros</h5>
                             </a>
                         </Grid>
                         <Grid item xs={6} sm={2} lg={2} xl={1}>
                             <a href="https://www.instagram.com/llucas_r_a/?igshid=4lmdgza2hyfp" target="_blank" rel="noopener noreferrer" className={classes.noLinkStyle}>
                                 <img src={LucasImg} alt="" className={classes.imgMember} />
-                                <h5 className={classes.nameMember}>Lucas Angat</h5>
+                                <h5 className={classes.nameMember}>Lucas Angst</h5>
                             </a>
                         </Grid>
                     </Grid>
