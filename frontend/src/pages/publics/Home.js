@@ -224,7 +224,7 @@ export default function Home(props) {
                     <Grid item xs={12} md={7} lg={6} style={{ color: 'white' }}>
                         <p className={classes.titulo} style={{ fontWeight: "bold" , marginTop: '3.5rem'}}>Conheça as instituições</p>
                         <p className={classes.paragrafo4}>Veja quais instituições estão<br/>próximas à sua localização para facilitar o processo.</p>
-                        <Button variant="yellow"  className={classes.button} onClick={() => props.history.push('/instituicao')} style={{ width: 'fit-content', display: 'block', margin: '0 auto 1em auto' }}>Quero conhecer</Button>
+                        <Button variant="yellow"  className={classes.button} onClick={() => props.history.push('/dashboard')} style={{ width: 'fit-content', display: 'block', margin: '0 auto 1em auto' }}>Quero conhecer</Button>
                     </Grid>
                 </Grid>
                 {/*Como podemos receber doações?*/}
@@ -232,7 +232,7 @@ export default function Home(props) {
                     <Grid item xs={12} md={7}>
                         <p className={classes.titulo}>Como podemos receber doações?</p>
                         <p className={classes.paragrafo2}>Para receber uma doação, basta cadastrar a instituição, esperar a confirmação das informações e aguardar as doações.</p>
-                        <Button variant="green" className={classes.button} onClick={() => props.history.push('/dashboard')} style={{ width: 'fit-content', display: 'block', margin: '0 auto 1em auto' }}>Junte-se a nós!</Button>
+                        <Button variant="green" className={classes.button} onClick={() => props.history.push('/instituicao')} style={{ width: 'fit-content', display: 'block', margin: '0 auto 1em auto' }}>Junte-se a nós!</Button>
                     </Grid>
                     <Grid item xs={12} md={5}>
                         <div className={classes.videoContainer}>
