@@ -105,9 +105,9 @@ export default function Home({props}){
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
    
-    const [uf, setUF] = React.useState(user.uf);
+    const [uf, setUF] = React.useState(user ? user.uf : "Acre");
     const [citiesArray, setCitiesArray] = React.useState(cities[uf].cidades);
-    const [city, setCity] = React.useState(user.city);
+    const [city, setCity] = React.useState(user ? user.city : "Rio Branco");
     const [institutions,setInstitutions] = React.useState(null);
     const [institutionsCity,setInstitutionsCity] = React.useState(null);
     const [coordinates, setCoordinates] = React.useState(null)

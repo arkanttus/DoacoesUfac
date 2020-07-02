@@ -250,7 +250,7 @@ const Menu = withRouter((props) => {
     };
 
     const user = getUser();
-
+    
     return (
         <>
             { user && user.typeUser === 'Doador' ? (
@@ -258,43 +258,57 @@ const Menu = withRouter((props) => {
                     <Link to="/dashboard" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Instituições</Button></Link>
                     <Link to="/minhas-doacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Minhas Doações</Button></Link>
                 </>
-            ) : (
+            ) : (<></>)}
+
+            { user && user.typeUser === 'Receptor' ? (
                 <>
                     <Link to="/solicitacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Solicitações</Button></Link>
                     <Link to="/doacoes" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><FavoriteBorderIcon  className={classes.navHiddenItem}/>Doações</Button></Link>
                 </>
-            )}
-            <IconButton aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleMenu} color="inherit" className={classes.navHiddenInvert}>
-                <PersonIcon />
-              </IconButton>
-              <Dropdown
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <Link to="/conta" style={{ color: '#000' }} className={classes.noLinkStyle}>
-                    <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
-                </Link>
-                <Link to="/sair" className={classes.noLinkStyle}>
-                    <MenuItem style={{ color: 'red' }}>Sair</MenuItem>
-                </Link>
-              </Dropdown>
-            <Link to="/conta" className={classes.noLinkStyle}>
-                <Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button>
-            </Link>
-            <Link to="/sair" className={classes.noLinkStyle}>
-                <Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button>
-            </Link>
+            ) : (<></>)}
+
+            { !user ? (
+                <>
+                    <Link to="/" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Início</Button></Link>
+                    <Link to="/doador" className={classes.noLinkStyle}><Button className={classes.NavBarButtons}><AccountBalanceOutlinedIcon className={classes.navHiddenItem}/>Quero doar!</Button></Link>
+                </>
+            ) : (<></>)}
+
+            { user ? (
+                <>
+                    <IconButton aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleMenu} color="inherit" className={classes.navHiddenInvert}>
+                        <PersonIcon />
+                    </IconButton>
+                    <Dropdown
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                        }}
+                        open={open}
+                        onClose={handleClose}
+                    >
+                        <Link to="/conta" style={{ color: '#000' }} className={classes.noLinkStyle}>
+                            <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
+                        </Link>
+                        <Link to="/sair" className={classes.noLinkStyle}>
+                            <MenuItem style={{ color: 'red' }}>Sair</MenuItem>
+                        </Link>
+                    </Dropdown>
+                    <Link to="/conta" className={classes.noLinkStyle}>
+                        <Button className={[classes.NavBarButtons, classes.navHiddenItem]}><PersonIcon />Minha Conta</Button>
+                    </Link>
+                    <Link to="/sair" className={classes.noLinkStyle}>
+                        <Button className={[classes.NavBarButtons, classes.navHiddenItem]} style={{ color: 'red' }}><ExitToAppIcon  />Sair</Button>
+                    </Link>
+                </>
+            ) : (<></>)}
         </>
     )
 })

@@ -8,7 +8,7 @@ export default function Dashboard() {
 
     return (
         <>
-            {user.typeUser === "Doador" ? ( 
+            {!user || user.typeUser === "Doador" ? ( 
                 <DashboardDonator />
             ): 
             (
