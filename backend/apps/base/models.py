@@ -1,5 +1,6 @@
 import os
 import uuid
+import unicodedata
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -36,7 +37,10 @@ class TypeInstitution(BaseModel):
 
 def path_image_institution(instance, filename):
     extension = os.path.splitext(filename)[-1]
-    return f'institution/{instance.id}_{instance.name}{extension}'
+    name_format = ''.join(
+        ch for ch in unicodedata.normalize('NFKD', instance.name) if not unicodedata.combining(ch)
+    )
+    return f'institution/{instance.id}_{name_format}{extension}'
 
 
 class Institution(BaseModel):
@@ -51,6 +55,9 @@ class Institution(BaseModel):
     other_type = models.CharField(_('Outro tipo'), max_length=100, null=True, blank=True)
     description = models.TextField(_('Descrição da Instituição'), max_length=500)
     image = models.ImageField(_('Foto da instituição'), upload_to=path_image_institution)
+    is_active = models.BooleanField(
+        _('Ativo'), default=False, help_text=_('Desative para que essa Instituição não seja retornada.')
+    )
 
     # Geo
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
@@ -90,4 +97,17 @@ class Institution(BaseModel):
         else:
             return self.type_institution.name if self.type_institution else ''
 
+
+class Contact(models.Model):
+    name = models.CharField(_('Nome'), max_length=150)
+    email = models.EmailField(_('Email'))
+    subject = models.CharField(_('Titulo'), max_length=200)
+    message = models.TextField(_('Mensagem'), max_length=700)
+
+    class Meta:
+        verbose_name_plural = _('Contatos')
+        verbose_name = _('Contato')
+
+    def __str__(self):
+        return f'{self.name}'
 

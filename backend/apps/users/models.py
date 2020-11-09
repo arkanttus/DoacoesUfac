@@ -1,11 +1,20 @@
 import uuid
+import os
+import unicodedata
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.core.mail import send_mail
 from localflavor.br.validators import BRCPFValidator
-from apps.base.utils import gerar_token
+
+
+def path_to_picture_profile(instance, filename):
+    extension = os.path.splitext(filename)[-1]
+    name_format = ''.join(
+        ch for ch in unicodedata.normalize('NFKD', instance.name) if not unicodedata.combining(ch)
+    )
+    return f'user_profile/{instance.id}_{name_format}{extension}'
 
 
 class UserManager(BaseUserManager):
@@ -86,6 +95,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     cpf = models.CharField(_('CPF'), max_length=14, validators=[BRCPFValidator()], unique=True, null=True, blank=True)
     uf = models.CharField(_('Estado'), max_length=100)
     city = models.CharField(_('Cidade'), max_length=150)
+    image = models.ImageField(
+        _('Foto de Perfil'),
+        upload_to=path_to_picture_profile,
+        null=True, blank=True
+    )
 
     objects = UserManager()
 
@@ -99,9 +113,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f'{self.name} {self.phone_number}'
 
+    def save(self, *args, **kwargs):
+        try:
+            obj = User.objects.get(id=self.id)
+            if obj.image != self.image:
+                obj.image.delete(save=False)
+        except:
+            pass
+        return super(User, self).save(*args, **kwargs)
+
     def verify_email(self, **kwargs):
         subject = 'Navigo - Validar e-mail'
-        message = 'Olá ' + self.name + ', seja bem vindo ao Navigo! \n Para validar o seu email, acesse o link abaixo: \n http://127.0.0.1:3000/verify/' + str(self.id) + '/' + self.token + '\n' 
+        message = 'Olá ' + self.name + ', seja bem vindo ao Navigo! \n Para validar o seu email, acesse o link abaixo: \n https://doacao.ufac.br/verify/' + str(self.id) + '/' + self.token + '\n'
         send_mail(subject, message, 'doacoesufac@gmail.com', [self.email], **kwargs)
 
     @property

@@ -16,7 +16,8 @@ class UserAdmin(DjangoUserAdmin):
                 'type_user',
                 'cpf',
                 'uf',
-                'city'
+                'city',
+                'image'
             )
         }),
         (_('Permissions'), {'fields': (

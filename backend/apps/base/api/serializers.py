@@ -1,11 +1,16 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from apps.base.models import Institution, TypeInstitution
+from django.core.mail import send_mail
+
+from apps.base.models import Institution, TypeInstitution, Contact
 from apps.users.api.serializers import UserCreateSerializer, UserReadSerializer
 from apps.need_donate.serializers import NeedDonateSerializer
-
+from apps.need_donate.models import TypeDonate, NeedDonate
+import re
 
 User = get_user_model()
+
+pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
 
 class TypeInstitutionSerializer(serializers.ModelSerializer):
@@ -28,18 +33,23 @@ class InstitutionReadSerializer(serializers.ModelSerializer):
     linkInstagram = serializers.ReadOnlyField(source='link_instagram')
     linkFacebook = serializers.ReadOnlyField(source='link_facebook')
     needDonates = serializers.SerializerMethodField()
+    countDonates = serializers.SerializerMethodField()
     otherType = serializers.ReadOnlyField(source='other_type')
 
     class Meta:
         model = Institution
         fields = (
             'id', 'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude',
-            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates', 'otherType'
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'needDonates', 'otherType',
+            'countDonates'
         )
 
     def get_needDonates(self, instance):
         need_donates = instance.need_donates.filter(is_active=True)
         return NeedDonateSerializer(need_donates, many=True).data
+
+    def get_countDonates(self, instance):
+        return instance.donates.filter(donated=True).count()
 
 
 class InstitutionCreateSerializer(serializers.ModelSerializer):
@@ -64,24 +74,42 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
     linkFacebook = serializers.CharField(
         source='link_facebook', required=False, max_length=200, allow_null=True, allow_blank=True
     )
+    setDescriptions = serializers.ListField(
+        child=serializers.CharField(allow_blank=True), write_only=True
+    )
+    setTypeDonates = serializers.PrimaryKeyRelatedField(
+        write_only=True, queryset=TypeDonate.objects.all(), required=True, many=True
+    )
 
     class Meta:
         model = Institution
         fields = (
             'name', 'owner', 'typeInstitution', 'image', 'description', 'latitude', 'longitude', 'otherType',
-            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
+            'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city', 'setTypeDonates', 'setDescriptions'
         )
 
     def create(self, validated_data):
         user_data = validated_data.pop('owner')
         password_user = user_data.pop('password', None)
 
-        user = User.objects.create(**user_data)
+        user = User(**user_data)
         user.set_password(password_user)
         if user.type_user == User.RECEIVER:
             user.is_active = False
         user.save()
-        return Institution.objects.create(owner=user, **validated_data)
+
+        type_donates = validated_data.pop('setTypeDonates')
+        descriptions = validated_data.pop('setDescriptions')
+
+        institution = Institution.objects.create(owner=user, **validated_data)
+
+        need_donates = [
+            NeedDonate(description=desc, type_donate=t_d, owner=user, institution=institution)
+            for desc, t_d in zip(descriptions, type_donates, )
+        ]
+        NeedDonate.objects.bulk_create(need_donates)
+
+        return institution
 
     def validate(self, attrs):
         user = attrs.get('owner', None)
@@ -91,17 +119,35 @@ class InstitutionCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(detail='CPF para Instituição é obrigatório')
         return super(InstitutionCreateSerializer, self).validate(attrs)
 
-    def validate_linkFacebook(self):
-        if self.linkFacebook not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
-            raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
+    def validate_linkFacebook(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'facebook.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkFacebook': "Digite um link válido ex: https://www.facebook.com/MinhaInstituicao/"
+                })
+        return value
 
-    def validate_linkInstagram(self):
-        if self.linkInstagram not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
-            raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
+    def validate_linkInstagram(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'instagram.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkInstagram': "Digite um link válido ex: https://www.instagram.com/MinhaInstituicao/"
+                })
+        return value
 
-    def validate_linkTwitter(self):
-        if self.linkTwitter not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
-            raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
+    def validate_linkTwitter(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'twitter.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkTwitter': "Digite um link válido ex: https://twitter.com/MinhaInstituicao/"
+                })
+        return value
 
 
 class InstitutionUpdateSerializer(serializers.ModelSerializer):
@@ -134,16 +180,47 @@ class InstitutionUpdateSerializer(serializers.ModelSerializer):
             'linkTwitter', 'linkInstagram', 'linkFacebook', 'uf', 'city'
         )
 
-    def validate_linkFacebook(self):
-        if self.linkFacebook not in ['https://facebook.com', 'http://facebook.com', 'facebook.com']:
-            raise serializers.ValidationError({'linkFacebook': "Digite um link do facebook"})
+    def validate_linkFacebook(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'facebook.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkFacebook': "Digite um link válido ex: https://www.facebook.com/MinhaInstituicao/"
+                })
+        return value
 
-    def validate_linkInstagram(self):
-        if self.linkInstagram not in ['https://instagram.com', 'http://instagram.com', 'instagram.com']:
-            raise serializers.ValidationError({'linkInstagram': "Digite um link do instagram"})
+    def validate_linkInstagram(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'instagram.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkInstagram': "Digite um link válido ex: https://www.instagram.com/MinhaInstituicao/"
+                })
+        return value
 
-    def validate_linkTwitter(self):
-        if self.linkTwitter not in ['https://twitter.com', 'http://twitter.com', 'twitter.com']:
-            raise serializers.ValidationError({'linkTwitter': "Digite um link do twitter"})
+    def validate_linkTwitter(self, value):
+        if value:
+            link = re.findall(pattern, value)
+            valid_link = link[0] if link else ''
+            if 'twitter.com' not in valid_link:
+                raise serializers.ValidationError({
+                    'linkTwitter': "Digite um link válido ex: https://twitter.com/MinhaInstituicao/"
+                })
+        return value
 
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = (
+            'name', 'email', 'subject', 'message'
+        )
+
+    def save(self, **kwargs):
+        instance = super(ContactSerializer, self).save(**kwargs)
+        subject = f'{instance.name} entrou em contato'
+        message = f'Assunto: {instance.subject}\nMensagem: {instance.message}'
+        send_mail(subject, message, 'doacoesufac@gmail.com', ['doacoesufac@gmail.com'], **kwargs)
 

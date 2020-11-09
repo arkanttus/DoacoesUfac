@@ -22,12 +22,13 @@ class UserReadSerializer(serializers.ModelSerializer):
     uf = serializers.ReadOnlyField()
     city = serializers.ReadOnlyField()
     totalDonations = serializers.ReadOnlyField(source='get_all_donations')
+    image = serializers.ImageField(use_url=True)
 
     class Meta:
         model = UserModel
         fields = (
             'id', 'email', 'cpf', 'name', 'institution', 'isActive', 'dateJoined', 'emailConfirm', 'shareEmail',
-            'sharePhone', 'phoneNumber', 'typeUser', 'uf', 'city', 'totalDonations'
+            'sharePhone', 'phoneNumber', 'typeUser', 'uf', 'city', 'totalDonations', 'image'
         )
 
 
@@ -58,12 +59,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
     )
     uf = serializers.CharField(max_length=100, required=True, error_messages={'required': _('Campo Obrigatório')})
     city = serializers.CharField(max_length=150, required=True, error_messages={'required': _('Campo Obrigatório')})
+    image = serializers.ImageField(required=False)
 
     class Meta:
         model = UserModel
         fields = (
             'email', 'name', 'cpf', 'emailConfirm', 'shareEmail', 'sharePhone', 'phoneNumber', 'password1', 'typeUser',
-            'uf', 'city'
+            'uf', 'city', 'image'
         )
 
     def create(self, validated_data):
@@ -105,7 +107,7 @@ class PasswordChangeSerializer(serializers.Serializer):
 
     def validate_old_password(self, value):
         if not self.user.check_password(value):
-            raise serializers.ValidationError('Senha invalida')
+            raise serializers.ValidationError({'old_password': 'Senha invalida'})
         return value
 
     def validate(self, attrs):

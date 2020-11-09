@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 GOOGLE_RECAPTCHA_SECRET_KEY = "6LfNRPUUAAAAAA_l4IEPhjqFexMqIbx_hKhAEvGX"
 
 if PRODUCTION:
-    ALLOWED_HOSTS = ['200.129.173.207', 'localhost']
+    ALLOWED_HOSTS = ['200.129.173.207', 'doacao.ufac.br', 'localhost']
 else:
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -127,7 +127,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -141,14 +140,18 @@ REST_FRAMEWORK = {
 OLD_PASSWORD_FIELD_ENABLED = True
 
 # CORS
-
-CORS_ORIGIN_ALLOW_ALL = True
-#CORS_ORIGIN_WHITELIST = [
-#    'https://localhost:3000',
-#]
-#CORS_ORIGIN_REGEX_WHITELIST = [
-#    'localhost:3000',
-#]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'https://doacao.ufac.br'
+] if PRODUCTION else [
+    'https://localhost:3000',
+    'http://localhost:3000'
+]
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'doacao.ufac.br'
+] if PRODUCTION else [
+    'localhost:3000'
+]
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -156,4 +159,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'doacoesufac@gmail.com'
-EMAIL_HOST_PASSWORD = 
+EMAIL_HOST_PASSWORD = ""
