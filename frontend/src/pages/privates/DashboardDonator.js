@@ -117,7 +117,7 @@ export default function Home({props}){
 
     async function loadData() {
 
-        let res = await sendRequest("GET", `institutions/?offset=${page}`, {})
+        /*let res = await sendRequest("GET", `institutions/?offset=${page}`, {})
         
         if(res.status === 200) {
             res.data.results.forEach((institution) => {
@@ -134,8 +134,33 @@ export default function Home({props}){
             setPages(Math.ceil(res.data.count/20))
             setLoading(false)
         }
-        else
+        else {
             props.history.push("/dashboard");
+        }*/
+        const res = [
+            {
+                name: "Abrigo Fulano de Tal",
+                items: "Cestas básicas, produtos de limpeza, fraldas, geriáticas descartáveis e roupas."
+            },
+            {
+                name: "Centro de Recuperação",
+                items: "Cestas básicas e produtos de limpeza e roupas."
+            },
+            {
+                name: "Igreja ABC",
+                items: "Cestas básicas e produtos de limpeza."
+            },
+            {
+                name: "Educandário BCA",
+                items: "Cestas básicas, produtos de limpeza, produtos de higiene pessoal e roupas.s"
+            },
+            {
+                name: "Abrigo Fulano de Tal",
+                items: "Cestas básicas, produtos de limpeza, fraldas, geriáticas descartáveis e roupas."
+            }
+        ]
+        setInstitutions(res);
+        setLoading(false);
     }
 
     async function loadInstitutionByCity(){
@@ -159,7 +184,7 @@ export default function Home({props}){
 
     React.useEffect(() => {
         handleCoordinates()
-        loadInstitutionByCity()
+        //loadInstitutionByCity()
     }, [city])
 
     function handleSelectCities(e) {

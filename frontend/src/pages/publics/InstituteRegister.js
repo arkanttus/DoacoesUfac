@@ -241,19 +241,51 @@ export default function CadastroInstituicao({props}) {
     
 
     async function loadData() {
-        let res = await getInstitutionTypes()
-        let resItems = await sendRequest("GET", "type_donates/", {})
-        if(res) {
-           setTypes(res.results);
-        }
-        //items
-        if(resItems.status === 200) {
-            resItems.data.results.forEach(function(name) {
-                name.checked = false
-                name.description= ""
-            });
-            setItems(resItems.data.results)
-        }
+        setTypes([
+            {
+                id: 0,
+                name: "Igreja"
+            },
+            {
+                id: 1,
+                name: "ONG"
+            }
+        ])
+
+        setItems([
+            {
+                id: 0,
+                name: "Cestas básicas"
+            },
+            {
+                id: 1,
+                name: "Alimentos perecíveis"
+            },
+            {
+                id: 2,
+                name: "Alimentos não perecíveis"
+            },
+            {
+                id: 3,
+                name: "Material de limpeza"
+            },
+            {
+                id: 4,
+                name: "Higiene pessoal"
+            },
+            {
+                id: 5,
+                name: "Roupas"
+            },
+            {
+                id: 6,
+                name: "Dinheiro"
+            },
+            {
+                id: 7,
+                name: "Outro"
+            }
+        ]);
         
     }
 

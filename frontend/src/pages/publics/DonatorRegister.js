@@ -240,80 +240,14 @@ export default function CadastroInstituicao({ props }) {
         }
 
         setWaiting(true);
-        const formData = new FormData();
-        if(avatarBlob !== null) {
-            formData.append("image", avatarBlob, "image.jpg");
-        }
-        formData.append("name", name);
-        formData.append("email", email);
-        formData.append("password1", password);
-        formData.append("phoneNumber", phoneNumber);
-        formData.append("uf", uf);
-        formData.append("city", city);
-        formData.append("typeUser", "D");
-
-        api.post("users/", formData, { headers: { 'content-type': 'multipart/form-data' } }).then(res => {
-            if(res.status === 201) {
-                setWaiting(false);
-                Swal.fire({
-                    title: "Seu cadastro foi realizado com sucesso!",
-                    text: "Você será redirecionado para a página de Login!",
-                    icon: 'success',
-                    confirmButtonText: 'Obrigado'
-                }).then(() => {
-                    props.history.push('/login');
-                });
-                
-            } else {
-                if(res.data.name) {
-                    Swal.fire({
-                        title: res.data.name,
-                        text: "Nome Completo*",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-                if(res.data.email) {
-                    Swal.fire({
-                        title: res.data.email,
-                        text: "Email*",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-                if(res.data.phoneNumber) {
-                    Swal.fire({
-                        title: res.data.phoneNumber,
-                        text: "Telefone*",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-                if(res.data.password1) {
-                    Swal.fire({
-                        title: res.data.password1,
-                        text: "Senha de acesso*",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-                Swal.fire({
-                    title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
-            }
-        }).catch(err => {
-            setWaiting(false);
-            Swal.fire({
-                title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
+        setWaiting(false);
+        Swal.fire({
+            title: "Seu cadastro foi realizado com sucesso!",
+            text: "Você será redirecionado para a página de Login!",
+            icon: 'success',
+            confirmButtonText: 'Obrigado'
+        }).then(() => {
+            props.history.push('/login');
         });
     }
 
