@@ -1,0 +1,6 @@
+Contact - Done (Thalison)
+Help - Route removed (Thalisson)
+Dashboard - Done (Thalisson)
+InstituteRegister - Done (Thalisson)
+DonatorRegister - Done (Thalisson)
+DonationList - Done (Thalisson)

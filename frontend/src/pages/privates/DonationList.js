@@ -56,21 +56,36 @@ export default function ListDonation() {
     const [donations, setDonations] = React.useState([]);
 
     async function loadData() {
-        let response = await getDonations();
-        if(response) {
-            console.log(response)
-            response.results.forEach((donation) => {
-                donation.items = donation.needDonates.map((need, index) => {
-                    let msg = need.typeDonate.name
-                    if(index > 0)
-                        msg = msg.toLowerCase()
-                    if(index !== donation.needDonates.length-1)
-                        return `${msg}, `;
-                    return `${msg}.`;
-                })
-            })
-            setDonations(response.results);
-        }
+        const results = [
+            {
+                donator: {
+                    name: "José",
+                    totalDonations: 20
+                },
+                donated: false,
+                items: "Dinheiro",
+                createdAt: "2020-10-01"
+            },
+            {
+                donator: {
+                    name: "Fulano",
+                    totalDonations: 25
+                },
+                donated: true,
+                items: "Dinheiro e roupas",
+                createdAt: "2020-12-01"
+            },
+            {
+                donator: {
+                    name: "Maria",
+                    totalDonations: 30
+                },
+                donated: false,
+                items: "Roupas e alimentos não-perecíveis",
+                createdAt: "2021-01-01"
+            }
+        ]
+        setDonations(results);
     }
 
     React.useEffect(() => {
@@ -93,34 +108,20 @@ export default function ListDonation() {
             cancelButtonText: 'Não',
           }).then((result) => {
             if (result.value) {
-                api.patch('/donates/' + donation.id + '/', {donated: true}).then(response => {
-                    if(response.status === 200) {
-                        donation.donated = true
-                        const newDonations = donations.map(d => {
-                            if(d.donator.id === donation.donator.id) {
-                                d.donator.totalDonations += 1;
-                            }
-                            return d
-                        });
-                        setDonations(newDonations);
-                        Swal.fire({
-                            title: 'Confirmado!',
-                            icon: 'success'
-                        });
-                    } else {
-                        Swal.fire({
-                            title: '1Aconteceu um erro. Tente novamente mais tarde!',
-                            icon: 'error',
-                            confirmButtonText: 'Ok'
-                        });
+            
+                donation.donated = true
+                const newDonations = donations.map(d => {
+                    if(d.donator.id === donation.donator.id) {
+                        d.donator.totalDonations += 1;
                     }
-            }).catch(err => {
-                Swal.fire({
-                    title: 'Aconteceu um erro. Tente novamente mais tarde!',
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
+                    return d
                 });
-            });
+                setDonations(newDonations);
+                Swal.fire({
+                    title: 'Confirmado!',
+                    icon: 'success'
+                });
+                
             }
           })
       };

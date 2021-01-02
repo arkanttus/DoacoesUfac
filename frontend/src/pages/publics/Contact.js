@@ -151,64 +151,15 @@ export default function Contact({props}) {
             return
         }
 
-        const response = await sendRequest('POST', 'contact/', {name, email, subject, message});
-        if(response.status === 201) {
-            setName("");
-            setEmail("");
-            setSubject("");
-            setMessage("");
-            Swal.fire({
-                title: "Sua mensagem foi enviada",
-                text: "Mensagem",
-                icon: 'success',
-                confirmButtonText: 'Ok'
-            }).then(() => {
-                props.history.push('/');
-            });
-        } else {
-            if(response.data.name) {
-                Swal.fire({
-                    title: response.data.name,
-                    text: "Nome",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
-                return
-            }
-            if(response.data.email) {
-                Swal.fire({
-                    title: response.data.email,
-                    text: "Email",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
-                return
-            }
-            if(response.data.subject) {
-                Swal.fire({
-                    title: response.data.subject,
-                    text: "Título",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
-                return
-            }
-            if(response.data.message) {
-                Swal.fire({
-                    title: response.data.message,
-                    text: "Mensagem",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
-                return
-            }
-            Swal.fire({
-                title: "Aconteceu um erro. Por favor tente novamente!",
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-        }
-
+        Swal.fire({
+            title: "Sua mensagem foi enviada",
+            text: "Mensagem",
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        }).then(() => {
+            props.history.push('/');
+        });
+        
     }
 
     return(

@@ -67,7 +67,7 @@ const Routes = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <RouteWithLayout path="/contato" layout={LandingLayout} component={Contact} />
-      <RouteWithLayout path="/ajuda" layout={FormLayout} component={Help} />
+      {/*<RouteWithLayout path="/ajuda" layout={FormLayout} component={Help} />*/}
       <RouteWithLayout path="/validar-email/:id/:token" layout={FormLayout} component={EmailValidation} />
       <RouteWithLayout path="/dashboard" layout={DashboardLayout} component={Dashboard} />
 

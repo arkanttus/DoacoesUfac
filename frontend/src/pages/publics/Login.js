@@ -120,13 +120,12 @@ export default function Login({ props }) {
     async function validateForm(e) {
         e.preventDefault()
         setWaiting(true)
-        const response = await sendRequest("POST", "login/", { username: email, password })
+        //const response = await sendRequest("POST", "login/", { username: email, password })
         setWaiting(false)
-        if(response.status === 200) {
-            await login(response.data)
-            props.history.push("/dashboard")
-        }
-        if(response.status === 400){
+        await login([])
+        props.history.push("/dashboard")
+        
+        /*if(response.status === 400){
             Swal.fire({
                 title: "Desculpe",
                 text: "Usuário ou senha inválido.",
@@ -146,7 +145,7 @@ export default function Login({ props }) {
         }
         else {
             setOpen(true)
-        }
+        }*/
     }
 
     return(
