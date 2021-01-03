@@ -68,13 +68,33 @@ export default function Donated({ props }) {
     const [loading, setLoading] = React.useState(true)
 
     async function loadData() {
-        let res = await getDonationById(props.match.params.donationId)
+        /*let res = await getDonationById(props.match.params.donationId)
         if(res) {
             setDonation(res)
             setLoading(false)
         }
         else
-            props.history.push("/dashboard");
+            props.history.push("/dashboard");*/
+        setDonation({
+            institution: {
+                name: "ONG 1",
+                latitude: "0",
+                longitude: "0",
+                owner: {
+                    phoneNumber: "99999-9999",
+                    email: "ong1@hotmail.com"
+                }
+            },
+            needDonates: [
+                {
+                    typeDonate: { name: "Roupas" }
+                },
+                {
+                    typeDonate: { name: "Dinheiro" }
+                }
+            ]
+        })
+        setLoading(false)
     }
 
     React.useEffect(() => {

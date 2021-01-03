@@ -68,7 +68,7 @@ export default function MyDonations({ props  }) {
     
 
     async function loadData() {
-        let res = await getDonationsByUserId(user.id)
+        /*let res = await getDonationsByUserId(user.id)
         if(res) {
             res.results.forEach((donation) => {
                 donation.items = donation.needDonates.map((need, index) => {
@@ -82,7 +82,26 @@ export default function MyDonations({ props  }) {
             })
             setDonations(res.results)
             setLoading(false)
-        }
+        }*/
+        setDonations([
+            {
+                id: 0,
+                institution: {
+                    name: "Igreja ABC"
+                },
+                items: "Roupas e dinheiro",
+                createdAt: "2021-01-03"
+            },
+            {
+                id: 1,
+                institution: {
+                    name: "ONG 1"
+                },
+                items: "Brinquedos",
+                createdAt: "2020-12-24"
+            }
+        ])
+        setLoading(false)
     }
 
     React.useEffect(() => {

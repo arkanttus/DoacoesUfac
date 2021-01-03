@@ -11,10 +11,10 @@ export default function Logout({ props }) {
         await sendRequest("POST", "logout/", {});
     }
 
-    React.useEffect(() => {
+    /*React.useEffect(() => {
         serverLogout();
     }, []);
-    logout();
+    logout();*/
     
     return <Redirect to="/login"/>;
 }

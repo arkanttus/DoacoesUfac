@@ -16,7 +16,8 @@ export const login = data1 => {
             email: "user@email.com",
             name: "User 1",
             isActive: true,
-            typeUser: "Donator",
+            //typeUser: "Donator",
+            typeUser: "Receptor",
             token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
         }
     }
