@@ -10,19 +10,20 @@ export const setUser  = (dataUser) => localStorage.setItem('USER', JSON.stringif
 export const getInstitution  = () => JSON.parse(localStorage.getItem('INSTITUTION'))
 export const setInstitution  = (dataInstitution) => localStorage.setItem('INSTITUTION', JSON.stringify(dataInstitution));
 
-export const login = data1 => {
+export const login = email => {
     const data = {
         user: {
             email: "user@email.com",
             name: "User 1",
             isActive: true,
-            //typeUser: "Donator",
-            typeUser: "Receptor",
+            uf: 'Acre',
             token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
         }
     }
+    data['user'].typeUser = email.includes("doador") ? 'Doador' : 'Receptor'
+
     localStorage.setItem(TOKEN_KEY, data['token']);
-    setUser(data)
+    setUser(data['user'])
 
     if(data['user'].typeUser === 'Receptor')
         setInstitution(data['institution']);

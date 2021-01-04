@@ -44,7 +44,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         maxHeight: '2.5vh',
         backgroundColor: '#247BA0',
-        boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.56)',
+        marginLeft: 0,
+        marginRight: 0,
+        //boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.56)',
         color: '#fff'
     },
 
@@ -136,18 +138,17 @@ export default function ListDonation() {
                     Confirme se a doação foi efetuada
                 </Grid>
 
-                <Grid container>
+                <Grid container style={{ justifyContent: 'center' }}>
                     { donations.map( donation => (
-                        <Grid item xs={12} sm={4} lg={3}  className={classes.gridCardContainer}>
+                        <Grid item xs={12} sm={3} lg={3}  className={classes.gridCardContainer}>
                             <Card style={{backgroundColor:"#ECE9E9",width: "19rem", height: "auto"}}>
                                 <CardHeader className={classes.cardHeader}>
                                     <label>
                                         <strong>Doador:</strong> {donation.donator.name}
                                     </label>
                                     { donation.donated === true ? (
-                                            <IconButton>
-                                                <FavoriteIcon style={{ color:"#E53935", marginRight: -8 }}/>
-                                            </IconButton>
+                                            <FavoriteIcon style={{ color:"#E53935", marginRight: -8, padding: 12 }}/>
+                                            
                                         ) : ( 
                                             <IconButton onClick={() => handleChange(donation)}>
                                                 <FavoriteBorderIcon style={{color:"#ffffff", marginRight: -8 }} />

@@ -62,10 +62,14 @@ const NotAuthenticateRoute = ({ component: Component, ...rest }) => (
   )}/>
 );
 
+const LoginRedirect = () => (
+  <Redirect to={{ pathname: '/login' }} />
+)
+
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={LoginRedirect} />
       <RouteWithLayout path="/contato" layout={LandingLayout} component={Contact} />
       {/*<RouteWithLayout path="/ajuda" layout={FormLayout} component={Help} />*/}
       <RouteWithLayout path="/validar-email/:id/:token" layout={FormLayout} component={EmailValidation} />
