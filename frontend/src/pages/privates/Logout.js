@@ -13,8 +13,8 @@ export default function Logout({ props }) {
 
     /*React.useEffect(() => {
         serverLogout();
-    }, []);
-    logout();*/
+    }, []);*/
+    logout();
     
     return <Redirect to="/login"/>;
 }

@@ -250,7 +250,7 @@ const Menu = withRouter((props) => {
     };
 
     const user = getUser();
-    
+
     return (
         <>
             { user && user.typeUser === 'Doador' ? (

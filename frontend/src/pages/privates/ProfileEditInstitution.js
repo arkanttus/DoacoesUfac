@@ -177,7 +177,7 @@ export default function ProfileEditInstitution() {
     const [coordinates, setCoordinates] = React.useState(null)
 
     React.useEffect(() => {
-        loadData();
+        //loadData();
         setCoordinates(LatsLngs[uf][city])
     }, []);
 
