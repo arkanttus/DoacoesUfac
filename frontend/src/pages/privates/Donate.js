@@ -12,6 +12,7 @@ import WaitLoading from '../../components/WaitLoading';
 import { getInstitutionById, sendRequest } from '../../services/api';
 import Modal from '@material-ui/core/Modal';
 import ReCAPTCHA from "react-google-recaptcha";
+import InstitutionImage from "../../assets/Image.png"
 
 //ICONS
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -104,19 +105,30 @@ export default function Donate({ props }) {
     const Swal = require('sweetalert2');
 
     async function loadData() {
-        let res = await getInstitutionById(institutionId)
-        if(res) {
-            setInstitution(res)
-
-            res.needDonates.forEach(function(name) {
-                name.checked = false
-            });
-
-            setItems(res.needDonates)
-            setLoading(false)
-        }
-        else
-            props.history.push("/dashboard");
+        
+        setInstitution({
+            name: "ONG 1",
+            image: InstitutionImage
+        });
+        setItems([
+            {
+                id: 0,
+                checked: false,
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in vestibulum leo.",
+                typeDonate: {
+                    name: "Dinheiro"
+                }
+            },
+            {
+                id: 1,
+                checked: false,
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in vestibulum leo.",
+                typeDonate: {
+                    name: "Roupas"
+                }
+            }
+        ]);
+        setLoading(false);
     }
 
     React.useEffect(() => {
@@ -137,7 +149,7 @@ export default function Donate({ props }) {
         await handleSubmit(value)
     }
 
-    async function handleSubmit(captcha) {
+    async function handleSubmit() {
         let actives = items.filter(obj => obj.checked === true)
         if(actives.length === 0) {
             Swal.fire({
@@ -147,19 +159,7 @@ export default function Donate({ props }) {
             });
             return;
         }
-        const response = await sendRequest("POST", `donates/`, { setNeedDonates: actives.map(obj => { return obj.id }), setInstitution: institutionId, "g-recaptcha-response": captcha })
-        
-        if(response.status === 201) {
-            props.history.push("/doado/"+response.data.id);
-        }
-        else {
-            Swal.fire({
-                title: "Não foi possível efetuar a doação!",
-                text: "Falha",
-                icon: "error",
-                confirmButtonText: "Ok"
-            });
-        }
+        props.history.push("/doado/1");
     }
 
     return(
@@ -234,7 +234,7 @@ export default function Donate({ props }) {
                                         </Grid>
 
                                         <Grid item>
-                                            <Button onClick={() => setOpen(true)} variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>CONFIRMAR</Button>
+                                            <Button onClick={() => handleSubmit()} variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>CONFIRMAR</Button>
                                         </Grid>
                                     </Grid>
                                 </>
