@@ -133,7 +133,7 @@ export default function Login({ props }) {
         setWaiting(true)
         //const response = await sendRequest("POST", "login/", { username: email, password })
         setWaiting(false)
-        await login( email )
+        await login( email, password )
         props.history.push("/dashboard")
     }
 
@@ -143,7 +143,7 @@ export default function Login({ props }) {
                 <CssBaseline />
                 <Grid item xs={12} className={classes.gridCard}>
                     <Card style={{width: "35rem"}}>
-                        <CardHeader style={{ textAlign: 'center', fontSize: 20, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>LOGIN</CardHeader>
+                        <CardHeader style={{ textAlign: 'center', fontSize: 20, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', color: '#FFF', marginLeft: 0, marginRight: 0 }}>LOGIN</CardHeader>
                         <CardBody>
                             <form onSubmit={validateForm}>
                                 <Grid container>

@@ -46,7 +46,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         maxHeight: '2.5vh',
         backgroundColor: '#247BA0',
-        boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.56)',
+        marginLeft: 0,
+        marginRight: 0,
+        //boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.56)',
         color: '#FFF'
     },
     noneDonation: {
@@ -83,24 +85,20 @@ export default function MyDonations({ props  }) {
             setDonations(res.results)
             setLoading(false)
         }*/
-        setDonations([
-            {
-                id: 0,
+        const names = ["Igreja ABC", "ONG 1", 'ONG x', 'Lar dos Vicentinos', 'Dom Bosco']
+        const items = ["Roupas e dinheiro", "Roupas", "Itens de higiene", "Itens de limpeza"]
+        const data = []
+        for(let i = 0; i < 10; i++) {
+            data.push({
+                id: i,
                 institution: {
-                    name: "Igreja ABC"
+                    name: names[i % items.length]
                 },
-                items: "Roupas e dinheiro",
-                createdAt: "2021-01-03"
-            },
-            {
-                id: 1,
-                institution: {
-                    name: "ONG 1"
-                },
-                items: "Brinquedos",
-                createdAt: "2020-12-24"
-            }
-        ])
+                items: items[i % items.length],
+                createdAt: "2021-01-03 17:30"
+            })
+        }
+        setDonations(data)
         setLoading(false)
     }
 
@@ -120,9 +118,9 @@ export default function MyDonations({ props  }) {
                         <ThumbUpIcon /> Minhas doações
                     </Grid>
 
-                    <Grid container>
+                    <Grid container style={{ justifyContent: 'center' }}>
                         { donations ? donations.map( donation => (
-                            <Grid item xs={12} sm={4} md={3} className={classes.gridCardContainer}>
+                            <Grid item xs={12} sm={4} md={4} className={classes.gridCardContainer}>
                                     <Card style={{ width: '19rem', height: 'auto', cursor: 'pointer'}} onClick={() => openDonation(donation.id)}>
                                         <CardHeader className={classes.cardHeader}>
                                             <label>

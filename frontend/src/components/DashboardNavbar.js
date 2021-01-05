@@ -227,7 +227,6 @@ const MenuLeft = (props) => {
     return (
         <Link to={"/dashboard"} style={{ textDecoration: "none", color: "white" }}>
             <div className={classes.leftSide}>
-                    <img src={Logo} alt="logo" className={classes.logo} />
                     <Typography variant="h6" className={classes.title}>
                             Doações
                     </Typography>

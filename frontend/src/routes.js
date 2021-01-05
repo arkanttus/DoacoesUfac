@@ -76,6 +76,7 @@ const Routes = () => (
       <RouteWithLayout path="/dashboard" layout={DashboardLayout} component={Dashboard} />
 
       <NotAuthenticateRoute path="/login" layout={FormLayout} component={Login} />
+      <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
       <NotAuthenticateRoute path="/instituicao" layout={FormLayout} component={InstituteRegister} />
       <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
       
