@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: '45%'
         }
     },
+    button : {
+        display: 'block',
+        margin: 'auto'
+    },
     buttonFix: {
         '& a button': {
             whiteSpace: 'nowrap',
@@ -105,6 +109,13 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
       },
+      gridButton: {
+        display: 'flex',
+        flexDirection: 'column',
+        [theme.breakpoints.up('sm')]: {
+            flexDirection: 'row'
+        }
+      }
 
 }));
 
@@ -124,33 +135,11 @@ export default function Login({ props }) {
         setWaiting(false)
         await login( email )
         props.history.push("/dashboard")
-        
-        /*if(response.status === 400){
-            Swal.fire({
-                title: "Desculpe",
-                text: "Usuário ou senha inválido.",
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-            return;
-        }
-        else if(response.status === 401){
-            Swal.fire({
-                title: "Desculpe",
-                text: "Sua conta ainda não foi ativada. Por favor, aguarde.",
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-            return;
-        }
-        else {
-            setOpen(true)
-        }*/
     }
 
     return(
         <Grid container className={classes.container}>
-            <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
+            <Container component="main" maxWidth="sm" style={{ display: 'flex', flexDirection: 'column' }}>
                 <CssBaseline />
                 <Grid item xs={12} className={classes.gridCard}>
                     <Card style={{width: "35rem"}}>
@@ -182,6 +171,14 @@ export default function Login({ props }) {
                             </form>
                         </CardBody>
                     </Card>
+                </Grid>
+                <Grid item xs={12} className={classes.gridButton}>
+                    <Grid item xs={12} sm={6} style={{ padding: 5 }}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={() => props.history.push('/doador')}>Quero ser doador</Button>
+                    </Grid>
+                    <Grid item xs={12} sm={6} style={{ padding: 5 }}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={() => props.history.push('/instituicao')}>Seja uma instituição</Button>
+                    </Grid>
                 </Grid>
             </Container>
         </Grid>

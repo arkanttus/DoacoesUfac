@@ -497,7 +497,7 @@ export default function CadastroInstituicao({props}) {
             return;
         }
 
-        const formData = new FormData();
+        /*const formData = new FormData();
         formData.append("image", avatarBlob, "image.jpg");
         setWaiting(true)
         const filter = items.filter(item => item.checked === true)
@@ -514,78 +514,17 @@ export default function CadastroInstituicao({props}) {
             setTypeDonates: filter.map(obj => { return obj.id }), 
             setDescriptions: filter.map(obj => { return obj.description }) 
             }
-        );
-        setWaiting(false)
+        );*/
+        setWaiting(false);
 
-        if(response.status === 201) {
-            Swal.fire({
-                title: "Seu cadastro foi realizado com sucesso!",
-                text: "Em breve seu registro será avaliado!",
-                icon: 'success',
-                confirmButtonText: 'Obrigado'
-            }).then(() => {
-                props.history.push('/login');
-            });
-            const id = response.data.id;
-            api.patch(`institutions/${id}/`, formData).then(response => {
-            }).then(err => {
-                console.log(err);
-            });
-            
-        } else {
-            if(response.data.owner) {
-                if(response.data.owner.cpf !== null) {
-                    Swal.fire({
-                        title: response.data.owner.cpf,
-                        text: "CPF",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-            }
-            if(response.data.name !== null) {
-                Swal.fire({
-                    title: response.data.name,
-                    text: "Nome Completo*",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-                return;
-            }
-            if(response.data.email !== null) {
-                Swal.fire({
-                    title: response.data.email,
-                    text: "Email*",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-                return;
-            }
-            if(response.data.phoneNumber !== null) {
-                Swal.fire({
-                    title: response.data.phoneNumber,
-                    text: "Telefone*",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-                return;
-            }
-            if(response.data.password1 !== null) {
-                Swal.fire({
-                    title: response.data.password1,
-                    text: "Senha de acesso*",
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-                return;
-            }
-            Swal.fire({
-                title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            })
-        }
+        Swal.fire({
+            title: "Seu cadastro foi realizado com sucesso!",
+            text: "Em breve seu registro será avaliado!",
+            icon: 'success',
+            confirmButtonText: 'Obrigado'
+        }).then(() => {
+            props.history.push('/login');
+        });
     }
    
     return(
