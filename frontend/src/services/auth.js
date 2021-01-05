@@ -32,7 +32,7 @@ export const login = email => {
                 emailConfirm:true,
                 shareEmail:false,
                 sharePhone:false,
-                phoneNumber:68999999999,
+                phoneNumber:'68999999999',
                 typeUser: 'Receptor',
                 uf: 'Acre',
                 city: 'Rio Branco',
