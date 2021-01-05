@@ -34,12 +34,10 @@ export default function FormLayout(props) {
     const classes = useStyles();
     return(
         <div>
-            <InitialNavbar/>
             <main className={classes.main}>
                     {props.children} 
                 <InitialFooter/>
             </main>
-            
         </div>
     );
 }

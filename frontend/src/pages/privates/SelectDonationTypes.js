@@ -55,7 +55,7 @@ export default function SelectDOnationTypes({ props }) {
                 checked: false
             },
             {
-                id: 0,
+                id: 1,
                 name: "Roupas",
                 checked: true,
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in vestibulum leo."
@@ -115,27 +115,12 @@ export default function SelectDOnationTypes({ props }) {
 
     async function handleSubmit() {
         const filter = items.filter(item => item.checked === true)
-        const response = await sendRequest("POST", `need_donates/`, { 
-            setTypeDonates: filter.map(obj => { return obj.id }), 
-            setDescriptions: filter.map(obj => { return obj.description }) })
-
-        if(response.status === 201) {
-            Swal.fire({
-                title: "Os itens solicitados foram atualizados!",
-                text: "Sucesso!",
-                icon: "success",
-                confirmButtonText: "Ok"
-            });
-            setInstitution(await getInstitutionById(institution.id))
-        }
-        else {
-            Swal.fire({
-                title: "Não foi possível efetuar a doação :(",
-                text: "Falha",
-                icon: "error",
-                confirmButtonText: "Ok"
-            });
-        }
+        Swal.fire({
+            title: "Os itens solicitados foram atualizados!",
+            text: "Sucesso!",
+            icon: "success",
+            confirmButtonText: "Ok"
+        });
     }
 
     return(

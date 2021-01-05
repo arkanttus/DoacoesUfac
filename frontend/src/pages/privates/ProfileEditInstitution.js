@@ -22,7 +22,7 @@ import getCroppedImg from '../../components/cropImage';
 import { setUser, setInstitution, getUser, getInstitution } from '../../services/auth';
 import { Cities } from "../../components/Cities";
 import api, { sendRequest, getInstitutionTypes } from "../../services/api";
-import {LatLng} from '../../components/LatLng'
+import { LatLng } from '../../components/LatLng'
 
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -153,8 +153,14 @@ export default function ProfileEditInstitution() {
     const [institutionAvatar, setInstitutionAvatar] = React.useState(institution.image);
     const [description, setDescription] = React.useState(institution.description);
     const [name, setName] = React.useState(institution.name);
-    const [typesInstitutions,setTypesInstitutions] = React.useState(null);
-    const [typeInstitutionName, setTypeInstitutionName] = React.useState("");
+    const [typesInstitutions,setTypesInstitutions] = React.useState([
+        { id: 1, name: "Azilo" },
+        { id: 2, name: "Escola" },
+        { id: 3, name: "Igreja" },
+        { id: 4, name: "Centro de Ensino" },
+        { id: 5, name: "Outro" },
+    ]);
+    const [typeInstitutionName, setTypeInstitutionName] = React.useState("Centro de Ensino");
     const [typeInstitutionID, setTypeInstitutionID] = React.useState("");
     const [otherType, setOtherType] = React.useState(institution.otherType);
     const [nameResponsible, setNameResponsible] = React.useState(user.name);
@@ -200,43 +206,16 @@ export default function ProfileEditInstitution() {
                 croppedAreaPixels,
                 0
             );
-            var formData = new FormData();
-            formData.append('image', croppedImage, institution.id + ".jpg");
 
-            api.patch(`institutions/${institution.id}/`, formData)
-            .then(response => {
-                //const data = response.data
-                if(response.status === 200) {
-                    Swal.fire({
-                        title: "Sua foto foi atualizada!",
-                        icon: "success",
-                        confirmButtonText: "Ok"
-                    });
-                    setInstitution(response.data);
-                    setInstitutionAvatar(response.data.image);
-                    setNewAvatar(null);
-                    handleCloseModal();
-                } else {
-                    handleCloseModal();
-                    setNewAvatar(null);
-                    Swal.fire({
-                        title: "Não foi possível atualizar sua foto!",
-                        icon: "error",
-                        confirmButtonText: "Ok"
-                    });
-                }
-            })
-            .catch( err => {
-                if(err.response.status === 400) {
-                    handleCloseModal();
-                    setNewAvatar(null);
-                    Swal.fire({
-                        title: "Não foi possível atualizar sua foto!",
-                        icon: "error",
-                        confirmButtonText: "Ok"
-                    });
-                }
-            })
+            //const data = response.data
+            Swal.fire({
+                title: "Sua foto foi atualizada!",
+                icon: "success",
+                confirmButtonText: "Ok"
+            });
+            setInstitutionAvatar(croppedImage);
+            setNewAvatar(null);
+            handleCloseModal();
         } catch(e) {
             console.log(e);
         }
@@ -425,10 +404,10 @@ export default function ProfileEditInstitution() {
                     </Tooltip>
                     
                     <Grid item xs={12}>
-                        <TextField fullWidth required value={description} onChange={(e) => setDescription(e.target.value)} label="Breve descrição das atividades" />
+                        <TextField fullWidth required value={name} onChange={(e) => setName(e.target.value)} label="Nome da Instituição" />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth required value={name} onChange={(e) => setName(e.target.value)} label="Nome da Instituição" />
+                        <TextField fullWidth required multiline rows={4} value={description} onChange={(e) => setDescription(e.target.value)} label="Breve descrição das atividades" />
                     </Grid>
 
                     {typeInstitutionName !== "Outro" ? (

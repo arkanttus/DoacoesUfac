@@ -16,6 +16,7 @@ import { sendRequest } from '../../services/api';
 import { Link } from 'react-router-dom';
 import {getUser} from '../../services/auth'
 import { LatLng } from '../../components/LatLng'
+import InstitutionImage from "../../assets/Image.png";
 
 const useStyles = makeStyles((theme) => ({
     containerRoot: {
@@ -96,6 +97,49 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const InstitutionsData = [
+    {
+        id: 1,
+        name: "Abrigo Fulano de Tal",
+        items: "Cestas básicas, produtos de limpeza, fraldas, geriáticas descartáveis e roupas.",
+        latitude: -9.956846,
+        longitude: -67.798846,
+        image: InstitutionImage
+    },
+    {
+        id: 2,
+        name: "Centro de Recuperação",
+        items: "Cestas básicas e produtos de limpeza e roupas.",
+        latitude: -9.957311,
+        longitude: -67.831717,
+        image: InstitutionImage
+    },
+    {
+        id: 3,
+        name: "Igreja ABC",
+        items: "Cestas básicas e produtos de limpeza.",
+        latitude: -9.961345,
+        longitude: -67.856088,
+        image: InstitutionImage
+    },
+    {
+        id: 4,
+        name: "Educandário BCA",
+        items: "Cestas básicas, produtos de limpeza, produtos de higiene pessoal e roupas.",
+        latitude: -9.976528,
+        longitude: -67.832540,
+        image: InstitutionImage
+    },
+    {
+        id: 5,
+        name: "Abrigo Fulano de Tal",
+        items: "Cestas básicas, produtos de limpeza, fraldas, geriáticas descartáveis e roupas.",
+        latitude: -9.976647,
+        longitude: -67.817003,
+        image: InstitutionImage
+    }
+]
+
 export default function Home({props}){
     const classes = useStyles();
     const cities = Cities();
@@ -108,7 +152,7 @@ export default function Home({props}){
     const [uf, setUF] = React.useState(user ? user.uf : "Acre");
     const [citiesArray, setCitiesArray] = React.useState(cities[uf].cidades);
     const [city, setCity] = React.useState(user ? user.city : "Rio Branco");
-    const [institutions,setInstitutions] = React.useState(null);
+    const [institutions,setInstitutions] = React.useState([]);
     const [institutionsCity,setInstitutionsCity] = React.useState(null);
     const [coordinates, setCoordinates] = React.useState(null)
     const [pages, setPages] = React.useState(1)
@@ -137,34 +181,8 @@ export default function Home({props}){
         else {
             props.history.push("/dashboard");
         }*/
-        const res = [
-            {
-                id: 1,
-                name: "Abrigo Fulano de Tal",
-                items: "Cestas básicas, produtos de limpeza, fraldas, geriáticas descartáveis e roupas."
-            },
-            {
-                id: 2,
-                name: "Centro de Recuperação",
-                items: "Cestas básicas e produtos de limpeza e roupas."
-            },
-            {
-                id: 3,
-                name: "Igreja ABC",
-                items: "Cestas básicas e produtos de limpeza."
-            },
-            {
-                id: 4,
-                name: "Educandário BCA",
-                items: "Cestas básicas, produtos de limpeza, produtos de higiene pessoal e roupas.s"
-            },
-            {
-                id: 5,
-                name: "Abrigo Fulano de Tal",
-                items: "Cestas básicas, produtos de limpeza, fraldas, geriáticas descartáveis e roupas."
-            }
-        ]
-        setInstitutions(res);
+        setInstitutions(InstitutionsData);
+        setInstitutionsCity(InstitutionsData)   
         setLoading(false);
     }
 
@@ -172,7 +190,7 @@ export default function Home({props}){
         let res = await sendRequest("POST", 'institutions/city/', {city: city})
         
         if(res.status === 200) {
-            setInstitutionsCity(res.data.Institutions)       
+                
         }
         else if(res.status === 404) {
             console.log("Cidade não encontrada")

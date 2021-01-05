@@ -10,38 +10,36 @@ export const setUser  = (dataUser) => localStorage.setItem('USER', JSON.stringif
 export const getInstitution  = () => JSON.parse(localStorage.getItem('INSTITUTION'))
 export const setInstitution  = (dataInstitution) => localStorage.setItem('INSTITUTION', JSON.stringify(dataInstitution));
 
-export const login = email => {
+export const login = (email, password) => {
     const data = {
         user: {
-            email: "user@email.com",
-            name: "User 1",
+            email: email,
+            password: password,
+            name: "Macilon Araujo Costa Neto",
             isActive: true,
+            cpf: '673.681.530-41',
+            phoneNumber:'68999999999',
             uf: 'Acre',
+            city: 'Rio Branco',
+            emailConfirm:true,
+            shareEmail:false,
+            sharePhone:false,
             token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
         },
-        institution: {
+    }
+    data['user'].typeUser = email.includes("doador") ? 'Doador' : 'Receptor'
+
+    localStorage.setItem(TOKEN_KEY, data['token']);
+    setUser(data['user'])
+
+    if(data['user'].typeUser === 'Receptor') {
+        data['institution'] = {
             id:1,
-            name:'Cara louco',
-            owner:{
-                id:1,
-                email: 'ropgeroin@gmail.com',
-                cpf: '673.681.530-41',
-                name: 'rogerin',
-                isActive:true,
-                dateJoined:true,
-                emailConfirm:true,
-                shareEmail:false,
-                sharePhone:false,
-                phoneNumber:'68999999999',
-                typeUser: 'Receptor',
-                uf: 'Acre',
-                city: 'Rio Branco',
-                totalDonations:0,
-                image:null
-            },
-            typeInstitution: 'L�der de Bairro',
+            name:'Centro Dom Bosco',
+            owner: data['user'],
+            typeInstitution: 'Centro de Ensino',
             image: 'https://doacao.ufac.br/media/institution/46b63e52-a072-4727-8133-95a21acef985_Cara_louco.png',
-            description: 'RIO BRANCO',
+            description: 'O Núcleo de Apoio Pedagógico Dom Bosco é uma referência na Assistência de Educação Inclusiva para crianças e adultos com deficiência',
             latitude: -9.980230909669002,
             longitude: -67.82715289467892,
             linkTwitter: null,
@@ -70,14 +68,8 @@ export const login = email => {
             otherType:null,
             countDonates:0
         }
-    }
-    data['user'].typeUser = email.includes("doador") ? 'Doador' : 'Receptor'
-
-    localStorage.setItem(TOKEN_KEY, data['token']);
-    setUser(data['user'])
-
-    if(data['user'].typeUser === 'Receptor')
         setInstitution(data['institution']);
+    }
     
 };
 
