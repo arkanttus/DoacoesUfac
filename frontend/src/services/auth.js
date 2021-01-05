@@ -39,7 +39,7 @@ export const login = email => {
                 totalDonations:0,
                 image:null
             },
-            typeInstitution: 'Líder de Bairro',
+            typeInstitution: 'Lï¿½der de Bairro',
             image: 'https://doacao.ufac.br/media/institution/46b63e52-a072-4727-8133-95a21acef985_Cara_louco.png',
             description: 'RIO BRANCO',
             latitude: -9.980230909669002,

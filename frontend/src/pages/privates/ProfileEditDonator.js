@@ -17,6 +17,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Cropper from 'react-easy-crop';
+import InstitutionImage from "../../assets/Image.png";
 
 //Services
 import { setUser, getUser } from '../../services/auth';
@@ -276,30 +277,12 @@ export default function ProfileEditDonator() {
             return;
         }
 
-        const response = await sendRequest("PATCH", "users/" + user.id + "/", { name, email, phoneNumber: phone, uf, city });
-        if(response.status === 200) {
-            Swal.fire({
-                title: "Seus dados foram atualizados!",
-                icon: 'success',
-                confirmButtonText: 'Ok'
-            });
-            setUser(response.data);
-        } else {
-            //Número de telefone inválido
-            if(response.data.phoneNumber) {
-                Swal.fire({
-                    title: "Número de telefone inválido!",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-            } else {
-                Swal.fire({
-                    title: "Algo deu errado. Tente novamente ou entre em contato conosco!",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-            }   
-        }
+        Swal.fire({
+            title: "Seus dados foram atualizados!",
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        });
+
     }//Atualizar perfil
 
     //Atualizar senha
@@ -340,47 +323,15 @@ export default function ProfileEditDonator() {
             return;
         }
 
-        const response = await sendRequest('POST', "users/" + user.id + "/change_password/", { old_password: password, new_password1: newPassword1, new_password2: newPassword2 });
-        
-        if(response.status === 400) {
-            //Senha curta
-            if(response.data.new_password2) {
-                Swal.fire({
-                    title: "Esta senha é muito curta. Ela precisa conter pelo menos 8 caracteres!",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-                return;
-            }
-            //Senha atual incorreta
-            if(response.data.old_password) {
-                Swal.fire({
-                    title: "A senha atual está incorreta!",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-                return;
-            }
-        }
-        
-        //Sucesso
-        if(response.status === 200) {
-            Swal.fire({
-                title: "A senha foi atualizada com sucesso!",
-                icon: "success",
-                confirmButtonText: "Ok"
-            });
-            setPassword("");
-            setNewPassword1("");
-            setNewPassword2("");
-        } else {
-            Swal.fire({
-                title: "Aconteceu um problema. Tente novamente mais tarde ou entre em contato conosco!",
-                icon: "error",
-                confirmButtonText: "Ok"
-            });
-        }
-        
+        Swal.fire({
+            title: "A senha foi atualizada com sucesso!",
+            icon: "success",
+            confirmButtonText: "Ok"
+        });
+        setPassword("");
+        setNewPassword1("");
+        setNewPassword2("");
+
     }//Atualizar senha
     
     return(
@@ -396,10 +347,10 @@ export default function ProfileEditDonator() {
                             <Grid item xs={12} className={classes.divAvatar}>
                                 <label htmlFor="uploadAvatar">
                                     {userAvatar !== null ? (
-                                        <img src={userAvatar} alt="profile" />
+                                        <img src={InstitutionImage} alt="profile" />
                                         
                                     ) : (
-                                        <img src={PhotoExample} alt="profile" />
+                                        <img src={InstitutionImage} alt="profile" />
                                     )}
                                 </label>
                             </Grid>

@@ -16,6 +16,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Tooltip from '@material-ui/core/Tooltip';
+import InstitutionImage from "../../assets/Image.png";
 
 import getCroppedImg from '../../components/cropImage';
 import { setUser, setInstitution, getUser, getInstitution } from '../../services/auth';
@@ -177,7 +178,6 @@ export default function ProfileEditInstitution() {
     const [coordinates, setCoordinates] = React.useState(null)
 
     React.useEffect(() => {
-        //loadData();
         setCoordinates(LatsLngs[uf][city])
     }, []);
 
@@ -258,15 +258,6 @@ export default function ProfileEditInstitution() {
         setCitiesArray(cities[e.target.value].cidades);
     }
 
-    async function loadData() {
-        let res = await getInstitutionTypes()
-        if(res) {
-            setTypesInstitutions(res.results);
-            setTypeInstitutionName(res.results.filter(obj => {return obj.name === institution.typeInstitution})[0].name);
-            setTypeInstitutionID(res.results.filter(obj => {return obj.name === institution.typeInstitution})[0].id);
-        }
-    }
-    
     function handleSelectInstitutionType (e){
         setTypeInstitutionName(e.target.value);
         setTypeInstitutionID(typesInstitutions.filter(obj => { return obj.name === e.target.value })[0].id);
@@ -335,81 +326,13 @@ export default function ProfileEditInstitution() {
             });
             return;
         }
-        
-        const responseUser = await sendRequest("PATCH", "users/" + user.id + "/", {name: nameResponsible, email, cpf: CPF, phoneNumber: phone, typeUser: "R"});
-        const responseInst = await sendRequest("PATCH", "institutions/" + institution.id + "/", {
-            owner: user.id,
-            name,
-            typeInstitution: typeInstitutionID,
-            otherType,
-            description,
-            latitude,
-            longitude,
-            uf,
-            city,
-            linkFacebook,
-            linkInstagram,
-            linkTwitter,
+
+        Swal.fire({
+            title: "Seus dados foram atualizados!",
+            icon: "success",
+            confirmButtonText: "Ok"
         });
 
-        if(responseInst.status === 200 && responseUser.status === 200) {
-            Swal.fire({
-                title: "Seus dados foram atualizados!",
-                icon: "success",
-                confirmButtonText: "Ok"
-            });
-            setUser(responseUser.data);
-            setInstitution(responseInst.data);
-            return;
-        } else {
-            if(responseUser.status !== 200) {
-                if(responseUser.data.phoneNumber) {
-                    Swal.fire({
-                        title: "Número de telefone inválido!",
-                        icon: "error",
-                        confirmButtonText: "Ok"
-                    });
-                    return;
-                }
-            }
-            if(responseInst.status !== 200) {
-                //Facebook link
-                if(responseInst.data.linkFacebook) {
-                    Swal.fire({
-                        title: "Link Facebook Inválido!",
-                        text: responseInst.data.linkFacebook.linkFacebook,
-                        icon: "error",
-                        confirmButtonText: "Ok"
-                    });
-                    return;
-                }
-                //Instagram link
-                if(responseInst.data.linkInstagram) {
-                    Swal.fire({
-                        title: "Link Instagram Inválido!",
-                        text: responseInst.data.linkInstagram.linkInstagram,
-                        icon: "error",
-                        confirmButtonText: "Ok"
-                    });
-                    return;
-                }
-                //Twitter link
-                if(responseInst.data.linkTwitter) {
-                    Swal.fire({
-                        title: "Link Twitter Inválido!",
-                        text: responseInst.data.linkTwitter.linkTwitter,
-                        icon: "error",
-                        confirmButtonText: "Ok"
-                    });
-                    return;
-                }
-            }
-            Swal.fire({
-                title: "Algo deu errado. Tente novamente mais tarde!",
-                icon: "error",
-                confirmButtonText: "Ok"
-            });
-        }
     }//Atualizar perfil
 
     //Atualizar senha
@@ -450,45 +373,14 @@ export default function ProfileEditInstitution() {
             return;
         }
 
-        const response = await sendRequest('POST', "users/" + user.id + "/change_password/", { old_password: password, new_password1: newPassword1, new_password2: newPassword2 });
-        
-        if(response.status === 400) {
-            //Senha curta
-            if(response.data.new_password2) {
-                Swal.fire({
-                    title: "Esta senha é muito curta. Ela precisa conter pelo menos 8 caracteres!",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-                return;
-            }
-            //Senha atual incorreta
-            if(response.data.old_password) {
-                Swal.fire({
-                    title: "A senha atual está incorreta!",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-                return;
-            }
-        }
-        //Sucesso
-        if(response.status === 200) {
-            Swal.fire({
-                title: "A senha foi atualizada com sucesso!",
-                icon: "success",
-                confirmButtonText: "Ok"
-            });
-            setPassword("");
-            setNewPassword1("");
-            setNewPassword2("");
-        } else {
-            Swal.fire({
-                title: "Aconteceu um problema. Tente novamente mais tarde ou entre em contato conosco!",
-                icon: "error",
-                confirmButtonText: "Ok"
-            });
-        }
+        Swal.fire({
+            title: "A senha foi atualizada com sucesso!",
+            icon: "success",
+            confirmButtonText: "Ok"
+        });
+        setPassword("");
+        setNewPassword1("");
+        setNewPassword2("");
     }//Atualizar senha
 
     function getImage(e) {
@@ -520,13 +412,13 @@ export default function ProfileEditInstitution() {
                 <Grid container spacing={2}>
                     <input onChange={(e) => getImage(e)} accept="image/*" id="uploadAvatar" type="file" style={{ display: "none" }} />
                     <Tooltip title="Clique para alterar a foto" arrow>
-                        <Grid item xs={12} sm={4} className={classes.divAvatar}>
+                        <Grid item xs={12} sm={4} className={classes.divAvatar} style={{ display: 'block', margin: 'auto' }}>
                             <label htmlFor="uploadAvatar">
                                 {institutionAvatar !== null ? (
-                                    <img src={institutionAvatar} style={{ maxWidth: '100%' }} alt="profile" />
+                                    <img src={InstitutionImage} style={{ maxWidth: '100%' }} alt="profile" />
                                     
                                 ) : (
-                                    <img src={PhotoExample} style={{ maxWidth: '100%' }} alt="profile" />
+                                    <img src={InstitutionImage} style={{ maxWidth: '100%' }} alt="profile" />
                                 )}
                             </label>
                         </Grid>

@@ -48,9 +48,23 @@ export default function SelectDOnationTypes({ props }) {
     const institution = getInstitution();
 
     async function loadData() {
-        let res = await sendRequest("GET", "type_donates/", {})
+        setItems([
+            {
+                id: 0,
+                name: "Dinheiro",
+                checked: false
+            },
+            {
+                id: 0,
+                name: "Roupas",
+                checked: true,
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in vestibulum leo."
+            }
+        ]);
+        setLoading(false)
+
     
-        if(res.status === 200) {
+        /*if(res.status === 200) {
             res.data.results.forEach(function(name) {
                 name.checked = false
                 name.description= ""
@@ -70,7 +84,7 @@ export default function SelectDOnationTypes({ props }) {
             setLoading(false)
         }
         else
-            props.history.push("/dashboard");
+            props.history.push("/dashboard");*/
     }
 
     React.useEffect(() => {
