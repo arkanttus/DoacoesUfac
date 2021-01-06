@@ -352,6 +352,15 @@ export default function ProfileEditInstitution() {
             return;
         }
 
+        if(password !== user.password) {
+            Swal.fire({
+                title: "Senha atual incorreta!",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+            return;
+        }
+
         Swal.fire({
             title: "A senha foi atualizada com sucesso!",
             icon: "success",
