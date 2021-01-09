@@ -14,6 +14,8 @@ export const login = data => {
     localStorage.setItem(TOKEN_KEY, data['token']);
     setUser(data['user'])
 
+    console.log(data)
+
     if(data['user'].typeUser === 'Receptor')
         setInstitution(data['institution']);
     

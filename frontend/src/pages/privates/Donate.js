@@ -61,6 +61,8 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         padding: "0px 10px !important",
+        flex: 1,
+        height: '100% !important'
     },
     modal: {
         display: 'flex',
@@ -90,6 +92,10 @@ const useStyles = makeStyles((theme) => ({
             color: '#1DA1F2',
             cursor: 'pointer'
         }
+    },
+    cardContainer: {
+        height: '7rem !important',
+        display: 'flex'
     }
 
 }));
@@ -216,15 +222,16 @@ export default function Donate({ props }) {
                                             <Grid container spacing={4}>
                                                 { items.map( (item) => (
                                                     <Grid item xs={12} sm={12} md={6}>
-                                                        <Card>
+                                                        <Card className={classes.cardContainer}>
                                                             <CardContent className={classes.content}>
-                                                                <Grid container direction="row" alignItems="center">
+                                                                <Grid container direction="row" alignItems="center" style={{ height: '100%' }}>
                                                                     <Grid item xs={12}>
                                                                         <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.typeDonate.name} style={{ color: "#247BA0" }}/>
                                                                     </Grid>
-                                                                    <Grid item style={{ fontSize: "14px" }}>
+                                                                    {item.description !== "" &&
+                                                                    <Grid item style={{ fontSize: "14px", height: '4rem', overflowY: 'auto' }}>
                                                                         {item.description}
-                                                                    </Grid>
+                                                                    </Grid>}
                                                                 </Grid>
                                                             </CardContent>
                                                         </Card>
