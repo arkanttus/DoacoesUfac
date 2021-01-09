@@ -600,7 +600,7 @@ export default function CadastroInstituicao({props}) {
                 screen2===0 ? (
                     <Grid item xs={12} className={classes.gridCard}>
                         <Card style={{width: "35rem"}}>
-                            <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
+                            <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', marginLeft: 0, marginRight: 0, color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                             <CardBody style={{ paddingRight:15, paddingLeft:15}}>
                                 <Grid container>
                                 <input onChange={(e) => getImage(e)} accept="image/*" id="uploadAvatar" type="file" style={{ display: "none" }} />
@@ -730,7 +730,7 @@ export default function CadastroInstituicao({props}) {
                     screen3 ===0 ? (
                         <Grid item xs={12} className={classes.gridCard}>
                         <Card style={{width: "35rem", height:"35rem"}}>
-                            <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
+                            <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', marginLeft: 0, marginRight: 0, color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                             <CardBody style={{ paddingRight:15, paddingLeft:15}}>
                                 <Grid container>
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
@@ -749,7 +749,7 @@ export default function CadastroInstituicao({props}) {
                     </Grid>        
                     ):( <Grid item xs={12} className={classes.gridCard}>
                         <Card className={classes.item}>
-                            <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', boxShadow: '0px 4px 25px rgba(0, 0, 0, 0.12), 0px 5px 15px rgba(0, 0, 0, 0.5)', color: '#FFF' }}>Cadastro de Instituição</CardHeader>
+                            <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', marginLeft: 0, marginRight: 0, color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                             <CardBody style={{ paddingRight:15, paddingLeft:15}}>
                                 <Grid container>
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
