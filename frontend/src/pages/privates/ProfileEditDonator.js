@@ -322,7 +322,6 @@ export default function ProfileEditDonator() {
             });
             return;
         }
-        console.log(password, user.password)
         if(password !== user.password) {
             Swal.fire({
                 title: "Senha atual incorreta!",
