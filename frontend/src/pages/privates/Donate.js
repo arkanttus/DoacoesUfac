@@ -62,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         padding: "0px 10px !important",
+        flex: 1,
+        height: '100% !important'
     },
     modal: {
         display: 'flex',
@@ -91,6 +93,10 @@ const useStyles = makeStyles((theme) => ({
             color: '#1DA1F2',
             cursor: 'pointer'
         }
+    },
+    cardContainer: {
+        height: '7rem !important',
+        display: 'flex'
     }
 
 }));
@@ -114,7 +120,7 @@ export default function Donate({ props }) {
             {
                 id: 0,
                 checked: false,
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in vestibulum leo.",
+                description: "",
                 typeDonate: {
                     name: "Dinheiro"
                 }
@@ -122,9 +128,25 @@ export default function Donate({ props }) {
             {
                 id: 1,
                 checked: false,
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in vestibulum leo.",
+                description: "Roupas de frio para crianças de 7 a 12 anos sem preferência de tecido.",
                 typeDonate: {
                     name: "Roupas"
+                }
+            },
+            {
+                id: 3,
+                checked: false,
+                description: "Sabonete e shampoo",
+                typeDonate: {
+                    name: "Itens de Higiene Pessoal"
+                }
+            },
+            {
+                id: 4,
+                checked: false,
+                description: "Sal, açúcar, arroz, café, macarrão e feijão.",
+                typeDonate: {
+                    name: "Alimentos não-perecíveis"
                 }
             }
         ]);
@@ -216,15 +238,16 @@ export default function Donate({ props }) {
                                             <Grid container spacing={4}>
                                                 { items.map( (item) => (
                                                     <Grid item xs={12} sm={12} md={6}>
-                                                        <Card>
+                                                        <Card className={classes.cardContainer}>
                                                             <CardContent className={classes.content}>
-                                                                <Grid container direction="row" alignItems="center">
+                                                                <Grid container direction="row" alignItems="center" style={{ height: '100%' }}>
                                                                     <Grid item xs={12}>
                                                                         <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.typeDonate.name} style={{ color: "#247BA0" }}/>
                                                                     </Grid>
-                                                                    <Grid item style={{ fontSize: "14px" }}>
+                                                                    {item.description !== "" &&
+                                                                    <Grid item style={{ fontSize: "14px", height: '4rem', overflowY: 'auto' }}>
                                                                         {item.description}
-                                                                    </Grid>
+                                                                    </Grid>}
                                                                 </Grid>
                                                             </CardContent>
                                                         </Card>

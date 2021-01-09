@@ -36,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         padding: "0px 10px !important",
+        flex: 1,
+        height: '100% !important'
+    },
+    cardContainer: {
+        height: '7rem !important',
+        display: 'flex'
     }
 
 }));
@@ -139,18 +145,15 @@ export default function SelectDOnationTypes({ props }) {
                                 <Grid container spacing={4} >
                                     {items ? items.map( item => (
                                         <Grid item xs={12} sm={4} md={6}>
-                                            <Card>
+                                            <Card className={classes.cardContainer}>
                                                 <CardContent className={classes.content}>
-                                                    <Grid container direction="row" alignItems="center"> 
+                                                    <Grid container direction="row" alignItems="center" style={{ height: '100%' }}> 
                                                             <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0" }}/>                                       
                                                             {
-                                                                item.checked===true ?
-                                                                 (  
+                                                                item.checked===true &&
+                                                                 
                                                                     <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação de itens:(opcional)" />
-                                                                     
-                                                                 )
-
-                                                                 : (<></>)
+                                                                            
                                                             }   
                                                     </Grid>
                                                 </CardContent>

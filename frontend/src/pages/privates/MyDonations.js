@@ -95,7 +95,8 @@ export default function MyDonations({ props  }) {
                     name: names[i % items.length]
                 },
                 items: items[i % items.length],
-                createdAt: "2021-01-03 17:30"
+                createdAt: "2021-01-03 17:30",
+                status: i % 2 === 0
             })
         }
         setDonations(data)
@@ -130,6 +131,7 @@ export default function MyDonations({ props  }) {
                                         <CardBody>
                                             <p><strong>Doação: </strong>{donation.items}</p>
                                             <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY HH:mm')}</p>
+                                            <p><strong>Status: </strong> <label style={donation.status ? {color: 'green'} : {color: 'red'}}>{donation.status ? "Confirmada" : "Pendente"}</label></p>
                                         </CardBody>
                                     </Card>
                             </Grid>

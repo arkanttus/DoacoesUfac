@@ -110,6 +110,11 @@ const useStyles = makeStyles((theme) => ({
     },
     resize: {
         fontSize: '10px'
+    },
+    fixPlaceholder: {
+        '& label': {
+            fontSize: '.8rem'
+        }
     }
 }));
 
@@ -147,6 +152,7 @@ function CPFMask(props) {
 
 
 export default function CadastroInstituicao({props}) {
+    
     const classes = useStyles();
     const Swal = require('sweetalert2');
     const cities = Cities();
@@ -758,15 +764,15 @@ export default function CadastroInstituicao({props}) {
                                         <Grid container style={{ padding: 0, marginBottom: 15}}>
                                         <Grid container spacing={2}>
                                             {items ? items.map( item => (
-                                                <Grid item xs={12} sm={4} md={6}  style={{height:110}} >
-                                                    <Card >
-                                                        <CardContent className={classes.content} style={{height:50}} >
-                                                            <Grid container direction="row" alignItems="center" > 
-                                                                    <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChangeDonate(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0", marginTop:-10}}  />                                       
+                                                <Grid item xs={12} sm={4} md={6} >
+                                                    <Card>
+                                                        <CardContent className={classes.content}>
+                                                            <Grid container direction="row" alignItems="center"> 
+                                                                    <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChangeDonate(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0" }}/>                                       
                                                                     {
                                                                         item.checked===true ?
                                                                         (  
-                                                                            <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação do Item (opcional)" InputLabelProps={{style: {fontSize: '0.8rem'}}}/>
+                                                                            <TextField className={classes.fixPlaceholder}  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação de itens:(opcional)" />
                                                                             
                                                                         )
 
