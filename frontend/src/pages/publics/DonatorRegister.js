@@ -263,52 +263,46 @@ export default function CadastroInstituicao({ props }) {
                 }).then(() => {
                     props.history.push('/login');
                 });
-                
-            } else {
-                if(res.data.name) {
-                    Swal.fire({
-                        title: res.data.name,
-                        text: "Nome Completo*",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-                if(res.data.email) {
-                    Swal.fire({
-                        title: res.data.email,
-                        text: "Email*",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-                if(res.data.phoneNumber) {
-                    Swal.fire({
-                        title: res.data.phoneNumber,
-                        text: "Telefone*",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-                if(res.data.password1) {
-                    Swal.fire({
-                        title: res.data.password1,
-                        text: "Senha de acesso*",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    })
-                    return;
-                }
-                Swal.fire({
-                    title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
             }
         }).catch(err => {
             setWaiting(false);
+            if(err.response.data.name) {
+                Swal.fire({
+                    title: err.response.data.name,
+                    text: "Nome Completo*",
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+                return;
+            }
+            if(err.response.data.email) {
+                Swal.fire({
+                    title: err.response.data.email,
+                    text: "Email*",
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+                return;
+            }
+            if(err.response.data.phoneNumber) {
+                Swal.fire({
+                    title: err.response.data.phoneNumber,
+                    text: "Telefone*",
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+                return;
+            }
+            if(err.response.data.password1) {
+                Swal.fire({
+                    title: err.response.data.password1,
+                    text: "Senha de acesso*",
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+                return;
+            }
+
             Swal.fire({
                 title: 'Algo de errado aconteceu. Por favor tente novamente mais tarde!',
                 icon: 'error',

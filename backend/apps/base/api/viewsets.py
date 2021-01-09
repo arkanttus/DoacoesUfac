@@ -15,6 +15,7 @@ class InstitutionView(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return InstitutionReadSerializer
+        
         return InstitutionUpdateSerializer
 
     def create(self, request, *args, **kwargs):
@@ -31,6 +32,7 @@ class InstitutionView(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
+        self.queryset = Institution.objects.all()
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
