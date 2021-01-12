@@ -239,6 +239,7 @@ export default function CadastroInstituicao({props}) {
     const [city, setCity] = React.useState(null);
     const [longitude, setLongitude] = React.useState("");
     const [latitude, setLatitude] = React.useState("");
+    const [marker, setMarker] = React.useState(null)
 
     //items
     const [items, setItems] = React.useState(null)
@@ -560,7 +561,7 @@ export default function CadastroInstituicao({props}) {
             })
         }
     }
-   
+
     return(
     <Grid container className={classes.container}>
         <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
@@ -770,7 +771,7 @@ export default function CadastroInstituicao({props}) {
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                         <h3 style={{ color: "#555",textAlign: 'center'}}>Digite o endereço da Instituição ou selecione no mapa</h3>
                                         <Grid item xs={12} >   
-                                            <MapRegister center={centerMap} handleCoordinates={handleCoordinates}/>       
+                                            <MapRegister center={centerMap} handleCoordinates={handleCoordinates} marker={marker} setMarker={setMarker} />       
                                         </Grid>
                                     </Grid>
                                 </Grid>

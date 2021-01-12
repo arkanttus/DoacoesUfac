@@ -30,11 +30,12 @@ class MapComp extends Component {
     super(props);
 
     this.state = {
-      marker: null,
+      marker: this.props.marker,
       showCurrent: false
     };
 
     this.handleCoordinates = this.props.handleCoordinates
+    this.setMarker = this.props.setMarker
   }
 
   componentDidMount() {
@@ -45,7 +46,6 @@ class MapComp extends Component {
 
     searchControl.on("results", function(data) {
       results.clearLayers();
-      //console.log(data);
       const marker = data.results[0];
 
       if (marker) self.addMarker(marker);
@@ -60,6 +60,7 @@ class MapComp extends Component {
   addMarker = e => {
     const marker = e.latlng
     this.setState({ marker });
+    this.setMarker(marker)
     this.handleCoordinates(marker.lat, marker.lng)
   };
 
@@ -69,6 +70,7 @@ class MapComp extends Component {
   };
 
   handleClose = () => {
+    this.setMarker(null)
     this.setState({ marker: null });
     this.handleCoordinates('', '')
   };
@@ -89,7 +91,7 @@ class MapComp extends Component {
       },
       onActivate: () => {} // callback before engine starts retrieving locations
     };
-    console.log(marker)
+
     return (
       <Map
         className={styles ? styles : classes.mapa}
