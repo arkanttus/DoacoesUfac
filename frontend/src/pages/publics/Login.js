@@ -114,7 +114,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         [theme.breakpoints.up('sm')]: {
             flexDirection: 'row'
-        }
+        },
+        marginTop: '15px'
       }
 
 }));
@@ -166,7 +167,7 @@ export default function Login({ props }) {
                                     </Grid>
                                 </Grid>
                                 <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
-                                    <Button type="submit" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">ENTRAR</Button>
+                                    <Button type="submit" variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: 'auto', marginTop: 40, marginBottom: 5 }} color="primary">ENTRAR</Button>
                                 </WaitLoading>
                             </form>
                         </CardBody>
@@ -174,10 +175,10 @@ export default function Login({ props }) {
                 </Grid>
                 <Grid item xs={12} className={classes.gridButton}>
                     <Grid item xs={12} sm={6} style={{ padding: 5 }}>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={() => props.history.push('/doador')}>Quero ser doador</Button>
+                        <Button variant="contained" color="primary" className={classes.button} style={{ background: '#1769aa' }} onClick={() => props.history.push('/doador')}>Quero ser doador</Button>
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ padding: 5 }}>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={() => props.history.push('/instituicao')}>Seja uma instituição</Button>
+                        <Button variant="contained" color="secondary" className={classes.button} style={{ background: '#b26500' }} onClick={() => props.history.push('/instituicao')}>Seja uma instituição</Button>
                     </Grid>
                 </Grid>
             </Container>

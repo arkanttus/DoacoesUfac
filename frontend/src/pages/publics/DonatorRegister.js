@@ -366,7 +366,7 @@ export default function CadastroInstituicao({ props }) {
 
                             </Grid>
                             <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
-                                <Button onClick={(e) => confirmRegister(e)} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
+                                <Button variant="contained" onClick={(e) => confirmRegister(e)} style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary">FINALIZAR</Button>
                             </WaitLoading>
                         </CardBody>
                     </Card>

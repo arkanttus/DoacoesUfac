@@ -42,11 +42,24 @@ const useStyles = makeStyles((theme) => ({
     cardContainer: {
         height: '7rem !important',
         display: 'flex'
+    },
+    btnOk: {
+        background: '#008B00', 
+        boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', 
+        borderRadius: '3px', 
+        display: 'block', 
+        margin: '0vh auto 3vh auto', 
+        width: '30vh', 
+        height: '6vh', 
+        fontSize: '1rem',
+        "&:focus": {
+            background: '#357a38',
+            color: '#ddd'
+        }
     }
-
 }));
 
-export default function SelectDOnationTypes({ props }) {
+export default function SelectDonationTypes({ props }) {
     const classes = useStyles();
     const [items, setItems] = React.useState(null)
     const [loading, setLoading] = React.useState(true)
@@ -151,9 +164,7 @@ export default function SelectDOnationTypes({ props }) {
                                                             <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChange(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0" }}/>                                       
                                                             {
                                                                 item.checked===true &&
-                                                                 
                                                                     <TextField  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação de itens:(opcional)" />
-                                                                            
                                                             }   
                                                     </Grid>
                                                 </CardContent>
@@ -165,7 +176,7 @@ export default function SelectDOnationTypes({ props }) {
                             </Grid>
 
                             <Grid item>
-                                <Button onClick={handleSubmit} variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>CONFIRMAR</Button>
+                                <Button onClick={handleSubmit} variant="contained" className={classes.btnOk}>CONFIRMAR</Button>
                             </Grid>
                         </Grid>
                     </Container>
