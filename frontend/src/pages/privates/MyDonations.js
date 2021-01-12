@@ -113,6 +113,7 @@ export default function MyDonations({ props  }) {
                                         <CardBody>
                                             <p><strong>Doação: </strong>{donation.items}</p>
                                             <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY HH:mm')}</p>
+                                            <p><strong>Status: </strong> <label style={donation.donated ? {color: 'green'} : {color: 'red'}}>{donation.donated ? "Confirmada" : "Pendente"}</label></p>
                                         </CardBody>
                                     </Card>
                             </Grid>

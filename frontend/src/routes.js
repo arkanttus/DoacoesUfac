@@ -22,6 +22,7 @@ import Help from './pages/publics/Help';
 
 
 import Dashboard from './pages/privates/Dashboard';
+import DonatorView from './pages/privates/DonatorView';
 import Logout from './pages/privates/Logout';
 import Donated from './pages/privates/Donated';
 import Donate from './pages/privates/Donate';
@@ -71,6 +72,10 @@ const Routes = () => (
       <RouteWithLayout path="/validar-email/:id/:token" layout={FormLayout} component={EmailValidation} />
       <RouteWithLayout path="/dashboard" layout={DashboardLayout} component={Dashboard} />
 
+      <PrivateRoute path="/doador/:id" layout={DashboardLayout} component={DonatorView} />
+      <PrivateRoute path="/doacoes" layout={DashboardLayout} component={DonationList} />
+      <PrivateRoute path="/solicitacoes" layout={DashboardLayout} component={SelectDonationTypes} />
+
       <NotAuthenticateRoute path="/login" layout={FormLayout} component={Login} />
       <NotAuthenticateRoute path="/instituicao" layout={FormLayout} component={InstituteRegister} />
       <NotAuthenticateRoute path="/doador" layout={FormLayout} component={DonatorRegister} />
@@ -80,9 +85,6 @@ const Routes = () => (
       <PrivateRoute path="/doado/:donationId" layout={DashboardLayout} component={Donated} />
       <PrivateRoute path="/doar/:institutionId" layout={DashboardLayout} component={Donate} />
       <PrivateRoute path="/conta" layout={DashboardLayout} component={ProfileEdit} />
-
-      <PrivateRoute path="/doacoes" layout={DashboardLayout} component={DonationList} />
-      <PrivateRoute path="/solicitacoes" layout={DashboardLayout} component={SelectDonationTypes} />
     </Switch>
   </BrowserRouter>
 );

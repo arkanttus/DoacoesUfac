@@ -72,3 +72,6 @@ export async function getDonationById(id) {
     return await getFromRequest("GET", "donates/"+id, {})
 }
 
+export async function getUserById(id) {
+    return await getFromRequest("GET", "users/"+id, {})
+}

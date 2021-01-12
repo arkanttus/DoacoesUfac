@@ -47,7 +47,20 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.56)',
         color: '#fff'
     },
-
+    noneDonation: {
+        color: '#555', 
+        textAlign: 'center', 
+        padding: '4% 0 2% 0', 
+        fontSize: '25px',
+        [theme.breakpoints.down('sm')]: {
+            padding: '4% 0 5% 0',  
+        }
+    },
+    cardContainer: {
+        "&:hover": {
+            cursor: "pointer"
+        }
+    }
 }));
 
 export default function ListDonation() {
@@ -131,14 +144,14 @@ export default function ListDonation() {
                 <Grid item xs={12} className={classes.titulo1}>
                     Lista de doações
                 </Grid>
-                <Grid item xs={12} className={classes.titulo2}>
+               { donations.length > 0 && (<Grid item xs={12} className={classes.titulo2}>
                     Confirme se a doação foi efetuada
-                </Grid>
+                </Grid>)}
 
                 <Grid container>
                     { donations.map( donation => (
                         <Grid item xs={12} sm={4} lg={3}  className={classes.gridCardContainer}>
-                            <Card style={{backgroundColor:"#ECE9E9",width: "19rem", height: "auto"}}>
+                            <Card className={classes.cardContainer} style={{backgroundColor:"#ECE9E9",width: "19rem", height: "auto"}} onClick={() => window.location.href = 'doador/'+donation.donator.id}>
                                 <CardHeader className={classes.cardHeader}>
                                     <label>
                                         <strong>Doador:</strong> {donation.donator.name}
@@ -158,14 +171,20 @@ export default function ListDonation() {
                                 <CardBody>
                                     <p><strong>Doação: </strong>{donation.items}</p>
                                     <p><strong>Data: </strong>{moment(donation.createdAt).format('DD/MM/YYYY')}</p>
-                                    <Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
+                                    {/*<Grid style={{ display:"flex", justifyContent:"flex-end", alignItems:"center" }}>
                                         <label> {donation.donator.totalDonations} </label>
                                         <FavoriteIcon style={{ color:"#E53935", marginRight: -8, marginLeft: 5 }}/>     
-                                    </Grid>
+                                    </Grid>*/}
                                 </CardBody>
                             </Card>
                         </Grid>
                     ) )}
+
+                    { !donations || donations.length == 0 && ( 
+                        <Grid item xs={12} className={classes.noneDonation}>
+                            Você ainda não recebeu doações!
+                        </Grid>
+                    )}
                 </Grid>
 
             </Grid>
