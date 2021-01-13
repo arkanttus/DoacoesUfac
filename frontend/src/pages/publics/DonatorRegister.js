@@ -368,6 +368,7 @@ export default function CadastroInstituicao({ props }) {
                             <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
                                 <Button onClick={(e) => confirmRegister(e)} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">FINALIZAR</Button>
                             </WaitLoading>
+                            <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                         </CardBody>
                     </Card>
                 </Grid>
