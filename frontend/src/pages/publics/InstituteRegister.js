@@ -599,6 +599,7 @@ export default function CadastroInstituicao({props}) {
 
                            </Grid>
                            <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
+                           <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                        </CardBody>
                    </Card>
                </Grid>            
@@ -727,7 +728,8 @@ export default function CadastroInstituicao({props}) {
                                 <Grid container spacing={3} style={{paddingTop: 20, paddingBottom: 20}}>
                                     <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary">VOLTAR</Button>
                                     <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
-                                </Grid> 
+                                </Grid>
+                                <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                             </CardBody>
                         </Card>
                     </Grid>   
@@ -735,7 +737,7 @@ export default function CadastroInstituicao({props}) {
                 ):(
                     screen3 ===0 ? (
                         <Grid item xs={12} className={classes.gridCard}>
-                        <Card style={{width: "35rem", height:"35rem"}}>
+                        <Card style={{width: "35rem", height:"43rem"}}>
                             <CardHeader style={{ textAlign: 'center', fontSize: 25, background: 'linear-gradient(90deg, #247BA0 0%, #10668B 100%)', marginLeft: 0, marginRight: 0, color: '#FFF' }}>Cadastro de Instituição</CardHeader>
                             <CardBody style={{ paddingRight:15, paddingLeft:15}}>
                                 <Grid container>
@@ -750,7 +752,8 @@ export default function CadastroInstituicao({props}) {
                             <Grid container spacing={3} style={{paddingTop: 0, marginBottom: 10}}>
                                 <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
                                 <Button onClick={() => setScreen3(screen3 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
-                            </Grid> 
+                            </Grid>
+                            <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                         </Card>
                     </Grid>        
                     ):( <Grid item xs={12} className={classes.gridCard}>
@@ -791,7 +794,8 @@ export default function CadastroInstituicao({props}) {
                                 <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
                                     <Button onClick={confirmRegister} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15, zIndex:1 }} color="primary" variant="contained">FINALIZAR</Button>
                                 </WaitLoading>
-                            </Grid> 
+                            </Grid>
+                            <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                         </Card>
                     </Grid>        
                     ) 
