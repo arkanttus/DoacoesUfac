@@ -193,7 +193,24 @@ export default function CadastroInstituicao({ props }) {
 
     async function confirmRegister(e) {
         e.preventDefault();
-
+        if(name === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Nome completo",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
+        if(email === "") {
+            Swal.fire({
+                title: "Este campo não pode ser vazio!",
+                text: "Estado",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
         if(uf === "") {
             Swal.fire({
                 title: "Este campo não pode ser vazio!",
