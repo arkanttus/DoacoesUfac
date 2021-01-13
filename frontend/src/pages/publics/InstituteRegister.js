@@ -598,7 +598,7 @@ export default function CadastroInstituicao({props}) {
                                </Grid>
 
                            </Grid>
-                           <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">CONTINUAR</Button>
+                           <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
                        </CardBody>
                    </Card>
                </Grid>            
@@ -725,8 +725,8 @@ export default function CadastroInstituicao({props}) {
                                 </Grid>
                                 
                                 <Grid container spacing={3} style={{paddingTop: 20, paddingBottom: 20}}>
-                                    <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">VOLTAR</Button>
-                                    <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">CONTINUAR</Button>
+                                    <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary">VOLTAR</Button>
+                                    <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
                                 </Grid> 
                             </CardBody>
                         </Card>
@@ -748,8 +748,8 @@ export default function CadastroInstituicao({props}) {
                                 </Grid>
                             </CardBody>
                             <Grid container spacing={3} style={{paddingTop: 0, marginBottom: 10}}>
-                                <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
-                                <Button onClick={() => setScreen3(screen3 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5 }} color="primary">CONTINUAR</Button>
+                                <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
+                                <Button onClick={() => setScreen3(screen3 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
                             </Grid> 
                         </Card>
                     </Grid>        
@@ -761,29 +761,26 @@ export default function CadastroInstituicao({props}) {
                                     <Grid container style={{ padding: 10 }} alignItems="flex-end">
                                     <h3 style={{ color: "#555",textAlign: 'center'}}>Selecione as necessidades de doação:</h3>
 
-                                        <Grid container style={{ padding: 0, marginBottom: 15}}>
+                                        <Grid container style={{ padding: 0, marginBottom: 15 }}>
                                         <Grid container spacing={2}>
-                                            {items ? items.map( item => (
+                                            {items ? items.map(item => (
                                                 <Grid item xs={12} sm={4} md={6} >
-                                                    <Card>
+                                                    <Card style={{ marginTop: 0, marginBottom: 0, height: '100%' }}>
                                                         <CardContent className={classes.content}>
                                                             <Grid container direction="row" alignItems="center"> 
-                                                                    <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChangeDonate(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0" }}/>                                       
-                                                                    {
-                                                                        item.checked===true ?
-                                                                        (  
-                                                                            <TextField className={classes.fixPlaceholder}  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação de itens:(opcional)" />
-                                                                            
-                                                                        )
-
-                                                                        : (<></>)
-                                                                    }   
+                                                                <FormControlLabel control={<Checkbox checked={item.checked} onChange={() => handleChangeDonate(item.id)} color="primary" />} label={item.name} style={{ color: "#247BA0" }}/>                                       
+                                                                {
+                                                                    item.checked===true ?
+                                                                    (  
+                                                                        <TextField className={classes.fixPlaceholder}  value={item.description}  onChange={(e) => handleChangeDescription(item.id,e.target.value)}  style={{width:'100%'}} size='small' id="standard-basic" label="Especificação de itens:(opcional)" />
+                                                                    )
+                                                                    : (<></>)
+                                                                }   
                                                             </Grid>
                                                         </CardContent>
                                                     </Card>
                                                 </Grid>
                                             )) : <></>}
-                                            
                                         </Grid>
                                     </Grid>
                                     </Grid>
@@ -792,7 +789,7 @@ export default function CadastroInstituicao({props}) {
                             <Grid container spacing={3} style={{paddingTop: 0, paddingBottom: 20}}>
                                 <Button onClick={() => setScreen3(screen3 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 5, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
                                 <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
-                                    <Button onClick={confirmRegister} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15, zIndex:1 }} color="primary">FINALIZAR</Button>
+                                    <Button onClick={confirmRegister} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15, zIndex:1 }} color="primary" variant="contained">FINALIZAR</Button>
                                 </WaitLoading>
                             </Grid> 
                         </Card>

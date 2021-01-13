@@ -103,6 +103,25 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         height: 'inherit',
         position: 'absolute'
+    },
+    btnPassword: {
+        fontSize: '1.1rem', 
+        borderRadius: 3, 
+        backgroundColor: '#247BA0',
+        "&:focus": {
+            background: '#0276aa',
+            color: '#ccc'
+        }
+    },
+    btnOk: {
+        display: 'block', 
+        fontSize: '1.2rem', 
+        borderRadius: 3, 
+        backgroundColor: '#008B00',
+        "&:focus": {
+            background: '#357a38',
+            color: '#ddd'
+        }
     }
 }));
 
@@ -523,10 +542,10 @@ export default function ProfileEditInstitution() {
                     </Grid>
 
                     <Grid item className={classes.buttonLeft} xs={12} sm={6}>
-                        <Button onClick={() => setScreen(1)} style={{ fontSize: '1.1rem', borderRadius: 3, backgroundColor: '#247BA0' }}>ALTERAR SENHA</Button>
+                        <Button onClick={() => setScreen(1)} className={classes.btnPassword}>ALTERAR SENHA</Button>
                     </Grid>
                     <Grid item className={classes.buttonRight} xs={12} sm={6}>
-                        <Button onClick={handleUpdateProfile} style={{ display: 'block', fontSize: '1.2rem', borderRadius: 3, backgroundColor: '#008B00' }}>CONFIRMAR</Button>
+                        <Button onClick={handleUpdateProfile} className={classes.btnOk}>CONFIRMAR</Button>
                     </Grid>
                 </Grid>
 
@@ -543,10 +562,10 @@ export default function ProfileEditInstitution() {
                         </Grid>
 
                         <Grid item className={classes.buttonLeft} xs={12} sm={6}>
-                            <Button onClick={() => setScreen(0)} style={{ fontSize: '1.1rem', borderRadius: 3, backgroundColor: '#247BA0' }}>EDITAR PERFIL</Button>
+                            <Button onClick={() => setScreen(0)} className={classes.btnPassword}>EDITAR PERFIL</Button>
                         </Grid>
                         <Grid item className={classes.buttonRight} xs={12} sm={6}>
-                            <Button onClick={handleChangePassword} style={{ display: 'block', fontSize: '1.2rem', borderRadius: 3, backgroundColor: '#008B00' }}>CONFIRMAR</Button>
+                            <Button onClick={handleChangePassword} className={classes.btnOk}>CONFIRMAR</Button>
                         </Grid>
                     </Grid>
                 )}

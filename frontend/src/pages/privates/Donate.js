@@ -97,8 +97,21 @@ const useStyles = makeStyles((theme) => ({
     cardContainer: {
         height: '7rem !important',
         display: 'flex'
+    },
+    btnOk: {
+        background: '#008B00', 
+        boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', 
+        borderRadius: '3px', 
+        display: 'block', 
+        margin: '0vh auto 3vh auto', 
+        width: '30vh', 
+        height: '6vh', 
+        fontSize: '1rem',
+        "&:focus": {
+            background: '#357a38',
+            color: '#ddd'
+        }
     }
-
 }));
 
 export default function Donate({ props }) {
@@ -257,7 +270,7 @@ export default function Donate({ props }) {
                                         </Grid>
 
                                         <Grid item>
-                                            <Button onClick={() => handleSubmit()} variant="contained" style={{ background: '#008B00', boxShadow: '0px 2px 2px rgba(156, 39, 176, 0.2)', borderRadius: '3px', display: 'block', margin: '0vh auto 3vh auto', width: '30vh', height: '6vh', fontSize: '1rem' }}>CONFIRMAR</Button>
+                                            <Button onClick={() => handleSubmit()} variant="contained" className={classes.btnOk}>CONFIRMAR</Button>
                                         </Grid>
                                     </Grid>
                                 </>

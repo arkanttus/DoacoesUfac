@@ -157,14 +157,12 @@ export default function ListDonation() {
                                     </label>
                                     { donation.donated === true ? (
                                             <FavoriteIcon style={{ color:"#E53935", marginRight: -8, padding: 12 }}/>
-                                            
                                         ) : ( 
                                             <IconButton onClick={() => handleChange(donation)}>
                                                 <FavoriteBorderIcon style={{color:"#ffffff", marginRight: -8 }} />
                                             </IconButton>      
                                         ) 
                                     }
-                                   
                                 </CardHeader>
                                 <CardBody>
                                     <p><strong>Doação: </strong>{donation.items}</p>
@@ -182,7 +180,6 @@ export default function ListDonation() {
                         </Grid>
                     )}
                 </Grid>
-
             </Grid>
         </Grid>
     );
