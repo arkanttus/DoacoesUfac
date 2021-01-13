@@ -58,10 +58,10 @@ const useStyles = makeStyles((theme) => ({
         minHeight: '95vh',
         flexWrap: 'initial',
         flexDirection: 'column',
-        paddingTop: '13%',
+        paddingTop: '6%',
         [theme.breakpoints.down('xs')]: {
             minHeight: '90vh',
-            paddingTop: '45%'
+            paddingTop: '25%'
         }
     },
     item: {
@@ -535,7 +535,7 @@ export default function CadastroInstituicao({props}) {
    
     return(
     <Grid container className={classes.container}>
-        <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
+        <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
             <CssBaseline />
             { screen === 0 ? (
                    <Grid item xs={12} className={classes.gridCard}>
@@ -599,7 +599,6 @@ export default function CadastroInstituicao({props}) {
 
                            </Grid>
                            <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
-                           <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                        </CardBody>
                    </Card>
                </Grid>            
@@ -729,7 +728,6 @@ export default function CadastroInstituicao({props}) {
                                     <Button onClick={() => setScreen(screen ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary">VOLTAR</Button>
                                     <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
                                 </Grid>
-                                <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                             </CardBody>
                         </Card>
                     </Grid>   
@@ -753,7 +751,6 @@ export default function CadastroInstituicao({props}) {
                                 <Button onClick={() => setScreen2(screen2 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5, zIndex:1 }} color="primary">VOLTAR</Button>
                                 <Button onClick={() => setScreen3(screen3 ? 0 : 1)} type="button" style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary" variant="contained">CONTINUAR</Button>
                             </Grid>
-                            <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                         </Card>
                     </Grid>        
                     ):( <Grid item xs={12} className={classes.gridCard}>
@@ -795,7 +792,6 @@ export default function CadastroInstituicao({props}) {
                                     <Button onClick={confirmRegister} type="button" style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15, zIndex:1 }} color="primary" variant="contained">FINALIZAR</Button>
                                 </WaitLoading>
                             </Grid>
-                            <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                         </Card>
                     </Grid>        
                     ) 
@@ -805,6 +801,9 @@ export default function CadastroInstituicao({props}) {
                 
             ) }
 
+            <Grid item xs={12} className={classes.gridButton}>
+                <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 0, marginBottom: 0 }} color="primary">Voltar para login</Button>
+            </Grid>
             
             <Modal
                 aria-labelledby="transition-modal-title"

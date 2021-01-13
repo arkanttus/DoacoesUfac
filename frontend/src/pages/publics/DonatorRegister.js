@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         minHeight: '95vh',
         flexWrap: 'initial',
         flexDirection: 'column',
-        paddingTop: '13%',
+        paddingTop: '6%',
         [theme.breakpoints.down('xs')]: {
             minHeight: '90vh',
             paddingTop: '45%'
@@ -253,7 +253,7 @@ export default function CadastroInstituicao({ props }) {
 
     return(
         <Grid container className={classes.container}>
-            <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center' }}>
+            <Container component="main" maxWidth="sm" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column'  }}>
                 <CssBaseline />
                 <Grid item xs={12} className={classes.gridCard}>
                     <Card style={{width: "35rem"}}>
@@ -368,9 +368,12 @@ export default function CadastroInstituicao({ props }) {
                             <WaitLoading isLoading={waiting} type="spin" style={{ display: "block", height: "5%", width: "5%", margin: "auto", marginTop: 15, marginBottom: 15}}>
                                 <Button variant="contained" onClick={(e) => confirmRegister(e)} style={{ display: 'block', margin: 'auto', marginTop: 25, marginBottom: 5 }} color="primary">FINALIZAR</Button>
                             </WaitLoading>
-                            <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 15, marginBottom: 15 }} color="primary">Voltar para login</Button>
                         </CardBody>
                     </Card>
+                </Grid>
+
+                <Grid item xs={12} className={classes.gridButton}>
+                    <Button onClick={() => props.history.push('/login')} style={{ display: 'block', margin: 'auto', marginTop: 0, marginBottom: 0 }} color="primary">Voltar para login</Button>
                 </Grid>
 
                 <Modal

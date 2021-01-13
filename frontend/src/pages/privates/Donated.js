@@ -78,8 +78,8 @@ export default function Donated({ props }) {
         setDonation({
             institution: {
                 name: "ONG 1",
-                latitude: "0",
-                longitude: "0",
+                latitude: -9.956846,
+                longitude: -67.798846,
                 owner: {
                     phoneNumber: "99999-9999",
                     email: "ong1@hotmail.com"

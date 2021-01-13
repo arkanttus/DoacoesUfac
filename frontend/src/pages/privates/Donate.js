@@ -126,7 +126,8 @@ export default function Donate({ props }) {
     async function loadData() {
         
         setInstitution({
-            name: "ONG 1",
+            name: "ONG Ih Agah Hemi",
+            description: "Somos uma instituição dedicada a fazer o bem e desenvolver protótipos",
             image: InstitutionImage
         });
         setItems([

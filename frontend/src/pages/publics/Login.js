@@ -132,10 +132,21 @@ export default function Login({ props }) {
     async function validateForm(e) {
         e.preventDefault()
         setWaiting(true)
-        //const response = await sendRequest("POST", "login/", { username: email, password })
-        setWaiting(false)
-        await login( email, password )
-        props.history.push("/dashboard")
+        setTimeout(async function(){ 
+            setWaiting(false)
+            if(password != "123") {
+                Swal.fire({
+                    title: "Desculpe",
+                    text: "Usuário ou senha inválido.",
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            }
+            else {
+                await login( email, password )
+                props.history.push("/dashboard")
+            }
+        }, 700);
     }
 
     return(
