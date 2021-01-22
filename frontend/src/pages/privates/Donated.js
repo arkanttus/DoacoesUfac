@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     container: {
-        height: 'fit-content'
+        height: 'fit-content',
+        justifyContent: 'center'
     },
     cardContainer: {
         marginLeft: '10%',
@@ -59,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         padding: "5px 20px !important",
+        backgroundColor: "#f8f8ff",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     }
 }));
 
@@ -91,7 +96,7 @@ export default function Donated({ props }) {
                         Confirmação de Doação
                     </Grid>
 
-                    <Grid container alignItems="center" justify="center">
+                    <Grid container alignItems="center" justify="center" style={{ maxWidth: "960px" }}>
                         <Grid container item xs={12} alignItems="center" justify="center" direction="column">
                             <div className={classes.mainMessage}>
                                 <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '25px' }} >
@@ -120,16 +125,15 @@ export default function Donated({ props }) {
                             </Card>
                         </Grid>
                             
-                        <Grid container item md={4} sm={12} alignItems="center" justify="center" direction="column">
-                            <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '20px' }} >
-                                <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px" color="red">
-                                    Por favor, entre em contato com a instituição, para combinar uma data e horário, a partir dos meios:
-                                </Box>
-                            </Typography>
-
-                            <Card style={{ marginBottom: '25px' }}>
+                        <Grid container item sm={12} alignItems="center" justify="center" direction="column" style={{ marginBottom: "10px"  }}>
+                            <Card style={{ width: "100%" }}>
                                 <CardContent className={classes.content}>
-                                    <Grid container direction="row" alignItems="center">
+                                    <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '20px' }} >
+                                        <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px" color="red">
+                                            Por favor, entre em contato com a instituição, para combinar uma data e horário, a partir dos meios:
+                                        </Box>
+                                    </Typography>
+                                    <Grid container direction="row" alignItems="center" style={{ width:'fit-content', marginBottom: 5 }}>
                                         <Grid item>
                                             <PhoneIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                         </Grid>
@@ -137,7 +141,7 @@ export default function Donated({ props }) {
                                             {donation.institution.owner ? donation.institution.owner.phoneNumber : ""}
                                         </Grid>
                                     </Grid>
-                                    <Grid container direction="row" alignItems="center">
+                                    <Grid container direction="row" alignItems="center" style={{ width:'fit-content', marginBottom: 5 }}>
                                         <Grid item>
                                             <EmailIcon style={{ color: "#555", marginLeft: -8, marginRight: 20 }} />
                                         </Grid>
@@ -145,21 +149,28 @@ export default function Donated({ props }) {
                                             {donation.institution.owner ? donation.institution.owner.email : ""}
                                         </Grid>
                                     </Grid>
+
                                 </CardContent>
                             </Card>
-
-                            <a href={mapUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                                <Button variant="contained" color="primary" >ABRIR NO GOOGLE MAPS</Button>
-                            </a>
                         </Grid>
 
-                        <Grid container item md={4} sm={12} alignItems="center" justify="center" direction="column">
-                            <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '15px', marginTop: '20px' }} >
-                                <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px">
-                                    Localização no Mapa
-                                </Box>
-                            </Typography>
-                            <MapViewer institution={donation.institution}/>
+                        <Grid container item sm={12} alignItems="center" justify="center" direction="column">
+                            <Card style={{ width: "100%" }}>
+                                <CardContent className={classes.content}>
+                                    <Typography variant="body2" component="p" style={{ color: "#000", marginBottom: '15px', marginTop: '20px' }} >
+                                        <Box fontWeight="fontWeightLight" m={1} textAlign="center" fontSize="18px">
+                                            Localização no Mapa
+                                        </Box>
+                                    </Typography>
+                                    <MapViewer institution={donation.institution}/>
+
+                                    
+                                    <a href={mapUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", padding: "10px 0px" }}>
+                                        <Button variant="contained" color="primary" >ABRIR NO GOOGLE MAPS</Button>
+                                    </a>
+
+                                </CardContent>
+                            </Card>
                         </Grid>
                     </Grid>
 
