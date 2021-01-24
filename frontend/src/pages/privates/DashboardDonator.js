@@ -106,7 +106,7 @@ export default function Home({props}){
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
    
     const [uf, setUF] = React.useState(user ? user.uf : "");
-    const [citiesArray, setCitiesArray] = React.useState(cities[uf].cidades);
+    const [citiesArray, setCitiesArray] = React.useState(user ? cities[uf].cidades : null);
     const [city, setCity] = React.useState(user ? user.city : null);
     const [institutions,setInstitutions] = React.useState(null);
     const [institutionsCity,setInstitutionsCity] = React.useState(null);
