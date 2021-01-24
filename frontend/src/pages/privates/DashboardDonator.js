@@ -106,7 +106,7 @@ export default function Home({props}){
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
    
     const [uf, setUF] = React.useState(user ? user.uf : "");
-    const [citiesArray, setCitiesArray] = React.useState([]);
+    const [citiesArray, setCitiesArray] = React.useState(cities[uf].cidades);
     const [city, setCity] = React.useState(user ? user.city : null);
     const [institutions,setInstitutions] = React.useState(null);
     const [institutionsCity,setInstitutionsCity] = React.useState(null);
@@ -170,7 +170,6 @@ export default function Home({props}){
         const state = e.target.value
         setUF(state);
         setCitiesArray(cities[state].cidades);
-        //loadInstitutionByCity()
     }
 
     const handleCity = (e) => {
