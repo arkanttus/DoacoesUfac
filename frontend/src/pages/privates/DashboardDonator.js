@@ -105,9 +105,9 @@ export default function Home({props}){
                 "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                 "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
    
-    const [uf, setUF] = React.useState(user ? user.uf : "Acre");
-    const [citiesArray, setCitiesArray] = React.useState(cities[uf].cidades);
-    const [city, setCity] = React.useState(user ? user.city : "Rio Branco");
+    const [uf, setUF] = React.useState(user ? user.uf : "");
+    const [citiesArray, setCitiesArray] = React.useState([]);
+    const [city, setCity] = React.useState(user ? user.city : null);
     const [institutions,setInstitutions] = React.useState(null);
     const [institutionsCity,setInstitutionsCity] = React.useState(null);
     const [coordinates, setCoordinates] = React.useState(null)
@@ -142,7 +142,8 @@ export default function Home({props}){
         let res = await sendRequest("POST", 'institutions/city/', {city: city})
         
         if(res.status === 200) {
-            setInstitutionsCity(res.data.Institutions)       
+            setInstitutionsCity(res.data.Institutions)
+            setInstitutions(res.data.Institutions)       
         }
         else if(res.status === 404) {
             console.log("Cidade não encontrada")
@@ -158,8 +159,10 @@ export default function Home({props}){
     }, [page]);
 
     React.useEffect(() => {
-        handleCoordinates()
-        loadInstitutionByCity()
+        if(city){
+            handleCoordinates()
+            loadInstitutionByCity()
+        }
     }, [city])
 
     function handleSelectCities(e) {
@@ -246,7 +249,15 @@ export default function Home({props}){
 
                 <Grid container>
                     <Grid item xs={12} className={classes.todasTitle}>
-                        Todas as Instituições
+                        { city ? (
+                            <>
+                                Instituições de {city}
+                            </>
+                        ): (
+                            <>
+                                Todas as Instituições
+                            </>
+                        )}
                     </Grid>
                 </Grid>
                 <WaitLoading isLoading={loading} type="spin" useGrid>

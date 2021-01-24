@@ -121,6 +121,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         except:
             pass
         return super(User, self).save(*args, **kwargs)
+    
+    def active(self, *args, **kwargs):
+        self.is_active = True
+        return self.save()
 
     def verify_email(self, **kwargs):
         subject = 'Navigo - Validar e-mail'

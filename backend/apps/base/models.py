@@ -89,6 +89,14 @@ class Institution(BaseModel):
         except:
             pass
         return super(Institution, self).save(*args, **kwargs)
+    
+    def active(self, *args, **kwargs):
+        self.is_active = True
+        return self.save()
+    
+    def active_all(self, *args, **kwargs):
+        self.active()
+        self.owner.active()
 
     @property
     def get_institution(self):
