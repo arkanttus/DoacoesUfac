@@ -268,7 +268,11 @@ export default function Home({props}){
                                 <InstitutionCard title={institution.name} text={institution.items} photo={institution.image}/>
                             </Link>
                         </Grid>
-                    )): <></>} 
+                    )): 
+                        <>
+                            Nenhuma Instituição cadastrada nesta cidade!   
+                        </>
+                    } 
                     </Grid>
                     
                     <Pagination count={pages} color="primary" onChange={handleChangePage} style={{ display: 'block', margin: '3vh auto 3vh auto' }} />
