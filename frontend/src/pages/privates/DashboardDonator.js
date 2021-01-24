@@ -147,6 +147,7 @@ export default function Home({props}){
         }
         else if(res.status === 404) {
             console.log("Cidade não encontrada")
+            setInstitutions([])
         }
     }
 
