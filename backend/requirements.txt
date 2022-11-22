@@ -40,7 +40,7 @@ mysqlclient==1.4.6
 netifaces==0.10.4
 oauthlib==2.0.6
 PAM==0.4.2
-Pillow==7.1.2
+Pillow==9.3.0
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
 pycrypto==2.6.1
